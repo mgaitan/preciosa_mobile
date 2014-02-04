@@ -1,49 +1,125 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Barcode Scanner Demo</title>
+
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.0.min.css" />
     </head>
     <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-            <p><a href="#" class="topcoat-button" id="scan">SCAN</a></p>
-            <p><a href="#" class="topcoat-button" id="encode">ENCODE</a></p>
-            <p id="info"></p>
-            <h2>OPENING LINKS:</h2>
-            <p><a href="#" class="topcoat-button" onclick="window.open('http://www.nhl.com', '_blank', 'location=yes');">InAppBrowser</a></p>
-            <p><a href="#" class="topcoat-button" onclick="window.open('http://www.nhl.com', '_system', 'location=yes');">System Browser</a></p>
-            <p><a href="#" class="topcoat-button" onclick="window.open('http://www.yahoo.com', '_self', 'location=yes');">This Webview</a></p>
-            <p><a href="#" class="topcoat-button" onclick="window.plugins.childBrowser.showWebPage('http://www.nhl.com', {});">ChildBrowser</a></p>
+
+
+
+
+        <div data-role="page">
+
+            <div data-role="header">
+                <h1>Preciosa :)</h1>
+            </div><!-- /header -->
+
+            <div role="main" class="ui-content">
+
+                <p>Preciosa es una aplicación colaborativa para encontrar mejores precios</p>
+
+                <a href="#select_sucursal" class="ui-btn ui-corner-all">Elegí tu super</a>
+
+                <a href="#select_product" class="ui-btn ui-corner-all">Buscá precios</a>
+
+
+            </div><!-- /content -->
+
+
+        </div><!-- /page -->
+
+
+        <div data-role="page" id="select_product">
+            <div role="main" class="ui-content">
+
+
+                <a id="scan" href="#" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all">Por código de barras</a>
+
+                <p>O filtrá por categoria</p>
+
+
+                <label for="search_categoria"></label>
+                <input name="search_categoria" id="search_categoria" value="" placeholder="Ej: leche, pañales, etc." type="search">
+
+            </div><!-- /content -->
         </div>
+
+
+
+
+
+        <div data-role="page" id="select_sucursal">
+
+            <form>
+                <label for="search_ciudad">Ciudad</label>
+                <input name="search_ciudad" id="search_ciudad" value="" placeholder="Ciudad..." type="search">
+
+
+                <label for="cadena" class="select">Cadena</label>
+                <select name="cadena" id="cadena" data-native-menu="false">
+                    <option value="standard">Disco</option>
+                    <option value="rush">La anónima</option>
+                    <option value="express">Jumbo</option>
+                    <option value="overnight">Walmart</option>
+                </select>
+
+                <input value="Buscar" type="submit" class="ui-btn ui-btn-inline ui-icon-search ui-btn-icon-left">
+            </form>
+
+            <p>¿No está la sucursal que buscás? <a href="#alta_sucursal" class="ui-btn ui-btn-inline ui-icon-plus ui-btn-icon-left">Agregala</a></p>
+
+
+        </div>
+
+
+
+        <div data-role="page" id="alta_sucursal">
+
+            <div role="main" class="ui-content">
+
+                <form>
+
+                <label for="search_ciudad">Ciudad</label>
+                <input name="search_ciudad" id="search_ciudad" value="" placeholder="Ciudad..." type="search">
+
+
+                <label for="cadena" class="select">Cadena</label>
+                <select name="cadena" id="cadena" data-native-menu="false">
+                    <option value="standard">Disco</option>
+                    <option value="rush">La anónima</option>
+                    <option value="express">Jumbo</option>
+                    <option value="overnight">Walmart</option>
+                </select>
+
+                <label for="alta_nombre_sucursal">Nombre sucursal</label>
+                <input name="alta_nombre_sucursal" id="alta_nombre_sucursal" placeholder="Ej: Shopping" value="" type="text">
+
+                <label for="alta_direccion_sucursal">Dirección:</label>
+                <input name="alta_direccion_sucursal" id="alta_direccion_sucursal" value="" type="text">
+
+
+                <input value="Enviar" type="submit" name="alta_direccion_enviar" id="alta_direccion_enviar">
+                </form>
+
+
+
+            </div><!-- /content -->
+
+
+        </div><!-- /page -->
+
+
+
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="barcodescanner.js"></script>
-        <script type="text/javascript" src="childbrowser.js"></script>
+
+        <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.4.0.min.js"></script>
+
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
