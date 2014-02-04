@@ -26,6 +26,7 @@
 
                 <a href="#select_product" class="ui-btn ui-corner-all">Buscá precios</a>
 
+                <a href="#detalle_producto" class="ui-btn ui-corner-all">Ejemplo detalle</a>
 
             </div><!-- /content -->
 
@@ -39,17 +40,108 @@
 
                 <a id="scan" href="#" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all">Por código de barras</a>
 
-                <p>O filtrá por categoria</p>
+                <p>O buscá el producto</p>
 
-
+                <p>
                 <label for="search_categoria"></label>
                 <input name="search_categoria" id="search_categoria" value="" placeholder="Ej: leche, pañales, etc." type="search">
+                </p>
 
             </div><!-- /content -->
         </div>
 
 
 
+        <div data-role="page" id="detalle_producto">
+
+            <div role="main" class="ui-content">
+
+
+            <div class="ui-body ui-body-a ui-corner-all">
+
+
+
+            <div class="ui-block-a" style="width: 47%; margin-right: 3%"> <img src="http://www.cotodigital.com.ar/fotos/full/00260000/00260050.JPG" style="width: 100%;" /></div>
+            <h2>Calzone de jamon muzzarella y tomate FAUSTO est x 280 grm</h2>
+
+
+            <ul data-role="listview" data-count-theme="b" data-inset="true">
+
+
+                <li data-role="list-divider">En tu sucursal </li>
+                <li>
+                    <p><a href="#" class="ui-btn ui-btn-inline">$ 23.2</a>
+
+                        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a"></a>
+
+
+                        <a href="#popup_nuevo_precio" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-a" data-transition="pop"></a>
+                        <div data-role="popup" id="popup_nuevo_precio" data-theme="a" class="ui-corner-all">
+                            <form>
+                                <div style="padding:10px 20px;">
+                                    <h3>¿Qué precio ves?</h3>
+                                    <label for="nuevo_precio" class="ui-hidden-accessible">$</label>
+                                    <input id="nuevo_precio" data-clear-btn="true" data-wrapper-class="controlgroup-textinput ui-btn" type="number" pattern="[0-9]*(\.[0-9]*)?" id="nuevo_precio" value="">
+                                    <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b">Enviar</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </p>
+                </li>
+
+                <li data-role="list-divider">Mejor precio en Córdoba</li>
+
+                <li>
+                    <p><a href="#" class="ui-btn ui-btn-inline">$ 20</a>
+                    Walmart Barrio Jardín</p>
+                </li>
+
+
+            </ul>
+
+            </div><!-- /content -->
+        </div>
+
+
+
+
+        <div data-role="page" id="alta_producto">
+            <div role="main" class="ui-content">
+            <ul data-role="listview" class="ui-listview-outer">
+                  <li data-role="collapsible" data-iconpos="right" data-shadow="false" data-corners="false">
+                    <h2>Almacén</h2>
+                    <ul data-role="listview" data-shadow="false" data-inset="true" data-corners="false">
+                      <li><a href="#">Arroz</a></li>
+                      <li><a href="#">Azúcar/Edulcorante</a></li>
+                      <li data-role="collapsible" data-iconpos="right" data-shadow="false" data-corners="false">
+
+                        <h3>Cereales</h3>
+
+                        <ul data-role="listview" data-shadow="false" data-inset="true" data-corners="false">
+                            <form>
+                            <fieldset data-role="controlgroup" data-mini="true">
+
+                            <input name="radio-choice-v-6" id="radio-choice-v-6a" value="on" checked="checked" type="radio">
+                            <label for="radio-choice-v-6a">One</label>
+                            <input name="radio-choice-v-6" id="radio-choice-v-6b" value="off" type="radio">
+                            <label for="radio-choice-v-6b">Two</label>
+                            <input name="radio-choice-v-6" id="radio-choice-v-6c" value="other" type="radio">
+                            <label for="radio-choice-v-6c">Three</label>
+                            </fieldset>
+                            </form>
+
+
+                        </ul>
+                      </li>
+                   </ul>
+                  </li>
+
+
+                </ul>
+
+       </div><!-- /content -->
+       </div>
 
 
         <div data-role="page" id="select_sucursal">

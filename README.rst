@@ -1,7 +1,7 @@
 Preciosa
 ===========
 
-Este es el repositorio público de la aplicación mobile del proyecto preciosa_
+Este es el repositorio de la aplicación mobile del proyecto preciosa_
 
 Está basada en Phonegap_ para ser compilada en el servicio cloud.
 
