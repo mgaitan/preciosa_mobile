@@ -1,6 +1,10 @@
-BarcodeDemo
+Preciosa
 ===========
 
-A PhoneGap app demoing the [BarcodeScanner Plugin](http://github.com/wildabeast/BarcodeScanner).
+Este es el repositorio público de la aplicación mobile del proyecto preciosa_
 
-Includes config.xml file for [PhoneGap Build](https://build.phonegap.com).
+Está basada en Phonegap_ para ser compilada en el servicio cloud.
+
+.. _preciosa: http://https://github.com/mgaitan/preciosa
+.. _Phonegap: http://www.phonegap.com/
+
