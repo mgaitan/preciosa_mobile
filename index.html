@@ -8,62 +8,46 @@
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.0.min.css" />
     </head>
     <body>
-
-
-
-
         <div data-role="page">
-
             <div data-role="header">
-                <h1>Preciosa :)</h1>
-            </div><!-- /header -->
-
-            <div role="main" class="ui-content">
-
-                <p>Preciosa es una aplicación colaborativa para encontrar mejores precios</p>
-
-                <a href="#select_sucursal" class="ui-btn ui-corner-all">Elegí tu super</a>
-
-                <a href="#select_product" class="ui-btn ui-corner-all">Buscá precios</a>
-
-                <a href="#detalle_producto" class="ui-btn ui-corner-all">Ejemplo detalle</a>
-
-            </div><!-- /content -->
-
-
-        </div><!-- /page -->
-
-
-        <div data-role="page" id="select_product">
-            <div role="main" class="ui-content">
-
-
-                <a id="scan" href="#" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all">Por código de barras</a>
-
-                <p>O buscá el producto</p>
-
-                <p>
-                <label for="search_categoria"></label>
-                <input name="search_categoria" id="search_categoria" value="" placeholder="Ej: leche, pañales, etc." type="search">
-                </p>
-
-            </div><!-- /content -->
-        </div>
-
-
-
-        <div data-role="page" id="detalle_producto">
-
-            <div role="main" class="ui-content">
-
-
-            <div class="ui-body ui-body-a ui-corner-all">
-                <h4>Calzone de jamon muzzarella y tomate FAUSTO est x 280 grm</h4>
-                <div class="ui-block-a" style="width: 95%; margin: 5%"> <img src="http://www.cotodigital.com.ar/fotos/full/00260000/00260050.JPG" style="width: 100%;" /></div>
-
-                <p>Código: 867573779</p>
+                <h1>Precios de Argentina</h1>
             </div>
 
+            <div role="main" class="ui-content">
+                <p>Preciosa es una aplicación colaborativa para encontrar mejores precios</p>
+                <a href="#buscar_sucursal" class="ui-btn ui-corner-all">Elegí tu super</a>
+                <a href="#buscar_producto" class="ui-btn ui-corner-all">Buscá precios</a>
+                <a href="#detalle_producto" class="ui-btn ui-corner-all">Ejemplo detalle</a>
+            </div>
+        </div>
+
+        <div data-role="page" id="buscar_producto">
+            <div data-role="header">
+                <a href="#" data-icon="back" data-rel="back" title="Volver">Volver</a>
+                <h1>Buscar producto</h1>
+            </div>
+
+            <div role="main" class="ui-content">
+                <a id="scan" href="#" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all">Por código de barras</a>
+                <p>O buscá el producto</p>
+                <p>
+                    <label for="search_categoria"></label>
+                    <input name="search_categoria" id="search_categoria" value="" placeholder="Ej: leche, pañales, etc." type="search">
+                </p>
+            </div>
+        </div>
+
+        <div data-role="page" id="detalle_producto">
+            <div data-role="header">
+                <a href="#" data-icon="back" data-rel="back" title="Volver">Volver</a>
+                <h1>Buscar producto</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <div class="ui-body ui-body-a ui-corner-all">
+                    <h4>Calzone de jamon muzzarella y tomate FAUSTO est x 280 grm</h4>
+                    <div class="ui-block-a" style="width: 95%; margin: 5%"> <img src="http://www.cotodigital.com.ar/fotos/full/00260000/00260050.JPG" style="width: 100%;" /></div>
+                <p>Código: 867573779</p>
+            </div>
 
             <ul data-role="listview" data-count-theme="b" data-inset="true">
 
@@ -144,7 +128,11 @@
        </div>
 
 
-        <div data-role="page" id="select_sucursal">
+        <div data-role="page" id="buscar_sucursal">
+            <div data-role="header">
+                <a href="#" data-icon="back" data-rel="back" title="Volver">Volver</a>
+                <h1>Buscar producto</h1>
+            </div>
 
             <form>
                 <label for="search_ciudad">Ciudad</label>
