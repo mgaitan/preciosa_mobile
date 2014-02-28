@@ -1,208 +1,43 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-
-        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.0.min.css" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.1.min.css" />
     </head>
+
     <body>
-        <div data-role="page">
+        <!-- Página princial -->
+        <div data-role="page" id="principal">
             <div data-role="header">
                 <h1>Precios de Argentina</h1>
             </div>
 
             <div role="main" class="ui-content">
-                <p>Preciosa es una aplicación colaborativa para encontrar mejores precios</p>
-                <a href="#buscar_sucursal" class="ui-btn ui-corner-all">Elegí tu super</a>
-                <a href="#buscar_producto" class="ui-btn ui-corner-all">Buscá precios</a>
-                <a href="#detalle_producto" class="ui-btn ui-corner-all">Ejemplo detalle</a>
-            </div>
-        </div>
+                <h2>Seleccioná una sucursal para empezar</h2>
+                <h3>Sucursales cercanas</h3>
+                    <ul data-role="listview" data-inset="true">
+                        <li><a href="#">Carrefour de Tribunales</a></li>
+                        <li><a href="#">Coto</a></li>
+                        <li><a href="#">Vea</a></li>
+                    </ul>
 
-        <div data-role="page" id="buscar_producto">
-            <div data-role="header">
-                <a href="#" data-icon="back" data-rel="back" title="Volver">Volver</a>
-                <h1>Buscar producto</h1>
-            </div>
-
-            <div role="main" class="ui-content">
-                <a id="scan" href="#" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all">Por código de barras</a>
-                <p>O buscá el producto</p>
-                <p>
-                    <label for="search_categoria"></label>
-                    <input name="search_categoria" id="search_categoria" value="" placeholder="Ej: leche, pañales, etc." type="search">
-                </p>
-            </div>
-        </div>
-
-        <div data-role="page" id="detalle_producto">
-            <div data-role="header">
-                <a href="#" data-icon="back" data-rel="back" title="Volver">Volver</a>
-                <h1>Buscar producto</h1>
-            </div>
-            <div role="main" class="ui-content">
-                <div class="ui-body ui-body-a ui-corner-all">
-                    <h4>Calzone de jamon muzzarella y tomate FAUSTO est x 280 grm</h4>
-                    <div class="ui-block-a" style="width: 95%; margin: 5%"> <img src="http://www.cotodigital.com.ar/fotos/full/00260000/00260050.JPG" style="width: 100%;" /></div>
-                <p>Código: 867573779</p>
-            </div>
-
-            <ul data-role="listview" data-count-theme="b" data-inset="true">
-
-
-                <li data-role="list-divider">En tu sucursal </li>
-                <li>
-                    <p><a href="#" class="ui-btn">$ 23.2</a>
-
-                        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a"></a>
-
-
-                        <a href="#popup_nuevo_precio" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-a" data-transition="pop"></a>
-                        <div data-role="popup" id="popup_nuevo_precio" data-theme="a" class="ui-corner-all">
-                            <form>
-                                <div style="padding:10px 20px;">
-                                    <h3>¿Qué precio ves?</h3>
-                                    <label for="nuevo_precio" class="ui-hidden-accessible">$</label>
-                                    <input id="nuevo_precio" data-clear-btn="true" data-wrapper-class="controlgroup-textinput ui-btn" type="number" pattern="[0-9]*(\.[0-9]*)?" id="nuevo_precio" value="">
-                                    <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b">Enviar</button>
-                                </div>
-                            </form>
-                        </div>
-
-                    </p>
-                </li>
-
-                <li data-role="list-divider">Mejor precio en Córdoba</li>
-
-                <li>
-                    <p><a href="#" class="ui-btn ui-btn-inline">$ 20</a>
-                    Walmart Barrio Jardín</p>
-                </li>
-
-
-            </ul>
-
-            </div><!-- /content -->
-        </div>
-
-
-
-
-        <div data-role="page" id="alta_producto">
-            <div role="main" class="ui-content">
-            <ul data-role="listview" class="ui-listview-outer">
-                  <li data-role="collapsible" data-iconpos="right" data-shadow="false" data-corners="false">
-                    <h2>Almacén</h2>
-                    <ul data-role="listview" data-shadow="false" data-inset="true" data-corners="false">
-                      <li><a href="#">Arroz</a></li>
-                      <li><a href="#">Azúcar/Edulcorante</a></li>
-                      <li data-role="collapsible" data-iconpos="right" data-shadow="false" data-corners="false">
-
-                        <h3>Cereales</h3>
-
-                        <ul data-role="listview" data-shadow="false" data-inset="true" data-corners="false">
-                            <form>
-                            <fieldset data-role="controlgroup" data-mini="true">
-
-                            <input name="radio-choice-v-6" id="radio-choice-v-6a" value="on" checked="checked" type="radio">
-                            <label for="radio-choice-v-6a">One</label>
-                            <input name="radio-choice-v-6" id="radio-choice-v-6b" value="off" type="radio">
-                            <label for="radio-choice-v-6b">Two</label>
-                            <input name="radio-choice-v-6" id="radio-choice-v-6c" value="other" type="radio">
-                            <label for="radio-choice-v-6c">Three</label>
-                            </fieldset>
-                            </form>
-
-
-                        </ul>
-                      </li>
-                   </ul>
-                  </li>
-
-
+                <h3>Buscar sucursal</h3>
+                <ul id="sucursales_listview" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Ej: nombre, dirección..." data-filter-theme="a"></ul>
                 </ul>
 
-       </div><!-- /content -->
-       </div>
 
-
-        <div data-role="page" id="buscar_sucursal">
-            <div data-role="header">
-                <a href="#" data-icon="back" data-rel="back" title="Volver">Volver</a>
-                <h1>Buscar producto</h1>
             </div>
-
-            <form>
-                <label for="search_ciudad">Ciudad</label>
-                <input name="search_ciudad" id="search_ciudad" value="" placeholder="Ciudad..." type="search">
-
-
-                <label for="cadena" class="select">Cadena</label>
-                <select name="cadena" id="cadena" data-native-menu="false">
-                    <option value="standard">Disco</option>
-                    <option value="rush">La anónima</option>
-                    <option value="express">Jumbo</option>
-                    <option value="overnight">Walmart</option>
-                </select>
-
-                <input value="Buscar" type="submit" class="ui-btn ui-btn-inline ui-icon-search ui-btn-icon-left">
-            </form>
-
-            <p>¿No está la sucursal que buscás? <a href="#alta_sucursal" class="ui-btn ui-btn-inline ui-icon-plus ui-btn-icon-left">Agregala</a></p>
-
-
         </div>
 
-
-
-        <div data-role="page" id="alta_sucursal">
-
-            <div role="main" class="ui-content">
-
-                <form>
-
-                <label for="search_ciudad">Ciudad</label>
-                <input name="search_ciudad" id="search_ciudad" value="" placeholder="Ciudad..." type="search">
-
-
-                <label for="cadena" class="select">Cadena</label>
-                <select name="cadena" id="cadena" data-native-menu="false">
-                    <option value="standard">Disco</option>
-                    <option value="rush">La anónima</option>
-                    <option value="express">Jumbo</option>
-                    <option value="overnight">Walmart</option>
-                </select>
-
-                <label for="alta_nombre_sucursal">Nombre sucursal</label>
-                <input name="alta_nombre_sucursal" id="alta_nombre_sucursal" placeholder="Ej: Shopping" value="" type="text">
-
-                <label for="alta_direccion_sucursal">Dirección:</label>
-                <input name="alta_direccion_sucursal" id="alta_direccion_sucursal" value="" type="text">
-
-
-                <input value="Enviar" type="submit" name="alta_direccion_enviar" id="alta_direccion_enviar">
-                </form>
-
-
-
-            </div><!-- /content -->
-
-
-        </div><!-- /page -->
-
-
-
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="barcodescanner.js"></script>
+        <!--script type="text/javascript" src="cordova.js"></script-->
+        <!--script type="text/javascript" src="barcodescanner.js"></script-->
 
         <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
-        <script type="text/javascript" src="js/jquery.mobile-1.4.0.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.4.1.min.js"></script>
+        <script type="text/javascript" src="js/requests.js"></script>
 
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
+        <!--script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">app.initialize();</script-->
     </body>
 </html>
