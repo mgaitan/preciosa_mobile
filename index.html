@@ -14,16 +14,35 @@
             </div>
 
             <div role="main" class="ui-content">
-                <h2>Seleccioná una sucursal para empezar</h2>
+                <h2>Seleccione una sucursal</h2>
                 <h3>Sucursales cercanas</h3>
-                    <ul data-role="listview" data-inset="true">
-                        <li><a href="#">Carrefour de Tribunales</a></li>
-                        <li><a href="#">Coto</a></li>
-                        <li><a href="#">Vea</a></li>
+                    <ul id="sucursales_cercanas_listview" data-role="listview" data-inset="true">
+                        <li>Cargando ...</li>
                     </ul>
 
                 <h3>Buscar sucursal</h3>
                 <ul id="sucursales_listview" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Ej: nombre, dirección..." data-filter-theme="a"></ul>
+                </ul>
+
+
+            </div>
+        </div>
+
+        <!-- Página de sucursal -->
+        <div data-role="page" id="sucursal">
+            <div data-role="header">
+                <h1>Sucursal</h1>
+            </div>
+
+            <div role="main" class="ui-content">
+                <h2>Elija un producto</h2>
+                <h3>Por código de barras</h3>
+                <form>
+                    <input data-icon="camera" value="Escanear" type="button">
+                </form>
+
+                <h3>Por descripción</h3>
+                <ul id="productos_listview" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Ej: marca, código, descripción..." data-filter-theme="a"></ul>
                 </ul>
 
 
