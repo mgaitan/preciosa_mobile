@@ -23,8 +23,6 @@
                 <h3>Buscar sucursal</h3>
                 <ul id="sucursales_listview" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Ej: nombre, dirección..." data-filter-theme="a"></ul>
                 </ul>
-
-
             </div>
         </div>
 
@@ -44,10 +42,39 @@
                 <h3>Por descripción</h3>
                 <ul id="productos_listview" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Ej: marca, código, descripción..." data-filter-theme="a"></ul>
                 </ul>
-
-
             </div>
         </div>
+
+
+        <!-- Página de producto -->
+        <div data-role="page" id="producto">
+            <div data-role="header">
+                <h1>Producto</h1>
+            </div>
+
+            <div role="main" class="ui-content">
+                <h2>Detalles</h2>
+                <h3>Marca y Producto</h3>
+                <p><img src="images/barcode1.jpg" /></p>
+                <p><img src="images/foto1.jpg" /></p>
+
+                <h4>Precio en sucursal</h4>
+                <p><b>$52,99.-</b></p>
+                <p>
+                ¿Coincide con el precio en góndola?
+                <fieldset class="ui-grid-a">
+                    <div class="ui-block-a"><input value="Sí" type="button"></div>
+                    <div class="ui-block-b"><input value="No" type="submit"></div>
+                </fieldset>
+                </p>
+
+                <h4>Mejores precios</h4>
+                <ul>
+                    <li><b>$50,45.-</b> en Sucursal X</li>
+                </ul>
+            </div>
+        </div>
+
 
         <!--script type="text/javascript" src="cordova.js"></script-->
         <!--script type="text/javascript" src="barcodescanner.js"></script-->

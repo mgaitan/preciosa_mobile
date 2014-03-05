@@ -12,14 +12,14 @@ $(document).on("pagecreate", "#principal", function() {
             data: {
                 lat: -38.7316685,
                 lon: -62.251555,
-                limit: 3
+                limit: 3,
+                format: 'jsonp',
             }
         })
         .then(function(response) {
-            console.log(response);
             if (response.count > 0){
                 $.each(response.results, function (i, obj) {
-                    html += '<li><a href="?id=' + obj.id + '/#sucursal">' + obj.nombre + '</a></li>';
+                    html += '<li><a href="?id='+obj.id+'#sucursal">' + obj.nombre + '</a></li>';
                 });
             }
             else {
@@ -51,13 +51,14 @@ $(document).on("pagecreate", "#principal", function() {
                 dataType: "jsonp",
                 crossDomain: true,
                 data: {
-                    q: $input.val()
+                    q: $input.val(),
+                    format: 'jsonp'
                 }
             })
             .then(function(response) {
                 if (response.count > 0){
                     $.each(response.results, function (i, obj) {
-                        html += '<li><a href="?id=' + obj.id + '/#sucursal">' + obj.nombre + '</a></li>';
+                        html += '<li><a href="?id='+obj.id+'#sucursal">' + obj.nombre + '</a></li>';
                     });
                 }
                 else {
@@ -70,4 +71,47 @@ $(document).on("pagecreate", "#principal", function() {
             });
         }
     });
+});
+
+$(document).on("pagecreate", "#sucursal", function() {
+    $("#productos_listview").on("filterablebeforefilter", function (e, data) {
+        var $ul = $( this ),
+            $input = $( data.input ),
+            value = $input.val(),
+            html = "";
+
+        $ul.html( "" );
+        if (value && value.length > 2) {
+            $ul.html( "<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>" );
+            $ul.listview( "refresh" );
+
+            $.ajax({
+                url: "http://localhost:8000/api/v1/productos/",
+                dataType: "jsonp",
+                crossDomain: true,
+                data: {
+                    q: $input.val(),
+                    format: 'jsonp'
+                }
+            })
+            .then(function(response) {
+                if (response.count > 0){
+                    $.each(response.results, function (i, obj) {
+                        html += '<li><a href="?id='+obj.id+'#producto">' + obj.descripcion + ' <i>[' + obj.upc + ']</i></a></li>';
+                    });
+                }
+                else {
+                    html = '<li><a class="ui-btn ui-shadow ui-corner-all ui-icon-alert ui-btn-icon-left">No se encontraron resultados</a></li>';
+                }
+
+                $ul.html( html );
+                $ul.listview( "refresh" );
+                $ul.trigger( "updatelayout");
+            });
+        }
+    });
+});
+
+$('producto').on('pagechange', function(){
+    alert(111);
 });
