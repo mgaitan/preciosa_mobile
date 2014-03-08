@@ -1,3 +1,8 @@
+/* Este es el modulo js cliente de la API rest */
+
+// var BASE_URL = "http://preciosdeargentina.com.ar/api/v1";
+var BASE_URL = "http://localhost:8000/api/v1";
+
 var consultar_sucursales = function(callback, params) {
     if (typeof(params) === 'undefined') params = {};
 
@@ -19,7 +24,7 @@ var consultar_sucursales = function(callback, params) {
     }
 
     $.ajax({
-        url: "http://localhost:8000/api/v1/sucursales/",
+        url: BASE_URL + "/sucursales/",
         dataType: "jsonp",
         crossDomain: true,
         data: data,
@@ -48,7 +53,7 @@ var consultar_productos = function(callback, params) {
     }
 
     $.ajax({
-        url: "http://localhost:8000/api/v1/productos/",
+        url: BASE_URL + "/productos/",
         dataType: "jsonp",
         crossDomain: true,
         data: data,

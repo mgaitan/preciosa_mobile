@@ -5,6 +5,17 @@ Este es el repositorio de la aplicación mobile del proyecto preciosa_
 
 Está basada en Phonegap_ para ser compilada en el servicio cloud_.
 
+Desarrollo
+----------
+
+Para configurar la URL de la API configura la variable javascript
+`BASE_URL` en `js/requests.js` con la url (sin slash). Por ejemplo:
+
+.. code-block:: javascript
+
+    var BASE_URL = "http://localhost:8000/api/v1";
+
+
 Recursos
 --------
 
