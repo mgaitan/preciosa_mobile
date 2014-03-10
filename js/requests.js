@@ -157,18 +157,56 @@ $(document).on("pagecreate", "#sucursal", function() {
 });
 
 $(document).on("pagebeforeshow", "#producto", function() {
-    //console.log(localStorage);
+    console.log(localStorage);
+    $.ajax({
+        url: "http://localhost:8000/api/v1/productos/",
+        dataType: "jsonp",
+        crossDomain: true,
+        data: {
+            format: 'jsonp',
+            pk: localStorage.producto_id
+        },
+        error: function(xhr, text, error) {
+            //return callback('error', text, params.selector);
+        },
+        success: function(response) {
+            //return callback('ok', response, params.selector);
+            if (response.count > 0) {
+                $('#producto_nombre').html(response.results[0].descripcion);
+            }
+        },
+    });
+
+    $.ajax({
+        url: "http://localhost:8000/api/v1/precios/",
+        dataType: "jsonp",
+        crossDomain: true,
+        data: {
+            format: 'jsonp',
+            producto_id: localStorage.producto_id,
+            sucursal_id: localStorage.sucursal_id
+        },
+        error: function(xhr, text, error) {
+            //return callback('error', text, params.selector);
+        },
+        success: function(response) {
+            //return callback('ok', response, params.selector);
+            if (response.count > 0) {
+                $('#producto_precio').html('$' + response.results[0].precio + '.-');
+            }
+        },
+    });
 });
 
 // ---
 
 var asignar_sucursal_id = function(e){
     localStorage.sucursal_id = $(e.target).data('id');
-    console.log(localStorage.sucursal_id);
+    console.log({sucursal_id: localStorage.sucursal_id});
 };
 var asignar_producto_id = function(e){
     localStorage.producto_id = $(e.target).data('id');
-    console.log(localStorage.producto_id);
+    console.log({producto_id: localStorage.producto_id});
 };
 
 
