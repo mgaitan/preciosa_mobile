@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.1.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.min.css" />
     </head>
 
     <body>
@@ -56,32 +56,37 @@
 
             <div role="main" class="ui-content">
                 <h2>Detalles</h2>
-                <h3 id="producto_nombre">...</h3>
-                <p><img src="images/logo.png" /></p>
+                <h3 id="producto_nombre">Cargando ...</h3>
+                <center><img src="images/logo.png" /></center>
 
                 <h4>Precio en sucursal</h4>
-                <b id="producto_precio">$52,99.-</b>
-                <p>
-                ¿Coincide con el precio en góndola?
-                <fieldset class="ui-grid-a">
-                    <div class="ui-block-a"><input value="Sí" type="button"></div>
-                    <div class="ui-block-b"><input value="No" type="submit"></div>
-                </fieldset>
-                </p>
+                <b id="producto_precio">Cargando ...</b>
+                <p>¿Coincide con el precio en góndola?</p>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <button class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-check ui-btn-inline">Sí</button>
+                    </div>
+                    <div class="ui-block-b">
+                        <button class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-alert ui-btn-inline">No</button>
+                    </div>
+                </div>
 
                 <h4>Mejores precios</h4>
                 <ul>
-                    <li><b>$50,45.-</b> en Sucursal X</li>
+                    <li>Cargando ...</li>
                 </ul>
             </div>
         </div>
+
+        <!-- Modal de "Cargando" -->
 
 
         <!--script type="text/javascript" src="cordova.js"></script-->
         <!--script type="text/javascript" src="barcodescanner.js"></script-->
 
         <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
-        <script type="text/javascript" src="js/jquery.mobile-1.4.1.min.js"></script>
+        <script type="text/javascript" src="js/loader.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.4.2.min.js"></script>
         <script type="text/javascript" src="js/requests.js"></script>
 
         <!--script type="text/javascript" src="js/index.js"></script>
