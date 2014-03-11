@@ -1,13 +1,13 @@
 /* Este es el modulo js cliente de la API rest */
 
-// var BASE_URL = "http://preciosdeargentina.com.ar/api/v1";
 var BASE_URL = "http://localhost:8000/api/v1";
+var BASE_URL = "http://preciosdeargentina.com.ar/api/v1";
 
 var consultar_sucursales = function(callback, params) {
     if (typeof(params) === 'undefined') params = {};
 
     var data = {
-        format: 'jsonp',
+        format: 'json',
     }
 
     if (typeof(params.lat) !== 'undefined' && typeof(params.lon) !== 'undefined') {
@@ -25,7 +25,7 @@ var consultar_sucursales = function(callback, params) {
 
     $.ajax({
         url: BASE_URL + "/sucursales/",
-        dataType: "jsonp",
+        dataType: "json",
         crossDomain: true,
         data: data,
         error: function(xhr, text, error) {
@@ -41,7 +41,7 @@ var consultar_productos = function(callback, params) {
     if (typeof(params) === 'undefined') params = {};
 
     var data = {
-        format: 'jsonp',
+        format: 'json',
     }
 
     if (typeof(params.barcode) !== 'undefined') {
@@ -54,7 +54,7 @@ var consultar_productos = function(callback, params) {
 
     $.ajax({
         url: BASE_URL + "/productos/",
-        dataType: "jsonp",
+        dataType: "json",
         crossDomain: true,
         data: data,
         error: function(xhr, text, error) {
@@ -164,17 +164,16 @@ $(document).on("pagebeforeshow", "#producto", function() {
     console.log(localStorage);
     $.ajax({
         url: BASE_URL + "/productos/",
-        dataType: "jsonp",
+        dataType: "json",
         crossDomain: true,
         data: {
-            format: 'jsonp',
+            format: 'json',
             pk: localStorage.producto_id
         },
         error: function(xhr, text, error) {
-            //return callback('error', text, params.selector);
+            $('#producto_nombre').html('No se pudo obtener el precio');
         },
         success: function(response) {
-            //return callback('ok', response, params.selector);
             if (response.count > 0) {
                 $('#producto_nombre').html(response.results[0].descripcion);
             }
@@ -183,20 +182,22 @@ $(document).on("pagebeforeshow", "#producto", function() {
 
     $.ajax({
         url: BASE_URL + "/precios/",
-        dataType: "jsonp",
+        dataType: "json",
         crossDomain: true,
         data: {
-            format: 'jsonp',
+            format: 'json',
             producto_id: localStorage.producto_id,
             sucursal_id: localStorage.sucursal_id
         },
         error: function(xhr, text, error) {
-            //return callback('error', text, params.selector);
+            $('#producto_precio').html('No se pudo obtener el precio');
         },
         success: function(response) {
-            //return callback('ok', response, params.selector);
             if (response.count > 0) {
                 $('#producto_precio').html('$' + response.results[0].precio + '.-');
+            }
+            else {
+                $('#producto_precio').html('Sin precio');
             }
         },
     });
