@@ -214,16 +214,9 @@ var asignar_producto_id = function(e){
 };
 
 
-$(document).on('pagebeforeshow', '#principal', function(){
+$(document).on('pageinit', '#principal', function(){
     $(document).on('click', 'a.sucursal', asignar_sucursal_id);
 });
-$(document).on('pagebeforehide', '#principal', function(){
-    $(document).off('click', 'a.sucursal', asignar_sucursal_id);
-});
-
-$(document).on('pagebeforeshow', '#sucursal', function(){
+$(document).on('pageinit', '#sucursal', function(){
     $(document).on('click', 'a.producto', asignar_producto_id);
-});
-$(document).on('pagebeforehide', '#sucursal', function(){
-    $(document).off('click', 'a.producto', asignar_producto_id);
 });
