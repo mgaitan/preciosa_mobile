@@ -72,7 +72,7 @@ var mostrar_sucursales = function(status, response, selector) {
 
     if (response.count > 0){
         $.each(response.results, function (i, obj) {
-            html += '<li><a href="/?id='+obj.id+'#sucursal">' + obj.nombre + '</a></li>';
+            html += '<li><a href="#sucursal" data-id="'+obj.id+'" class="sucursal">' + obj.nombre + '</a></li>';
         });
     }
     else {
@@ -90,7 +90,7 @@ var mostrar_productos = function(status, response, selector) {
 
     if (response.count > 0){
         $.each(response.results, function (i, obj) {
-            html += '<li><a href="?id='+obj.id+'#producto">' + obj.descripcion + ' <i>[' + obj.upc + ']</i></a></li>';
+            html += '<li><a href="#producto" data-id="'+obj.id+'" class="producto">' + obj.descripcion + ' <i>[' + obj.upc + ']</i></a></li>';
         });
     }
     else {
@@ -158,4 +158,72 @@ $(document).on("pagecreate", "#sucursal", function() {
             )
         }
     });
+});
+
+$(document).on("pagebeforeshow", "#producto", function() {
+    console.log(localStorage);
+    $.ajax({
+        url: BASE_URL + "/productos/",
+        dataType: "jsonp",
+        crossDomain: true,
+        data: {
+            format: 'jsonp',
+            pk: localStorage.producto_id
+        },
+        error: function(xhr, text, error) {
+            //return callback('error', text, params.selector);
+        },
+        success: function(response) {
+            //return callback('ok', response, params.selector);
+            if (response.count > 0) {
+                $('#producto_nombre').html(response.results[0].descripcion);
+            }
+        },
+    });
+
+    $.ajax({
+        url: BASE_URL + "/precios/",
+        dataType: "jsonp",
+        crossDomain: true,
+        data: {
+            format: 'jsonp',
+            producto_id: localStorage.producto_id,
+            sucursal_id: localStorage.sucursal_id
+        },
+        error: function(xhr, text, error) {
+            //return callback('error', text, params.selector);
+        },
+        success: function(response) {
+            //return callback('ok', response, params.selector);
+            if (response.count > 0) {
+                $('#producto_precio').html('$' + response.results[0].precio + '.-');
+            }
+        },
+    });
+});
+
+// ---
+
+var asignar_sucursal_id = function(e){
+    localStorage.sucursal_id = $(e.target).data('id');
+    console.log({sucursal_id: localStorage.sucursal_id});
+};
+var asignar_producto_id = function(e){
+    localStorage.producto_id = $(e.target).data('id');
+    console.log({producto_id: localStorage.producto_id});
+};
+
+
+$(document).on('pagebeforeshow', '#principal', function(){
+    $(document).on('click', 'a.sucursal', asignar_sucursal_id);
+});
+$(document).on('pagebeforehide', '#principal', function(){
+    $(document).off('click', 'a.sucursal', asignar_sucursal_id);
+});
+
+$(document).on('pagebeforeshow', '#sucursal', function(){
+    $(document).on('click', 'a.producto', asignar_producto_id);
+});
+$(document).on('pagebeforehide', '#sucursal', function(){
+    $(document).off('click', 'a.producto', asignar_producto_id);
 });
