@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="io.cordova.hellocordova" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Preciosa</name>
+    <description>
+        Precios de Argentina
+    </description>
+    <author email="gaitan@gmail.com" href="http://mgaitan.github.io">
+        Martin Gaitan
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+</widget>
