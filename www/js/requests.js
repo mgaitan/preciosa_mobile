@@ -167,6 +167,10 @@ $(document).on("pagecreate", "#sucursal", function() {
 });
 
 $(document).on("pagebeforeshow", "#producto", function() {
+    $('#producto_nombre').html('Cargando ...');
+    $('#producto_upc').html('');
+    $('#producto_precio').html('Cargando ...');
+
     console.log(localStorage);
     $.ajax({
         url: BASE_URL + "/productos/",
@@ -182,6 +186,7 @@ $(document).on("pagebeforeshow", "#producto", function() {
         success: function(response) {
             if (response.count > 0) {
                 $('#producto_nombre').html(response.results[0].descripcion);
+                $('#producto_upc').html(response.results[0].upc);
             }
         },
     });
