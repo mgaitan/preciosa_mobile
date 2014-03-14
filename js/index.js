@@ -91,9 +91,12 @@ var app = {
     },
 
     buscar: function(codigo){
+        // como tenemos productos con y sin checksum, por las dudas
+        // se lo quitamos para la búsqueda
+        codigo = codigo.substring(0, codigo.length - 1);
         var $search = $('input[data-type="search"]', '#sucursal');
-         $search.val(codigo);
-         $search.trigger('change');
+        $search.val(codigo);
+        $search.trigger('change');
     }
 
 };
