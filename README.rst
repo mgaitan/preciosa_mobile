@@ -3,7 +3,7 @@ Preciosa Mobile
 
 Este es el repositorio de la aplicación mobile del proyecto Preciosa_
 
-**Esta es la rama develop**, estructurada para  compilarse mediante `Phonegap Build`_. La rama local_develop_, en cambio, está pensada para utilizar Phonegap_ localmente.
+**Esta es la rama develop**, estructurada para  compilarse mediante `Phonegap Build`_. La rama `local_develop`_, en cambio, está pensada para utilizar Phonegap_ localmente.
 
 
 Desarrollo
@@ -27,4 +27,4 @@ Recursos
 .. _Preciosa: http://github.com/mgaitan/preciosa
 .. _Phonegap: http://www.phonegap.com/
 .. _Phonegap Build: http://build.phonegap.com
-.. _develop: https://github.com/mgaitan/preciosa_mobile/tree/local_develop
+.. _local_develop: https://github.com/mgaitan/preciosa_mobile/tree/local_develop
