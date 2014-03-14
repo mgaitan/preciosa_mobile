@@ -1,9 +1,10 @@
 Preciosa Mobile
 ===============
 
-Este es el repositorio de la aplicación mobile del proyecto preciosa_
+Este es el repositorio de la aplicación mobile del proyecto Preciosa_
 
-Está basada en Phonegap_ para ser compilada en el servicio cloud_.
+**Esta es la rama ``develop``** estructurada para  compilarse mediante `Phonegap Build`_. La rama `local_develop`_, en cambio, está pensada para utilizar Phonegap_ localmente.
+
 
 Desarrollo
 ----------
@@ -23,6 +24,7 @@ Recursos
 - La `API v1 <http://preciosadeargentina.com.ar/api/v1>`_ de Preciosa
 
 
-.. _preciosa: http://github.com/mgaitan/preciosa
+.. _Preciosa: http://github.com/mgaitan/preciosa
 .. _Phonegap: http://www.phonegap.com/
-.. _cloud: http://build.phonegap.com
+.. _Phonegap Build: http://build.phonegap.com
+.. _develop: https://github.com/mgaitan/preciosa_mobile/tree/local_develop
