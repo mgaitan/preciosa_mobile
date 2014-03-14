@@ -72,7 +72,10 @@ var mostrar_sucursales = function(status, response, selector) {
 
     if (response.count > 0){
         $.each(response.results, function (i, obj) {
-            html += '<li><a href="#sucursal" data-id="'+obj.id+'" class="sucursal">' + obj.nombre + '</a></li>';
+            html += '<li><a href="#sucursal" data-id="'+obj.id+'" class="sucursal">' +
+                    '<h2>'+ obj.nombre +'</h2>' +
+                    '<p><i class="fa fa-location-arrow"></i> '+obj.direccion+', ' +obj.ciudad+'</p>' +
+                    '</a></li>';
         });
     }
     else {
@@ -90,7 +93,10 @@ var mostrar_productos = function(status, response, selector) {
 
     if (response.count > 0){
         $.each(response.results, function (i, obj) {
-            html += '<li><a href="#producto" data-id="'+obj.id+'" class="producto"><h2>' + obj.descripcion + '</h2><p><i class="fa fa-barcode"></i> ' + obj.upc + '</p></a></li>';
+            html += '<li><a href="#producto" data-id="'+obj.id+'" class="producto">' +
+                    '<h2>' + obj.descripcion + '</h2>' +
+                    '<p><i class="fa fa-barcode"></i> ' + obj.upc + '</p>' +
+                    '</a></li>';
         });
     }
     else {
@@ -161,6 +167,10 @@ $(document).on("pagecreate", "#sucursal", function() {
 });
 
 $(document).on("pagebeforeshow", "#producto", function() {
+    $('#producto_nombre').html('Cargando ...');
+    $('#producto_upc').html('');
+    $('#producto_precio').html('Cargando ...');
+
     console.log(localStorage);
     $.ajax({
         url: BASE_URL + "/productos/",
@@ -176,6 +186,7 @@ $(document).on("pagebeforeshow", "#producto", function() {
         success: function(response) {
             if (response.count > 0) {
                 $('#producto_nombre').html(response.results[0].descripcion);
+                $('#producto_upc').html(response.results[0].upc);
             }
         },
     });
@@ -206,11 +217,31 @@ $(document).on("pagebeforeshow", "#producto", function() {
 // ---
 
 var asignar_sucursal_id = function(e){
-    localStorage.sucursal_id = $(e.target).data('id');
+    var target = $(e.target);
+    var sucursal_id = null;
+
+    if (target.is('a')) {
+        sucursal_id = $(e.target).data('id');
+    }
+    else {
+        sucursal_id = $(e.target).closest('a').data('id');
+    }
+
+    localStorage.sucursal_id = sucursal_id;
     console.log({sucursal_id: localStorage.sucursal_id});
 };
 var asignar_producto_id = function(e){
-    localStorage.producto_id = $(e.target).data('id');
+    var target = $(e.target);
+    var producto_id = null;
+
+    if (target.is('a')) {
+        producto_id = $(e.target).data('id');
+    }
+    else {
+        producto_id = $(e.target).closest('a').data('id');
+    }
+
+    localStorage.producto_id = producto_id;
     console.log({producto_id: localStorage.producto_id});
 };
 
