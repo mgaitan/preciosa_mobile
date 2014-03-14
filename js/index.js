@@ -71,34 +71,46 @@ var app = {
 
     scan: function() {
 
-                try{
+        try{
             var scanner = cordova.require("cordova/plugin/BarcodeScanner");
         } catch(err){
             // mock. se pide via prompt.
-            var scanner = false;
+            var scanner = scanner_mock;
         }
 
         var codigo = '';
-        var $search = $('input[data-type="search"]', '#sucursal');
 
-        if (scanner !== false){
-            scanner.scan(
-                function(result) {
-                    if (result.cancelled !== true) {
-                    codigo = result.text;
+        scanner.scan(function(result) {
+                        if (result.cancelled !== true) {
+                            app.buscar(result.text);
+                        }
+                    }, function (error) {
+                        console.log("Scanning failed: ", error);
                     }
-                },
-                function (error) {
-                    console.log("Scanning failed: ", error);
-                });
-        }else{
-            codigo = window.prompt("Ingresa el codigo","7794");
-        }
+        );
+    },
 
+    buscar: function(codigo){
+        var $search = $('input[data-type="search"]', '#sucursal');
          $search.val(codigo);
          $search.trigger('change');
     }
 
 };
+
+
+var scanner_mock = {
+
+    scan: function(callback_success, callback_error){
+
+        var codigo = window.prompt("Ingresa el codigo","7794");
+        if (codigo !== 'error'){
+            result = {text: codigo, cancelled: false};
+            callback_success(result);
+        } else {
+            callback_error("Error en el scanner");
+        }
+    }
+}
 
 app.initialize();
