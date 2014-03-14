@@ -27,7 +27,7 @@
     <preference name="fullscreen"       value="false" />
     <preference name="webviewbounce"    value="false" />
 
-    <icon src="images/icon.png" />
+    <icon src="icon.png" />
 
     <!-- content src="http://www.w3.org/2010/05/video/mediaevents.html" / -->
 </widget>
