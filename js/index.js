@@ -36,7 +36,6 @@ var app = {
     // function, we must explicity call `app.receivedEvent(...);`
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-        alert(1);
         navigator.geolocation.getCurrentPosition(location_success, location_error);
     },
 
@@ -71,25 +70,35 @@ var app = {
     },
 
     scan: function() {
-        console.log('scanning');
 
-        var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+                try{
+            var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+        } catch(err){
+            // mock. se pide via prompt.
+            var scanner = false;
+        }
 
-        scanner.scan(function(data) {
-            if (result.cancelled === true) {
-                return;
-            }
+        var codigo = '';
+        var $search = $('input[data-type="search"]', '#sucursal');
 
-            alert("We got a barcode\n" +
-            "Result: " + result.text + "\n" +
-            "Format: " + result.format + "\n" +
-            "Cancelled: " + result.cancelled);
+        if (scanner !== false){
+            scanner.scan(
+                function(result) {
+                    if (result.cancelled !== true) {
+                    codigo = result.text;
+                    }
+                },
+                function (error) {
+                    console.log("Scanning failed: ", error);
+                });
+        }else{
+            codigo = window.prompt("Ingresa el codigo","7794");
+        }
 
-
-        }, function (error) {
-            console.log("Scanning failed: ", error);
-        } );
-    },
-
+         $search.val(codigo);
+         $search.trigger('change');
+    }
 
 };
+
+app.initialize();

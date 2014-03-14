@@ -36,12 +36,11 @@
 
             <div role="main" class="ui-content">
                 <h2>Elija un producto</h2>
-                <h3>Por código de barras</h3>
                 <form>
-                    <input data-icon="camera" value="Escanear" type="button">
+                    <input id="scan" data-icon="camera" value="Escanear" type="button">
                 </form>
 
-                <h3>Por descripción</h3>
+                <h3>Buscador</h3>
                 <ul id="productos_listview" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Ej: marca, código, descripción..." data-filter-theme="a"></ul>
                 </ul>
             </div>
@@ -91,6 +90,5 @@
         <script type="text/javascript" src="js/requests.js"></script>
 
         <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">app.initialize();</script>
     </body>
 </html>

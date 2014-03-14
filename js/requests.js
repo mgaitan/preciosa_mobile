@@ -1,6 +1,6 @@
 /* Este es el modulo js cliente de la API rest */
 
-var BASE_URL = "http://localhost:8000/api/v1";
+// var BASE_URL = "http://localhost:8000/api/v1";
 var BASE_URL = "http://preciosdeargentina.com.ar/api/v1";
 
 var consultar_sucursales = function(callback, params) {
