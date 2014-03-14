@@ -36,7 +36,6 @@ var app = {
     // function, we must explicity call `app.receivedEvent(...);`
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-        alert(1);
         navigator.geolocation.getCurrentPosition(location_success, location_error);
     },
 
@@ -71,25 +70,50 @@ var app = {
     },
 
     scan: function() {
-        console.log('scanning');
 
-        var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+        try{
+            var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+        } catch(err){
+            // mock. se pide via prompt.
+            var scanner = scanner_mock;
+        }
 
-        scanner.scan(function(data) {
-            if (result.cancelled === true) {
-                return;
-            }
+        var codigo = '';
 
-            alert("We got a barcode\n" +
-            "Result: " + result.text + "\n" +
-            "Format: " + result.format + "\n" +
-            "Cancelled: " + result.cancelled);
-
-
-        }, function (error) {
-            console.log("Scanning failed: ", error);
-        } );
+        scanner.scan(function(result) {
+                        if (result.cancelled !== true) {
+                            app.buscar(result.text);
+                        }
+                    }, function (error) {
+                        console.log("Scanning failed: ", error);
+                    }
+        );
     },
 
+    buscar: function(codigo){
+        // como tenemos productos con y sin checksum, por las dudas
+        // se lo quitamos para la búsqueda
+        codigo = codigo.substring(0, codigo.length - 1);
+        var $search = $('input[data-type="search"]', '#sucursal');
+        $search.val(codigo);
+        $search.trigger('change');
+    }
 
 };
+
+
+var scanner_mock = {
+
+    scan: function(callback_success, callback_error){
+
+        var codigo = window.prompt("Ingresa el codigo","7794");
+        if (codigo !== 'error'){
+            result = {text: codigo, cancelled: false};
+            callback_success(result);
+        } else {
+            callback_error("Error en el scanner");
+        }
+    }
+}
+
+app.initialize();
