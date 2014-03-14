@@ -90,7 +90,7 @@ var mostrar_productos = function(status, response, selector) {
 
     if (response.count > 0){
         $.each(response.results, function (i, obj) {
-            html += '<li><a href="#producto" data-id="'+obj.id+'" class="producto">' + obj.descripcion + ' <i>[' + obj.upc + ']</i></a></li>';
+            html += '<li><a href="#producto" data-id="'+obj.id+'" class="producto"><h2>' + obj.descripcion + '</h2><p><i class="fa fa-barcode"></i> ' + obj.upc + '</p></a></li>';
         });
     }
     else {

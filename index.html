@@ -4,12 +4,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
     </head>
 
     <body>
         <!-- Página princial -->
         <div data-role="page" id="principal">
-            <div data-role="header">
+            <div data-role="header" data-position="fixed">
                 <h1>Precios de Argentina</h1>
             </div>
 
@@ -28,7 +29,7 @@
 
         <!-- Página de sucursal -->
         <div data-role="page" id="sucursal">
-            <div data-role="header">
+            <div data-role="header" data-position="fixed">
                 <a href="#" data-icon="back" data-rel="back" title="Volver">Volver</a>
                 <h1>Sucursal</h1>
             </div>
@@ -49,7 +50,7 @@
 
         <!-- Página de producto -->
         <div data-role="page" id="producto">
-            <div data-role="header">
+            <div data-role="header" data-position="fixed">
                 <a href="#" data-icon="back" data-rel="back" title="Volver">Volver</a>
                 <h1>Producto</h1>
             </div>
@@ -81,15 +82,15 @@
         <!-- Modal de "Cargando" -->
 
 
-        <!--script type="text/javascript" src="cordova.js"></script-->
-        <!--script type="text/javascript" src="barcodescanner.js"></script-->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="barcodescanner.js"></script>
 
         <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="js/loader.js"></script>
         <script type="text/javascript" src="js/jquery.mobile-1.4.2.min.js"></script>
         <script type="text/javascript" src="js/requests.js"></script>
 
-        <!--script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">app.initialize();</script-->
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">app.initialize();</script>
     </body>
 </html>
