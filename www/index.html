@@ -16,7 +16,6 @@
             </div>
 
             <div role="main" class="ui-content">
-                <h2>Seleccione una sucursal</h2>
                 <h3>Sucursales cercanas</h3>
                     <ul id="sucursales_cercanas_listview" data-role="listview" data-inset="true">
                         <li>Cargando ...</li>
@@ -36,12 +35,11 @@
             </div>
 
             <div role="main" class="ui-content">
-                <h2>Elija un producto</h2>
                 <form>
-                    <input id="scan" data-icon="camera" value="Escanear" type="button">
+                    <input data-icon="camera" value="Leer Código de barras" type="button">
                 </form>
 
-                <h3>Buscador</h3>
+                <h3>Buscar producto</h3>
                 <ul id="productos_listview" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Ej: marca, código, descripción..." data-filter-theme="a"></ul>
                 </ul>
             </div>
@@ -56,11 +54,11 @@
             </div>
 
             <div role="main" class="ui-content">
-                <h2 id="producto_nombre">Cargando ...</h2>
+                <h3 id="producto_nombre">Cargando ...</h3>
                 <p><i class="fa fa-barcode"></i> <span id="producto_upc"></span></p>
 
                 <div id="descripcion" class="ui-grid-a">
-                    <div class="ui-block-a"><img src="images/logo.png" /></div>
+                    <div class="ui-block-a"><img id="producto_foto" src="images/logo.png" /></div>
                     <div class="ui-block-b">
                         <h4>Precio en sucursal</h4>
                         <h2 id="producto_precio">Cargando ...</h2>
