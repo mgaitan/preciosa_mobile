@@ -110,6 +110,15 @@ var mostrar_productos = function(status, response, selector) {
 
 // ---
 
+$(document).ajaxStart(function () {
+    console.log('Cargando');
+    $.mobile.loading('show');
+});
+$(document).ajaxStop(function () {
+    console.log('Listo');
+    $.mobile.loading('hide');
+});
+
 $(document).on("pagecreate", "#principal", function() {
     consultar_sucursales(
         mostrar_sucursales,
@@ -167,11 +176,13 @@ $(document).on("pagecreate", "#sucursal", function() {
 });
 
 $(document).on("pagebeforeshow", "#producto", function() {
-    $('#producto_nombre').html('Cargando ...');
+    $('#producto_nombre').html('');
     $('#producto_upc').html('');
-    $('#producto_precio').html('Cargando ...');
-    $('#producto_foto').attr('src', 'images/logo.png');
+    $('#producto_precio').html('');
+    $('#producto_foto').attr('src', '');
+});
 
+$(document).on("pageshow", "#producto", function() {
     console.log(localStorage);
     $.ajax({
         url: BASE_API_URL + "/productos/",
