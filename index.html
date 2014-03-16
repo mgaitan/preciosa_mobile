@@ -68,10 +68,10 @@
                 <p><center>¿Coincide con el precio en góndola?</center></p>
                 <div id="preciovotar" class="ui-grid-a">
                     <div class="ui-block-a">
-                        <button class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-check ui-btn-inline">Sí</button>
+                        <a class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-check ui-btn-inline">Sí</a>
                     </div>
                     <div class="ui-block-b">
-                        <button class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete ui-btn-inline">No</button>
+                        <a href="#votar_precio" data-rel="popup" data-transition="pop" data-position-to="window" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete ui-btn-inline">No</a>
                     </div>
                 </div>
 
@@ -79,6 +79,18 @@
                 <ul>
                     <li>Cargando ...</li>
                 </ul>
+
+                <div data-role="popup" id="votar_precio" data-theme="a" class="ui-corner-all">
+                    <form>
+                        <div style="padding:10px 20px;">
+                            <h3>Confirme el precio</h3>
+                            <label for="precio_input" class="ui-hidden-accessible">Username:</label>
+                            <input name="precio" id="precio_input" value="" placeholder="Ej: 9,95" data-theme="a" min="0.01" step="0.01" type="number">
+                            <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Confirmar</button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
 
