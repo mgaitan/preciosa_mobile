@@ -354,7 +354,7 @@ $(document).on('pageinit', '#ubicacion', function(){
         placeMarker(latlng);
 
         // pero se actualiza donde el usuario hace click.
-        google.maps.event.addListener(map, 'dblclick', function(event) {
+        google.maps.event.addListener(map, 'click', function(event) {
           placeMarker(event.latLng);
         });
 
