@@ -6,6 +6,8 @@
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.min.css" />
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
         <link rel="stylesheet" type="text/css" href="css/custom.css" />
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+
     </head>
 
     <body>
@@ -24,6 +26,8 @@
                 <h3>Buscar sucursal</h3>
                 <ul id="sucursales_listview" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Ej: nombre, dirección..." data-filter-theme="a"></ul>
                 </ul>
+
+                <a href="#ubicacion" class="ui-btn ui-shadow ui-corner-all">Configurar ubicación</a>
             </div>
         </div>
 
@@ -44,6 +48,20 @@
                 </ul>
             </div>
         </div>
+
+
+        <!-- pagina de ubicacion -->
+        <div data-role="page" id="ubicacion">
+            <div data-role="header" data-position="fixed">
+                <a href="#" data-icon="back" data-rel="back" title="Volver">Volver</a>
+                <h1>Tu ubicación</h1>
+            </div>
+
+            <div role="main" class="ui-content" id="map-canvas">
+                <!-- map loads here... -->
+            </div>
+        </div>
+
 
 
         <!-- Página de producto -->
@@ -99,6 +117,8 @@
         <script type="text/javascript" src="barcodescanner.js"></script>
 
         <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+
+
         <script type="text/javascript" src="js/loader.js"></script>
         <script type="text/javascript" src="js/jquery.mobile-1.4.2.min.js"></script>
         <script type="text/javascript" src="js/requests.js"></script>
