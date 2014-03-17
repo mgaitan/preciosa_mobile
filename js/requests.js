@@ -340,7 +340,8 @@ $(document).on('pageinit', '#ubicacion', function(){
         var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
         // Add an overlay to the map of current lat/lng
         var marker = new google.maps.Marker({
-            map: map
+            map: map,
+            position: latlng
         });
 
         function placeMarker(location) {
@@ -349,9 +350,6 @@ $(document).on('pageinit', '#ubicacion', function(){
             localStorage.lng = location.lng();
             localStorage.lat = location.lat();
         }
-
-        // primera vez
-        placeMarker(latlng);
 
         // pero se actualiza donde el usuario hace click.
         google.maps.event.addListener(map, 'click', function(event) {
