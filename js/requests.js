@@ -152,14 +152,32 @@ var mostrar_productos = function(status, response, selector) {
     $ul.trigger('updatelayout');
 }
 
+var guardar_precio = function(precio)
+{
+    var precios_list = JSON.parse(localStorage.precios);
+
+    var data = 'precio=' + precio;
+    var fecha = new Date();
+
+    data = data + '&producto_id=' + localStorage.producto_id;
+    data = data + '&sucursal_id=' + localStorage.sucursal_id;
+    data = data + '&fecha=' + fecha.toJSON();
+
+    precios_list.push(data);
+    localStorage.precios = JSON.stringify(precios_list);
+
+    $('#votar_precio').popup('close');
+    $('#precio_preguntar').hide();
+    $('#precio_agradecer').show();
+    $('#precio_votar_form input[name=precio]').val('');
+}
+
 // ---
 
 $(document).ajaxStart(function () {
-    console.log('Cargando');
     $.mobile.loading('show');
 });
 $(document).ajaxStop(function () {
-    console.log('Listo');
     $.mobile.loading('hide');
 });
 
@@ -235,7 +253,9 @@ $(document).on("pagebeforeshow", "#producto", function() {
 });
 
 $(document).on("pageshow", "#producto", function() {
-    console.log(localStorage);
+    $('#precio_preguntar').show();
+    $('#precio_agradecer').hide();
+
     $.ajax({
         url: BASE_API_URL + "/productos/",
         dataType: "json",
@@ -273,9 +293,11 @@ $(document).on("pageshow", "#producto", function() {
         success: function(response) {
             if (response.count > 0) {
                 $('#producto_precio').html('$' + response.results[0].precio + '.-');
+                $('#votar_precio_si').data('precio', response.results[0].precio / 1);
             }
             else {
                 $('#producto_precio').html('Sin precio');
+                $('#votar_precio_si').data('precio', 0);
             }
         },
     });
@@ -319,7 +341,30 @@ $(document).on('pageinit', '#principal', function(){
 $(document).on('pageinit', '#sucursal', function(){
     $(document).on('click', 'a.producto', asignar_producto_id);
 });
+$(document).on('pageinit', '#producto', function(){
+    if (typeof(localStorage.precios) === 'undefined') {
+        localStorage.precios = JSON.stringify([]);
+    }
 
+    $('#votar_precio_si').click(function(e) {
+        var precio = $(e.target).data('precio');
+
+        if (precio > 0) {
+            guardar_precio(precio);
+        }
+        else {
+            $('#votar_precio').popup('open', {transition: "pop"});
+        }
+    });
+
+    $('#precio_votar_form').submit(function(e) {
+        e.preventDefault();
+
+        var precio = ($('#precio_votar_form input[name=precio]').val() / 1);
+        guardar_precio(precio);
+
+    });
+});
 $(document).on('pageinit', '#ubicacion', function(){
 
     //localStorage.removeItem('lat');
@@ -357,5 +402,4 @@ $(document).on('pageinit', '#ubicacion', function(){
         });
 
     }
-
 });
