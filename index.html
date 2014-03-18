@@ -65,15 +65,18 @@
                     </div>
                 </div>
 
-                <p><center>¿Coincide con el precio en góndola?</center></p>
-                <div id="preciovotar" class="ui-grid-a">
-                    <div class="ui-block-a">
-                        <a class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-check ui-btn-inline">Sí</a>
-                    </div>
-                    <div class="ui-block-b">
-                        <a href="#votar_precio" data-rel="popup" data-transition="pop" data-position-to="window" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete ui-btn-inline">No</a>
+                <div id="precio_preguntar">
+                    <p><center>¿Coincide con el precio en góndola?</center></p>
+                    <div id="preciovotar" class="ui-grid-a">
+                        <div class="ui-block-a">
+                            <a id="votar_precio_si" data-precio="" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-check ui-btn-inline">Sí</a>
+                        </div>
+                        <div class="ui-block-b">
+                            <a href="#votar_precio" data-rel="popup" data-transition="pop" data-position-to="window" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete ui-btn-inline">No</a>
+                        </div>
                     </div>
                 </div>
+                <div id="precio_agradecer"><p><center>Gracias por la información.</center></p></div>
 
                 <h4>Mejores precios</h4>
                 <ul>
@@ -85,7 +88,7 @@
                         <div style="padding:10px 20px;">
                             <h3>Confirme el precio</h3>
                             <label for="precio_input" class="ui-hidden-accessible">Username:</label>
-                            <input name="precio" id="precio_input" value="" placeholder="Ej: 9,95" data-theme="a" min="0.01" step="0.01" type="number">
+                            <input name="precio" id="precio_input" value="" placeholder="Ej: 9,95" data-theme="a" min="0.01" step="0.01" type="number" required>
                             <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Confirmar</button>
                         </div>
                     </form>
