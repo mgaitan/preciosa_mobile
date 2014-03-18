@@ -111,11 +111,9 @@ var mostrar_productos = function(status, response, selector) {
 // ---
 
 $(document).ajaxStart(function () {
-    console.log('Cargando');
     $.mobile.loading('show');
 });
 $(document).ajaxStop(function () {
-    console.log('Listo');
     $.mobile.loading('hide');
 });
 
@@ -266,4 +264,17 @@ $(document).on('pageinit', '#principal', function(){
 });
 $(document).on('pageinit', '#sucursal', function(){
     $(document).on('click', 'a.producto', asignar_producto_id);
+});
+$(document).on('pageinit', '#producto', function(){
+    $('#precio_votar_form').submit(function(e) {
+        e.preventDefault();
+
+        var data = $(this).serialize();
+        data = data + '&producto_id=' + localStorage.producto_id;
+        data = data + '&sucursal_id=' + localStorage.sucursal_id;
+
+        console.log({
+            data: data
+        });
+    });
 });
