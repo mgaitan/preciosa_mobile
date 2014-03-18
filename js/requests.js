@@ -13,6 +13,7 @@ var consultar_sucursales = function(callback, params) {
     if (typeof(params.lat) !== 'undefined' && typeof(params.lon) !== 'undefined') {
         data.lat = params.lat;
         data.lon = params.lon;
+        data.radio = 10;
     }
 
     if (typeof(params.limit) !== 'undefined') {
@@ -87,6 +88,49 @@ var mostrar_sucursales = function(status, response, selector) {
     $ul.trigger('updatelayout');
 };
 
+
+
+var get_ubicacion = function(callback){
+    // devuelve la ubicacion guardada en localStorage,
+    // o la del navigator.
+    // como fallback la del bunker de preciosa ;-)
+    // si callback es una funcion, entonces se llama con la ubicacion
+    // encontrada como parámetro.
+
+    var BUNKER = [-31.4428, -64.1797];
+    var ubicacion = BUNKER;
+
+    if (typeof(localStorage.lat) !== "undefined" && typeof(localStorage.lng) !== "undefined"){
+        ubicacion = [localStorage.lat, localStorage.lng];
+    }else{
+        console.log("navigator");
+        if ( navigator.geolocation ) {
+            function success(pos) {
+                // Location found
+                console.log("navigator success");
+                ubicacion = [pos.coords.latitude, pos.coords.longitude];
+            }
+            function fail(error) {
+                console.log("navigator fail");
+            }
+            // Find the users current position.
+            // Cache the location for 5 minutes,
+            // timeout after 6 seconds
+            navigator.geolocation.getCurrentPosition(success, fail, {maximumAge: 500000,
+                                                                     enableHighAccuracy:true,
+                                                                     timeout: 6000});
+        } else {
+            console.log("no navigator");
+        }
+    }
+    if (callback && typeof(callback) === "function") {
+        callback(ubicacion);
+    }
+    return ubicacion;
+}
+
+
+
 var mostrar_productos = function(status, response, selector) {
     var $ul = selector,
     html = '';
@@ -137,16 +181,24 @@ $(document).ajaxStop(function () {
     $.mobile.loading('hide');
 });
 
-$(document).on("pagecreate", "#principal", function() {
-    consultar_sucursales(
-        mostrar_sucursales,
-        {
-            selector: $('#sucursales_cercanas_listview'),
-            lat: -38.7316685,
-            lon: -62.251555,
-            limit: 3
-        }
-    );
+$(document).on("pageshow", "#principal", function() {
+
+    console.log("show principal")
+    get_ubicacion(function(ubicacion) {
+        console.log("ubicacion recibida" + ubicacion);
+
+        consultar_sucursales(
+            mostrar_sucursales,
+            {
+                selector: $('#sucursales_cercanas_listview'),
+                lat: ubicacion[0],
+                lon: ubicacion[1],
+                limit: 3
+            }
+        );
+
+    });
+
 
     $("#sucursales_listview").on("filterablebeforefilter", function (e, data) {
         var $ul = $( this ),
@@ -312,4 +364,42 @@ $(document).on('pageinit', '#producto', function(){
         guardar_precio(precio);
 
     });
+});
+$(document).on('pageinit', '#ubicacion', function(){
+
+    //localStorage.removeItem('lat');
+    //localStorage.removeItem('lng');
+
+    var ubicacion = get_ubicacion();
+
+    var point = new google.maps.LatLng(ubicacion[0], ubicacion[1]);
+
+    drawMap(point);
+
+    function drawMap(latlng) {
+        var myOptions = {
+            zoom: 15,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+        // Add an overlay to the map of current lat/lng
+        var marker = new google.maps.Marker({
+            map: map,
+            position: latlng
+        });
+
+        function placeMarker(location) {
+            marker.setPosition(location);
+            // actualizamos el localstorage
+            localStorage.lng = location.lng();
+            localStorage.lat = location.lat();
+        }
+
+        // pero se actualiza donde el usuario hace click.
+        google.maps.event.addListener(map, 'click', function(event) {
+          placeMarker(event.latLng);
+        });
+
+    }
 });

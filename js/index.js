@@ -20,6 +20,13 @@ var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
+
+        // clean up de la ultima sesión.
+        if (typeof(localStorage.lat) !== "undefined" && typeof(localStorage.lng) !== "undefined"){
+            localStorage.removeItem('lat');
+            localStorage.removeItem('lng');
+        }
+
     },
     // Bind Event Listeners
     //

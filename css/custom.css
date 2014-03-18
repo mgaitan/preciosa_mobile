@@ -19,3 +19,8 @@
 #preciovotar .ui-block-b {
     text-align: center;
 }
+
+
+#ubicacion, #map-canvas { width: 100%;
+                          height: 100%;
+                          padding: 0; }
