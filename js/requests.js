@@ -367,35 +367,38 @@ $(document).on('pageinit', '#producto', function(){
 });
 $(document).on('pageinit', '#ubicacion', function(){
 
-    var ubicacion = get_ubicacion();
-    console.log(ubicacion);
+    get_ubicacion(function(ubicacion) {
 
-    var point = new google.maps.LatLng(ubicacion[0], ubicacion[1]);
 
-    function drawMap(latlng) {
-        var myOptions = {
-            zoom: 15,
-            center: latlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
-        // Add an overlay to the map of current lat/lng
-        var marker = new google.maps.Marker({
-            map: map,
-            position: latlng
-        });
+        var point = new google.maps.LatLng(ubicacion[0], ubicacion[1]);
 
-        function placeMarker(location) {
-            marker.setPosition(location);
-            // actualizamos el localstorage
-            localStorage.lng = location.lng();
-            localStorage.lat = location.lat();
+        function drawMap(latlng) {
+            var myOptions = {
+                zoom: 15,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+            // Add an overlay to the map of current lat/lng
+            var marker = new google.maps.Marker({
+                map: map,
+                position: latlng
+            });
+
+            function placeMarker(location) {
+                marker.setPosition(location);
+                // actualizamos el localstorage
+                localStorage.lng = location.lng();
+                localStorage.lat = location.lat();
+            }
+
+            // pero se actualiza donde el usuario hace click.
+            google.maps.event.addListener(map, 'click', function(event) {
+              placeMarker(event.latLng);
+            });
         }
+        drawMap(point);
 
-        // pero se actualiza donde el usuario hace click.
-        google.maps.event.addListener(map, 'click', function(event) {
-          placeMarker(event.latLng);
-        });
-    }
-    drawMap(point);
+    });
+
 });
