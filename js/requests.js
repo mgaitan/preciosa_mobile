@@ -368,10 +368,9 @@ $(document).on('pageinit', '#producto', function(){
 $(document).on('pageinit', '#ubicacion', function(){
 
     var ubicacion = get_ubicacion();
+    console.log(ubicacion);
 
     var point = new google.maps.LatLng(ubicacion[0], ubicacion[1]);
-
-    drawMap(point);
 
     function drawMap(latlng) {
         var myOptions = {
@@ -397,6 +396,6 @@ $(document).on('pageinit', '#ubicacion', function(){
         google.maps.event.addListener(map, 'click', function(event) {
           placeMarker(event.latLng);
         });
-
     }
+    drawMap(point);
 });
