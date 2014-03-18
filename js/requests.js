@@ -322,9 +322,6 @@ $(document).on('pageinit', '#sucursal', function(){
 
 $(document).on('pageinit', '#ubicacion', function(){
 
-    //localStorage.removeItem('lat');
-    //localStorage.removeItem('lng');
-
     var ubicacion = get_ubicacion();
 
     var point = new google.maps.LatLng(ubicacion[0], ubicacion[1]);
