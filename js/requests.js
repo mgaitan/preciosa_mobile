@@ -401,7 +401,7 @@ $(document).on('pageinit', '#ubicacion', function(){
                 map: map,
                 position: latlng
             });
-            /*
+
             function placeMarker(location) {
                 marker.setPosition(location);
                 // actualizamos el localstorage
@@ -413,7 +413,6 @@ $(document).on('pageinit', '#ubicacion', function(){
             google.maps.event.addListener(map, 'click', function(event) {
               placeMarker(event.latLng);
             });
-            */
         }
         drawMap(point);
 
