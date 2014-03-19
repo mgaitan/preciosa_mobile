@@ -170,13 +170,14 @@ var guardar_precio = function(precio)
     }
 
     precios_queue.put(data);
-
+    setTimeout(enviar_precios, 3000);
     // - Manejo de interfaz
     $('#votar_precio').popup('close');
     $('#precio_preguntar').hide();
     $('#precio_agradecer').show();
     $('#precio_votar_form input[name=precio]').val('');
 }
+
 
 var enviar_precios = function (){
     console.log('Mandando precios');
@@ -202,7 +203,9 @@ var enviar_precios = function (){
         index--;
     }
 
-    setTimeout(enviar_precios, 5000);
+    if (precios_queue.qsize() > 0){
+        setTimeout(enviar_precios, 5000);
+    }
 }
 
 // ---
@@ -362,7 +365,6 @@ var asignar_producto_id = function(e){
 
 $(document).on('pageinit', '#principal', function(){
     $(document).on('click', 'a.sucursal', asignar_sucursal_id);
-    setTimeout(enviar_precios, 5000);
 });
 $(document).on('pageinit', '#sucursal', function(){
     $(document).on('click', 'a.producto', asignar_producto_id);
@@ -391,6 +393,7 @@ $(document).on('pageinit', '#ubicacion', function(){
 
     get_ubicacion(function(ubicacion) {
 
+        alert([localStorage.lng, localStorage.lat]);
 
         var point = new google.maps.LatLng(ubicacion[0], ubicacion[1]);
 
