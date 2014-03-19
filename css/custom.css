@@ -1,0 +1,26 @@
+#descripcion .ui-block-a {
+    width: 40% !important;
+}
+
+#descripcion .ui-block-b {
+    width: 60% !important;
+    text-align: center;
+}
+
+#descripcion img {
+    width: 95%;
+    height: auto;
+}
+
+#preciovotar .ui-block-a {
+    text-align: center;
+}
+
+#preciovotar .ui-block-b {
+    text-align: center;
+}
+
+
+#ubicacion, #map-canvas { width: 100%;
+                          height: 100%;
+                          padding: 0; }

@@ -20,6 +20,13 @@ var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
+
+        // clean up de la ultima sesión.
+        if (typeof(localStorage.lat) !== "undefined" && typeof(localStorage.lng) !== "undefined"){
+            localStorage.removeItem('lat');
+            localStorage.removeItem('lng');
+        }
+
     },
     // Bind Event Listeners
     //
@@ -36,6 +43,7 @@ var app = {
     // function, we must explicity call `app.receivedEvent(...);`
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        navigator.geolocation.getCurrentPosition(location_success, location_error);
     },
 
     // Update DOM on a Received Event
@@ -50,34 +58,69 @@ var app = {
         console.log('Received Event: ' + id);
     },
 
-    scan: function() {
-        console.log('scanning');
-
-        var scanner = cordova.require("cordova/plugin/BarcodeScanner");
-
-        scanner.scan( function (result) {
-
-            alert("We got a barcode\n" +
-            "Result: " + result.text + "\n" +
-            "Format: " + result.format + "\n" +
-            "Cancelled: " + result.cancelled);
-
-           console.log("Scanner result: \n" +
-                "text: " + result.text + "\n" +
-                "format: " + result.format + "\n" +
-                "cancelled: " + result.cancelled + "\n");
-            document.getElementById("info").innerHTML = result.text;
-            console.log(result);
-            /*
-            if (args.format == "QR_CODE") {
-                window.plugins.childBrowser.showWebPage(args.text, { showLocationBar: false });
-            }
-            */
-
-        }, function (error) {
-            console.log("Scanning failed: ", error);
-        } );
+    location_error: function(error) {
+        alert('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
     },
 
+    location_success: function(position) {
+        alert(position.coords.longitude, position.coords.latitude)
+        var element = document.getElementById('geolocation');
+        element.innerHTML = 'Latitude: '           + position.coords.latitude              + '<br />' +
+                            'Longitude: '          + position.coords.longitude             + '<br />' +
+                            'Altitude: '           + position.coords.altitude              + '<br />' +
+                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
+                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+                            'Heading: '            + position.coords.heading               + '<br />' +
+                            'Speed: '              + position.coords.speed                 + '<br />' +
+                            'Timestamp: '          + position.timestamp + '<br />';
+    },
+
+    scan: function() {
+
+        try{
+            var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+        } catch(err){
+            // mock. se pide via prompt.
+            var scanner = scanner_mock;
+        }
+
+        var codigo = '';
+
+        scanner.scan(function(result) {
+                        if (result.cancelled !== true) {
+                            app.buscar(result.text);
+                        }
+                    }, function (error) {
+                        console.log("Scanning failed: ", error);
+                    }
+        );
+    },
+
+    buscar: function(codigo){
+        // como tenemos productos con y sin checksum, por las dudas
+        // se lo quitamos para la búsqueda
+        codigo = codigo.substring(0, codigo.length - 1);
+        var $search = $('input[data-type="search"]', '#sucursal');
+        $search.val(codigo);
+        $search.trigger('change');
+    }
 
 };
+
+
+var scanner_mock = {
+
+    scan: function(callback_success, callback_error){
+
+        var codigo = window.prompt("Ingresa el codigo","7794");
+        if (codigo !== 'error'){
+            result = {text: codigo, cancelled: false};
+            callback_success(result);
+        } else {
+            callback_error("Error en el scanner");
+        }
+    }
+}
+
+app.initialize();
