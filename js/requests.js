@@ -3,6 +3,8 @@
 var BASE_API_URL = "http://preciosdeargentina.com.ar/api/v1";
 var BASE_IMG_URL = "http://preciosdeargentina.com.ar";
 
+var precios_queue = new Queue('precios');
+
 var consultar_sucursales = function(callback, params) {
     if (typeof(params) === 'undefined') params = {};
 
@@ -154,22 +156,48 @@ var mostrar_productos = function(status, response, selector) {
 
 var guardar_precio = function(precio)
 {
-    var precios_list = JSON.parse(localStorage.precios);
-
-    var data = 'precio=' + precio;
     var fecha = new Date();
+    var data = {
+        precio: precio,
+        fecha: fecha.toJSON(),
+        pid: localStorage.producto_id,
+        sid: localStorage.sucursal_id
+    }
 
-    data = data + '&producto_id=' + localStorage.producto_id;
-    data = data + '&sucursal_id=' + localStorage.sucursal_id;
-    data = data + '&fecha=' + fecha.toJSON();
+    precios_queue.put(data);
 
-    precios_list.push(data);
-    localStorage.precios = JSON.stringify(precios_list);
-
+    // - Manejo de interfaz
     $('#votar_precio').popup('close');
     $('#precio_preguntar').hide();
     $('#precio_agradecer').show();
     $('#precio_votar_form input[name=precio]').val('');
+}
+
+var enviar_precios = function (){
+    console.log('Mandando precios');
+
+    var index = precios_queue.qsize();
+
+    while(index) {
+        e = precios_queue.get();
+
+        var url = BASE_API_URL + '/sucursales/' + e.sid + '/productos/' + e.pid;
+        $.ajax({
+            async: false,
+            global: false,
+            type: 'POST',
+            dataType: 'json',
+            url: url,
+            data: {precio: e.precio, created: e.fecha},
+            error: function(response) {
+                precios_queue.put(e);
+            }
+        });
+
+        index--;
+    }
+
+    setTimeout(enviar_precios, 5000);
 }
 
 // ---
@@ -329,15 +357,12 @@ var asignar_producto_id = function(e){
 
 $(document).on('pageinit', '#principal', function(){
     $(document).on('click', 'a.sucursal', asignar_sucursal_id);
+    setTimeout(enviar_precios, 5000);
 });
 $(document).on('pageinit', '#sucursal', function(){
     $(document).on('click', 'a.producto', asignar_producto_id);
 });
 $(document).on('pageinit', '#producto', function(){
-    if (typeof(localStorage.precios) === 'undefined') {
-        localStorage.precios = JSON.stringify([]);
-    }
-
     $('#votar_precio_si').click(function(e) {
         var precio = $(e.target).data('precio');
 
@@ -376,7 +401,7 @@ $(document).on('pageinit', '#ubicacion', function(){
                 map: map,
                 position: latlng
             });
-            /*
+
             function placeMarker(location) {
                 marker.setPosition(location);
                 // actualizamos el localstorage
@@ -388,7 +413,6 @@ $(document).on('pageinit', '#ubicacion', function(){
             google.maps.event.addListener(map, 'click', function(event) {
               placeMarker(event.latLng);
             });
-            */
         }
         drawMap(point);
 
