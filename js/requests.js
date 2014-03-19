@@ -99,8 +99,8 @@ var get_ubicacion = function(callback){
     // si callback es una funcion, entonces se llama con la ubicacion
     // encontrada como parámetro.
 
-    var BUNKER = [-31.4428, -64.1797];
-    var ubicacion = BUNKER;
+    var BUNKER = [-38.925492, -68.050953];
+    var ubicacion;
 
     if (typeof(localStorage.lat) !== "undefined" && typeof(localStorage.lng) !== "undefined"){
         ubicacion = [localStorage.lat, localStorage.lng];
@@ -111,24 +111,29 @@ var get_ubicacion = function(callback){
                 // Location found
                 console.log("navigator success");
                 ubicacion = [pos.coords.latitude, pos.coords.longitude];
+                _finally();
             }
             function fail(error) {
                 console.log("navigator fail");
+                ubicacion = BUNKER;
+                _finally();
             }
-            // Find the users current position.
-            // Cache the location for 5 minutes,
-            // timeout after 6 seconds
-            navigator.geolocation.getCurrentPosition(success, fail, {maximumAge: 500000,
+
+            function _finally() {
+                if (callback && typeof(callback) === "function") {
+                    console.log(ubicacion);
+                    callback(ubicacion);
+                }
+                return ubicacion;
+            }
+
+            return navigator.geolocation.getCurrentPosition(success, fail, {maximumAge: 500000,
                                                                      enableHighAccuracy:true,
-                                                                     timeout: 6000});
+                                                                     timeout: 7000});
         } else {
             console.log("no navigator");
         }
     }
-    if (callback && typeof(callback) === "function") {
-        callback(ubicacion);
-    }
-    return ubicacion;
 }
 
 
