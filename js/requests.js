@@ -207,8 +207,8 @@ var enviar_precios = function (){
                 error: function(response) {
                     precios_queue.put(e);
                 },
-                complete: {
-                    en_verde = false;
+                complete: function(response) {
+                    en_verde = true;
                 }
             });
         }
