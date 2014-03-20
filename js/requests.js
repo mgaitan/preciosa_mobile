@@ -177,7 +177,7 @@ var guardar_precio = function(precio)
     }
 
     precios_queue.put(data);
-    setTimeout(enviar_precios, 3000);
+
     // - Manejo de interfaz
     $('#votar_precio').popup('close');
     $('#precio_preguntar').hide();
@@ -188,29 +188,31 @@ var guardar_precio = function(precio)
 
 var enviar_precios = function (){
     var index = precios_queue.qsize();
+    var en_verde = true;
 
-    while(index) {
-        e = precios_queue.get();
-
-        var url = BASE_API_URL + '/sucursales/' + e.sid + '/productos/' + e.pid;
-        $.ajax({
-            async: false,
-            global: false,
-            type: 'POST',
-            dataType: 'json',
-            url: url,
-            data: {precio: e.precio, created: e.fecha},
-            error: function(response) {
-                precios_queue.put(e);
+    for (var i=0, i<len; i++) {
+        while(true) {
+            if (en_verde) {
+                e = precios_queue.get();
+                var url = BASE_API_URL + '/sucursales/' + e.sid + '/productos/' + e.pid;
+                $.ajax({
+                    global: false,
+                    type: 'POST',
+                    dataType: 'json',
+                    url: url,
+                    data: {precio: e.precio, created: e.fecha},
+                    error: function(response) {
+                        precios_queue.put(e);
+                    },
+                    complete: {
+                        en_verde = false;
+                    }
+                });
             }
-        });
-
-        index--;
+        }
     }
 
-    if (precios_queue.qsize() > 0){
-        setTimeout(enviar_precios, 5000);
-    }
+    setTimeout(enviar_precios, 5000);
 }
 
 // ---
@@ -225,15 +227,15 @@ $(document).ajaxStop(function () {
 $(document).on("pageshow", "#principal", function() {
 
     console.log("show principal")
-    get_ubicacion(function(ubicacion) {
+    //get_ubicacion(function(ubicacion) {
         console.log("ubicacion recibida" + ubicacion);
 
         consultar_sucursales(
             mostrar_sucursales,
             {
                 selector: $('#sucursales_cercanas_listview'),
-                lat: ubicacion[0],
-                lon: ubicacion[1],
+                lat: -38.7316685,
+                lon: -62.251555,
                 limite: 3
             }
         );
@@ -370,6 +372,7 @@ var asignar_producto_id = function(e){
 
 $(document).on('pageinit', '#principal', function(){
     $(document).on('click', 'a.sucursal', asignar_sucursal_id);
+    setTimeout(enviar_precios, 5000);
 });
 $(document).on('pageinit', '#sucursal', function(){
     $(document).on('click', 'a.producto', asignar_producto_id);
@@ -394,7 +397,8 @@ $(document).on('pageinit', '#producto', function(){
 
     });
 });
-$(document).on('pageinit', '#ubicacion', function(){
+
+/*$(document).on('pageinit', '#ubicacion', function(){
 
     get_ubicacion(function(ubicacion) {
 
@@ -429,6 +433,6 @@ $(document).on('pageinit', '#ubicacion', function(){
         }
         drawMap(point);
 
-    });
+    });*/
 
 });
