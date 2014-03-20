@@ -74,10 +74,17 @@ var mostrar_sucursales = function(status, response, selector) {
     html = '';
 
     if (response.count > 0){
-        $.each(response.results, function (i, obj) {
-            html += '<li><a href="#sucursal" data-id="'+obj.id+'" class="sucursal">' +
-                    '<h2>'+ obj.nombre +'</h2>' +
-                    '<p><i class="fa fa-location-arrow"></i> '+obj.direccion+', ' +obj.ciudad+'</p>' +
+        $.each(response.results, function (i, e) {
+            html += '<li><a href="#sucursal" data-id="'+e.id+'" class="sucursal">';
+
+            if (e.cadena) {
+                html += '<h2>'+e.cadena.nombre+' ('+e.nombre+')</h2>';
+            }
+            else {
+                html += '<h2>'+e.nombre+'</h2>';
+            }
+
+            html += '<p><i class="fa fa-location-arrow"></i> '+e.direccion+', ' +e.ciudad_nombre+'</p>' +
                     '</a></li>';
         });
     }
@@ -180,8 +187,6 @@ var guardar_precio = function(precio)
 
 
 var enviar_precios = function (){
-    console.log('Mandando precios');
-
     var index = precios_queue.qsize();
 
     while(index) {
