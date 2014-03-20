@@ -74,10 +74,17 @@ var mostrar_sucursales = function(status, response, selector) {
     html = '';
 
     if (response.count > 0){
-        $.each(response.results, function (i, obj) {
-            html += '<li><a href="#sucursal" data-id="'+obj.id+'" class="sucursal">' +
-                    '<h2>'+ obj.nombre +'</h2>' +
-                    '<p><i class="fa fa-location-arrow"></i> '+obj.direccion+', ' +obj.ciudad+'</p>' +
+        $.each(response.results, function (i, e) {
+            html += '<li><a href="#sucursal" data-id="'+e.id+'" class="sucursal">';
+
+            if (e.cadena) {
+                html += '<h2>'+e.cadena.nombre+' ('+e.nombre+')</h2>';
+            }
+            else {
+                html += '<h2>'+e.nombre+'</h2>';
+            }
+
+            html += '<p><i class="fa fa-location-arrow"></i> '+e.direccion+', ' +e.ciudad_nombre+'</p>' +
                     '</a></li>';
         });
     }
@@ -170,7 +177,7 @@ var guardar_precio = function(precio)
     }
 
     precios_queue.put(data);
-    setTimeout(enviar_precios, 3000);
+
     // - Manejo de interfaz
     $('#votar_precio').popup('close');
     $('#precio_preguntar').hide();
@@ -185,32 +192,34 @@ var guardar_precio = function(precio)
 
 
 var enviar_precios = function (){
-    console.log('Mandando precios');
-
     var index = precios_queue.qsize();
+    var en_verde = true;
 
     while(index) {
-        e = precios_queue.get();
-
-        var url = BASE_API_URL + '/sucursales/' + e.sid + '/productos/' + e.pid;
-        $.ajax({
-            async: false,
-            global: false,
-            type: 'POST',
-            dataType: 'json',
-            url: url,
-            data: {precio: e.precio, created: e.fecha},
-            error: function(response) {
-                precios_queue.put(e);
-            }
-        });
-
         index--;
+        if (en_verde) {
+            en_verde = false;
+
+            e = precios_queue.get();
+            var url = BASE_API_URL + '/sucursales/' + e.sid + '/productos/' + e.pid;
+
+            $.ajax({
+                global: false,
+                type: 'POST',
+                dataType: 'json',
+                url: url,
+                data: {precio: e.precio, created: e.fecha},
+                error: function(response) {
+                    precios_queue.put(e);
+                },
+                complete: function(response) {
+                    en_verde = true;
+                }
+            });
+        }
     }
 
-    if (precios_queue.qsize() > 0){
-        setTimeout(enviar_precios, 5000);
-    }
+    setTimeout(enviar_precios, 3000);
 }
 
 // ---
@@ -232,8 +241,8 @@ $(document).on("pageshow", "#principal", function() {
             mostrar_sucursales,
             {
                 selector: $('#sucursales_cercanas_listview'),
-                lat: ubicacion[0],
-                lon: ubicacion[1],
+                lat: -38.7316685,
+                lon: -62.251555,
                 limite: 3
             }
         );
@@ -370,6 +379,7 @@ var asignar_producto_id = function(e){
 
 $(document).on('pageinit', '#principal', function(){
     $(document).on('click', 'a.sucursal', asignar_sucursal_id);
+    setTimeout(enviar_precios, 5000);
 });
 $(document).on('pageinit', '#sucursal', function(){
     $(document).on('click', 'a.producto', asignar_producto_id);
@@ -394,6 +404,7 @@ $(document).on('pageinit', '#producto', function(){
 
     });
 });
+
 $(document).on('pageinit', '#ubicacion', function(){
 
     get_ubicacion(function(ubicacion) {
