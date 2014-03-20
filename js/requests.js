@@ -190,29 +190,31 @@ var enviar_precios = function (){
     var index = precios_queue.qsize();
     var en_verde = true;
 
-    for (var i=0, i<len; i++) {
-        while(true) {
-            if (en_verde) {
-                e = precios_queue.get();
-                var url = BASE_API_URL + '/sucursales/' + e.sid + '/productos/' + e.pid;
-                $.ajax({
-                    global: false,
-                    type: 'POST',
-                    dataType: 'json',
-                    url: url,
-                    data: {precio: e.precio, created: e.fecha},
-                    error: function(response) {
-                        precios_queue.put(e);
-                    },
-                    complete: {
-                        en_verde = false;
-                    }
-                });
-            }
+    while(index) {
+        index--;
+        if (en_verde) {
+            en_verde = false;
+
+            e = precios_queue.get();
+            var url = BASE_API_URL + '/sucursales/' + e.sid + '/productos/' + e.pid;
+
+            $.ajax({
+                global: false,
+                type: 'POST',
+                dataType: 'json',
+                url: url,
+                data: {precio: e.precio, created: e.fecha},
+                error: function(response) {
+                    precios_queue.put(e);
+                },
+                complete: {
+                    en_verde = false;
+                }
+            });
         }
     }
 
-    setTimeout(enviar_precios, 5000);
+    setTimeout(enviar_precios, 3000);
 }
 
 // ---
