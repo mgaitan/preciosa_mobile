@@ -174,7 +174,12 @@ var guardar_precio = function(precio)
     // - Manejo de interfaz
     $('#votar_precio').popup('close');
     $('#precio_preguntar').hide();
-    $('#precio_agradecer').show();
+    $('#producto_precio').fadeOut('slow', function(){
+            $(this).html('$' + precio);
+            $(this).fadeIn('slow', function(){
+                $('#precio_agradecer').show().delay(5000).fadeOut();
+            });
+    });
     $('#precio_votar_form input[name=precio]').val('');
 }
 
@@ -311,7 +316,7 @@ $(document).on("pageshow", "#producto", function() {
             }
 
             if (response.mas_probables.length > 0) {
-                $('#producto_precio').html('$' + response.mas_probables[0].precio + '.-');
+                $('#producto_precio').html('$' + response.mas_probables[0].precio);
                 $('#votar_precio_si').data('precio', response.mas_probables[0].precio / 1);
             }
             else {
