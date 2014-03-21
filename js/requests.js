@@ -69,6 +69,12 @@ var consultar_productos = function(callback, params) {
     })
 };
 
+var mostrar_error = function(opciones) {
+    $elemento = opciones.selector;
+    var html = opciones.error;
+    $elemento.html(html);
+}
+
 var mostrar_sucursales = function(status, response, selector) {
     var $ul = selector,
     html = '';
@@ -99,47 +105,42 @@ var mostrar_sucursales = function(status, response, selector) {
 
 
 
-var get_ubicacion = function(callback){
-    // devuelve la ubicacion guardada en localStorage,
+var get_ubicacion = function(success_callback, error_callback) {
+    // Devuelve la ubicacion guardada en localStorage,
     // o la del navigator.
-    // como fallback la del bunker de preciosa ;-)
-    // si callback es una funcion, entonces se llama con la ubicacion
-    // encontrada como parámetro.
 
-    var BUNKER = [-38.925492, -68.050953];
-    var ubicacion;
+    // La función espera dos funciones, una para llamar cuando
+    // se obtiene correctamente una locación y otro callback
+    // para llamar en caso de error.
 
-    if (typeof(localStorage.lat) !== "undefined" && typeof(localStorage.lng) !== "undefined"){
-        ubicacion = [localStorage.lat, localStorage.lng];
-    }else{
-        console.log("navigator");
-        if ( navigator.geolocation ) {
-            function success(pos) {
-                // Location found
-                console.log("navigator success");
-                ubicacion = [pos.coords.latitude, pos.coords.longitude];
-                _finally();
-            }
-            function fail(error) {
-                console.log("navigator fail");
-                ubicacion = BUNKER;
-                _finally();
-            }
+    if (localStorage.lat !== undefined  && localStorage.lng !== undefined) {
+        console.log("Recuperando latitud y longitud desde localStorage.");
 
-            function _finally() {
-                if (callback && typeof(callback) === "function") {
-                    console.log(ubicacion);
-                    callback(ubicacion);
-                }
-                return ubicacion;
-            }
+        var ubicacion = {lat: localStorage.lat, lng: localStorage.lng};
+        success_callback(ubicacion);
 
-            return navigator.geolocation.getCurrentPosition(success, fail, {maximumAge: 500000,
-                                                                     enableHighAccuracy:true,
-                                                                     timeout: 7000});
-        } else {
-            console.log("no navigator");
+    } else {
+
+
+        if (!navigator.geolocation) {
+            error_callback({error: "El navegador no soporta geo-posicionamiento."});
+            return;
         }
+
+        function success(pos) {
+            ubicacion = [pos.coords.latitude, pos.coords.longitude];
+            var ubicacion = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+
+            success_callback(ubicacion);
+        }
+
+        function fail(error) {
+            error_callback({error: "No se pudo conseguir la ubicacion del equipo (motivo: " + error.message + ")"});
+        }
+
+        var options = {maximumAge: 500000, enableHighAccuracy:true, timeout: 10000};
+
+        navigator.geolocation.getCurrentPosition(success, fail, options);
     }
 }
 
@@ -233,21 +234,26 @@ $(document).ajaxStop(function () {
 
 $(document).on("pageshow", "#principal", function() {
 
-    console.log("show principal")
-    get_ubicacion(function(ubicacion) {
-        console.log("ubicacion recibida" + ubicacion);
+    console.log("show principal");
 
+
+    function cuando_obtiene_ubicacion(ubicacion) {
         consultar_sucursales(
             mostrar_sucursales,
             {
                 selector: $('#sucursales_cercanas_listview'),
-                lat: -38.7316685,
-                lon: -62.251555,
+                lat: ubicacion.lat,
+                lon: ubicacion.lng,
                 limite: 3
             }
         );
+    }
 
-    });
+    function cuando_falla_obtener_ubicacion(error) {
+        mostrar_error({selector: $("#sucursales_cercanas_listview"), error: error.error});
+    }
+
+    get_ubicacion(cuando_obtiene_ubicacion, cuando_falla_obtener_ubicacion);
 
 
     $("#sucursales_listview").on("filterablebeforefilter", function (e, data) {
@@ -407,11 +413,9 @@ $(document).on('pageinit', '#producto', function(){
 
 $(document).on('pageinit', '#ubicacion', function(){
 
-    get_ubicacion(function(ubicacion) {
-
-        alert([localStorage.lng, localStorage.lat]);
-
-        var point = new google.maps.LatLng(ubicacion[0], ubicacion[1]);
+    function cuando_obtiene_ubicacion(ubicacion) {
+        console.log(ubicacion);
+        var point = new google.maps.LatLng(ubicacion.lat, ubicacion.lng);
 
         function drawMap(latlng) {
             var myOptions = {
@@ -438,8 +442,14 @@ $(document).on('pageinit', '#ubicacion', function(){
               placeMarker(event.latLng);
             });
         }
-        drawMap(point);
 
-    });
+        drawMap(point);
+    }
+
+    function cuando_falla_obtener_ubicacion(error) {
+        console.log("No se pudo obtener la locación (" + error.error + ").");
+    }
+
+    get_ubicacion(cuando_obtiene_ubicacion, cuando_falla_obtener_ubicacion);
 
 });
