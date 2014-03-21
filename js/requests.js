@@ -131,6 +131,9 @@ var get_ubicacion = function(success_callback, error_callback) {
             ubicacion = [pos.coords.latitude, pos.coords.longitude];
             var ubicacion = {lat: pos.coords.latitude, lng: pos.coords.longitude};
 
+            localStorage.lat = ubicacion.lat;
+            localStorage.lng = ubicacion.lng;
+
             success_callback(ubicacion);
         }
 
