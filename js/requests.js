@@ -240,28 +240,32 @@ $(document).ajaxStop(function () {
     $.mobile.loading('hide');
 });
 
-$(document).on("click", "#tab_cercanas", function() {
-    // cuando se solicita el tab "cercanas"
-    // se consulta por geolocalizacion
-    console.log('cercanas');
-    function cuando_obtiene_ubicacion(ubicacion) {
-        consultar_sucursales(
-            mostrar_sucursales,
-            {
-                selector: $('#sucursales_cercanas_listview'),
-                lat: ubicacion.lat,
-                lon: ubicacion.lng,
-                limite: 3
-            }
-        );
-    }
 
-    function cuando_falla_obtener_ubicacion(error) {
-        mostrar_error({selector: $("#sucursales_cercanas_listview"), error: error.error});
-    }
 
-    get_ubicacion(cuando_obtiene_ubicacion, cuando_falla_obtener_ubicacion);
+$(document).on("pagecreate", "#principal", function() {
 
+    $("#tab_cercanas").on("click", function() {
+        // cuando se solicita el tab "cercanas"
+        // se consulta por geolocalizacion
+        console.log('cercanas');
+        function cuando_obtiene_ubicacion(ubicacion) {
+            consultar_sucursales(
+                mostrar_sucursales,
+                {
+                    selector: $('#sucursales_cercanas_listview'),
+                    lat: ubicacion.lat,
+                    lon: ubicacion.lng,
+                    limite: 3
+                }
+            );
+        }
+
+        function cuando_falla_obtener_ubicacion(error) {
+            mostrar_error({selector: $("#sucursales_cercanas_listview"), error: error.error});
+        }
+
+        get_ubicacion(cuando_obtiene_ubicacion, cuando_falla_obtener_ubicacion);
+    });
 
     $("#sucursales_listview").on("filterablebeforefilter", function (e, data) {
         var $ul = $( this ),
