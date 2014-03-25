@@ -232,7 +232,6 @@ var enviar_precios = function (){
     setTimeout(enviar_precios, 3000);
 }
 
-// ---
 
 $(document).ajaxStart(function () {
     $.mobile.loading('show');
@@ -241,11 +240,10 @@ $(document).ajaxStop(function () {
     $.mobile.loading('hide');
 });
 
-$(document).on("pageshow", "#principal", function() {
-
-    console.log("show principal");
-
-
+$(document).on("click", "#tab_cercanas", function() {
+    // cuando se solicita el tab "cercanas"
+    // se consulta por geolocalizacion
+    console.log('cercanas');
     function cuando_obtiene_ubicacion(ubicacion) {
         consultar_sucursales(
             mostrar_sucursales,
