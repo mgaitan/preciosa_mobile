@@ -5,6 +5,8 @@ var BASE_IMG_URL = "http://preciosdeargentina.com.ar";
 
 var precios_queue = new Queue('precios');
 
+var peticion_ajax = null;
+
 var consultar_sucursales = function(callback, params) {
     if (typeof(params) === 'undefined') params = {};
 
@@ -26,7 +28,9 @@ var consultar_sucursales = function(callback, params) {
         data.q = params.q;
     }
 
-    $.ajax({
+    if (peticion_ajax != null) { peticion_ajax.abort(); }
+
+    peticion_ajax = $.ajax({
         url: BASE_API_URL + "/sucursales/",
         dataType: "json",
         crossDomain: true,
@@ -55,7 +59,9 @@ var consultar_productos = function(callback, params) {
         data.q = params.q;
     }
 
-    $.ajax({
+    if (peticion_ajax != null) { peticion_ajax.abort(); }
+
+    peticion_ajax = $.ajax({
         url: BASE_API_URL + "/productos/",
         dataType: "json",
         crossDomain: true,
@@ -316,7 +322,9 @@ $(document).on("pageshow", "#producto", function() {
     $('#precio_preguntar').show();
     $('#precio_agradecer').hide();
 
-    $.ajax({
+    if (peticion_ajax != null) { peticion_ajax.abort(); }
+
+    peticion_ajax = $.ajax({
         url: BASE_API_URL + '/sucursales/' + localStorage.sucursal_id + '/productos/' + localStorage.producto_id,
         dataType: "json",
         crossDomain: true,
