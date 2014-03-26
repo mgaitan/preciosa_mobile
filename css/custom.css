@@ -26,5 +26,7 @@
                           padding: 0; }
 
 .ui-header {
-    background: #28a1d8;
+    background: url('../images/preciosa_header.png') no-repeat scroll 40px 10px #28a1d8 !important;
+    color: #FFFFFF !important;
+    text-shadow: 0 0px !important;
 }
