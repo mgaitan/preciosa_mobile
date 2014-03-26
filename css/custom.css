@@ -30,3 +30,12 @@
     color: #FFFFFF !important;
     text-shadow: 0 0px !important;
 }
+
+.ui-header .ui-title {
+   margin-left: 125px !important;
+   text-align: left !important;
+}
+
+.ui-header .ui-title:before {
+  content: " | ";
+}
