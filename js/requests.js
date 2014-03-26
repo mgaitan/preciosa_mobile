@@ -104,10 +104,17 @@ var mostrar_sucursales = function(status, response, selector) {
         html = '<li><a class="ui-btn ui-shadow ui-corner-all ui-icon-alert ui-btn-icon-left">No se encontraron resultados</a></li>';
     }
 
+    if ($ul.attr('id') === 'sucursales_listview'){
+        localStorage.ultima_busqueda = html;
+    }
+    actualizar_listview(html, $ul);
+};
+
+var actualizar_listview = function(html, $ul){
     $ul.html(html);
     $ul.listview('refresh');
     $ul.trigger('updatelayout');
-};
+}
 
 
 
@@ -287,6 +294,12 @@ $(document).on("pagecreate", "#principal", function() {
             );
         }
     });
+
+    // se carga la última busqueda realizada.
+    if (localStorage.ultima_busqueda !== undefined){
+        actualizar_listview(localStorage.ultima_busqueda, $('#sucursales_listview'));
+    }
+
 });
 
 $(document).on("pagecreate", "#sucursal", function() {
