@@ -516,7 +516,7 @@ $(document).on('pageinit', '#sucursal', function(){
     $(document).on('click', 'a.producto', asignar_producto_id);
 });
 $(document).on('pageinit', '#producto', function(){
-    $('#votar_precio_si').click(function(e) {
+    $('#votar_precio_si').on('click', function(e) {
         var precio = $(e.target).data('precio');
 
         if (precio > 0) {
