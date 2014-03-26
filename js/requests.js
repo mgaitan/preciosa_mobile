@@ -3,7 +3,10 @@
 var BASE_API_URL = "http://preciosdeargentina.com.ar/api/v1";
 var BASE_IMG_URL = "http://preciosdeargentina.com.ar";
 
+
+// esta cola se usa como buffer para enviar precios asincronicamente
 var precios_queue = new Queue('precios');
+
 
 var peticion_ajax = null;
 
@@ -104,11 +107,18 @@ var mostrar_sucursales = function(status, response, selector) {
         html = '<li><a class="ui-btn ui-shadow ui-corner-all ui-icon-alert ui-btn-icon-left">No se encontraron resultados</a></li>';
     }
 
+    if ($ul.attr('id') === 'sucursales_listview'){
+        // para una busqueda se cachean los resultados.
+        localStorage.ultima_busqueda = html;
+    }
+    actualizar_listview(html, $ul);
+};
+
+var actualizar_listview = function(html, $ul){
     $ul.html(html);
     $ul.listview('refresh');
     $ul.trigger('updatelayout');
-};
-
+}
 
 
 var get_ubicacion = function(success_callback, error_callback) {
@@ -232,7 +242,6 @@ var enviar_precios = function (){
     setTimeout(enviar_precios, 3000);
 }
 
-// ---
 
 $(document).ajaxStart(function () {
     $.mobile.loading('show');
@@ -241,29 +250,54 @@ $(document).ajaxStop(function () {
     $.mobile.loading('hide');
 });
 
-$(document).on("pageshow", "#principal", function() {
-
-    console.log("show principal");
 
 
-    function cuando_obtiene_ubicacion(ubicacion) {
-        consultar_sucursales(
-            mostrar_sucursales,
-            {
-                selector: $('#sucursales_cercanas_listview'),
-                lat: ubicacion.lat,
-                lon: ubicacion.lng,
-                limite: 3
+$(document).on("pagecreate", "#principal", function() {
+
+    $('#tab_recientes').on("click", function(){
+
+        console.log('recientes');
+        var html = '';
+
+        var recientes = JSON.parse(localStorage.sucursales_recientes);
+        console.log(recientes);
+        $.each(recientes, function (e) {
+            if (this.html !== undefined){
+                html += this.html;
             }
-        );
-    }
+        });
+        // si quedó vacío, ponemos cartelito.
+        if (html === ''){
+            html = '<li><a class="ui-btn ui-shadow ui-corner-all ui-icon-alert ui-btn-icon-left">No hay sucursales recientes</a></li>';
+        }
 
-    function cuando_falla_obtener_ubicacion(error) {
-        mostrar_error({selector: $("#sucursales_cercanas_listview"), error: error.error});
-    }
+        actualizar_listview(html, $('#sucursales_recientes_listview'));
+    });
 
-    get_ubicacion(cuando_obtiene_ubicacion, cuando_falla_obtener_ubicacion);
 
+
+    $("#tab_cercanas").on("click", function() {
+        // cuando se solicita el tab "cercanas"
+        // se consulta por geolocalizacion
+        console.log('cercanas');
+        function cuando_obtiene_ubicacion(ubicacion) {
+            consultar_sucursales(
+                mostrar_sucursales,
+                {
+                    selector: $('#sucursales_cercanas_listview'),
+                    lat: ubicacion.lat,
+                    lon: ubicacion.lng,
+                    limite: 3
+                }
+            );
+        }
+
+        function cuando_falla_obtener_ubicacion(error) {
+            mostrar_error({selector: $("#sucursales_cercanas_listview"), error: error.error});
+        }
+
+        get_ubicacion(cuando_obtiene_ubicacion, cuando_falla_obtener_ubicacion);
+    });
 
     $("#sucursales_listview").on("filterablebeforefilter", function (e, data) {
         var $ul = $( this ),
@@ -285,6 +319,12 @@ $(document).on("pageshow", "#principal", function() {
             );
         }
     });
+
+    // se carga la última busqueda realizada.
+    if (localStorage.ultima_busqueda !== undefined){
+        actualizar_listview(localStorage.ultima_busqueda, $('#sucursales_listview'));
+    }
+
 });
 
 $(document).on("pagecreate", "#sucursal", function() {
@@ -377,7 +417,81 @@ var asignar_sucursal_id = function(e){
 
     localStorage.sucursal_id = sucursal_id;
     console.log({sucursal_id: localStorage.sucursal_id});
+
+    actualizar_recientes(sucursal_id, $(this).parents('li'));
+
 };
+
+var actualizar_recientes = function(sucursal_id, $li){
+    // cuando se asigna una sucursal, se actualiza el contador asociado
+    // para que aparezca en "recientes"
+    // ordena de mas visitadas a menos visitadas y deja las 5 más visitadas
+
+    function compare(a,b) {
+      if (a.contador > b.contador || a == null)
+         return -1;
+      if (a.contador < b.contador || b == null)
+        return 1;
+      // a igual contador, primero el más reciente
+      if (a.ultima_vez > b.ultima_vez)
+        return -1;
+      if (a.ultima_vez < b.ultima_vez)
+        return 1;
+      return 0;
+    }
+
+
+    function unpack_objects(map){
+        var r = {}
+        $.each(map, function(i,e){
+
+            if (e !== null)
+                r[e.id] = e;
+        });
+        return r;
+    };
+
+
+    function pack_objects(hash){
+        var r = []
+        $.each(hash, function(e){
+                r.push(hash[e]);
+        });
+        return r;
+    };
+
+    console.log(localStorage.sucursales_recientes);
+
+    // [{id: XX, html: 'zzz', contador: YY}, { id: ZZ...}, null]
+    var recientes_original = JSON.parse(localStorage.sucursales_recientes);
+
+
+    // { XX: {id: XX, html: 'zzz', contador: YY}, ZZ: {id: ZZ ...}}
+    var recientes = unpack_objects(recientes_original);
+
+    // cómo se hace para obtener el html incluyendo el contenedor?
+    var html = '<li>' + $li.html() + '</li>';
+
+    if (recientes[sucursal_id] !== undefined){
+        recientes[sucursal_id].contador += 1;
+        recientes[sucursal_id].html = html;
+        recientes[sucursal_id].ultima_vez = Date.now();
+    } else {
+        recientes[sucursal_id] = {'contador': 1,
+                                  'html': html,
+                                  'id': sucursal_id,
+                                  'ultima_vez': Date.now()}
+    }
+
+    recientes_original = pack_objects(recientes);
+
+    // queda ordenada y hasta 5.
+    recientes_original.sort(compare);
+    console.log(recientes_original);
+    localStorage.sucursales_recientes = JSON.stringify(recientes_original.slice(0, 5));
+};
+
+
 var asignar_producto_id = function(e){
     var target = $(e.target);
     var producto_id = null;
