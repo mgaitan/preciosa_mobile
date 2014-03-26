@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/custom.css" />
+
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+
+    </head>
+    <body>
+
+         <!-- pagina de ubicacion -->
+        <div data-role="page" id="ubicacion">
+            <div data-role="header" data-position="fixed">
+                <a href="index.html#sucursal_cercanas" data-icon="back" data-ajax="false" data-iconpos="notext" title="Volver">Volver</a>
+                <h1>Tu ubicación</h1>
+            </div>
+
+            <div role="main" class="ui-content" id="map-canvas">
+                <!-- map loads here... -->
+            </div>
+        </div>
+
+        <!-- Modal de "Cargando" -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="barcodescanner.js"></script>
+
+        <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="js/queue.js"></script>
+        <script type="text/javascript" src="js/loader.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.4.2.min.js"></script>
+        <script type="text/javascript" src="js/requests.js"></script>
+
+
+    </body>
+</html>

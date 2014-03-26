@@ -20,14 +20,19 @@ var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
-
-
-        // clean up de la ultima sesión.
-        localStorage.removeItem('lat');
-        localStorage.removeItem('lng');
         if (localStorage.sucursales_recientes === undefined || localStorage.sucursales_recientes == ""){
            localStorage.sucursales_recientes = JSON.stringify([]);
         }
+
+          if(window.location.hash) {
+            var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+            console.debug(hash);
+            setTimeout(function(){
+                $('a[href="#' + hash + '"]').trigger('click');
+            },200);
+
+        }
+
     },
     // Bind Event Listeners
     //
@@ -44,6 +49,10 @@ var app = {
     // function, we must explicity call `app.receivedEvent(...);`
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+
+        // clean up de la ultima sesión.
+        localStorage.removeItem('lat');
+        localStorage.removeItem('lng');
     },
 
     // Update DOM on a Received Event
@@ -98,7 +107,6 @@ var app = {
     }
 
 };
-
 
 var scanner_mock = {
 

@@ -4,9 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
         <link rel="stylesheet" type="text/css" href="css/custom.css" />
-        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 
     </head>
 
@@ -41,7 +39,7 @@
                         <li>Cargando sucursales cercanas...</li>
                     </ul>
 
-                    <a href="#ubicacion" class="ui-btn ui-shadow ui-corner-all">Configurar ubicación</a>
+                    <a href="mapa.html#ubicacion" class="ui-btn ui-shadow ui-corner-all" data-icon="navigation" data-ajax="false">Configurar ubicación</a>
 
                   </div>
 
@@ -75,21 +73,6 @@
                 </div>
             </div>
         </div>
-
-
-        <!-- pagina de ubicacion -->
-        <div data-role="page" id="ubicacion">
-            <div data-role="header" data-position="fixed">
-                <a href="#" data-icon="back" data-rel="back" data-iconpos="notext" title="Volver">Volver</a>
-                <h1>Tu ubicación</h1>
-            </div>
-
-            <div role="main" class="ui-content" id="map-canvas">
-                <!-- map loads here... -->
-            </div>
-        </div>
-
-
 
         <!-- Página de producto -->
         <div data-role="page" id="producto">
