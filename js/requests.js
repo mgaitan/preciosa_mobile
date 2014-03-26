@@ -361,6 +361,8 @@ $(document).on("pagebeforeshow", "#producto", function() {
 });
 
 $(document).on("pageshow", "#producto", function() {
+
+    // reset de una vista previa
     $('#precio_preguntar').show();
     $('#precio_agradecer').hide();
 
@@ -390,6 +392,12 @@ $(document).on("pageshow", "#producto", function() {
             else {
                 $('#producto_precio').html('Sin precio');
                 $('#votar_precio_si').data('precio', 0);
+
+                // si no hay precio para la sucursal, se pide automáticamente
+                setTimeout(function(){
+                    $('#votar_precio').popup('open', {transition: "pop"});
+                }, 300);
+
             }
 
             if (response.mejores.length > 0) {
@@ -516,7 +524,11 @@ $(document).on('pageinit', '#principal', function(){
 $(document).on('pageinit', '#sucursal', function(){
     $(document).on('click', 'a.producto', asignar_producto_id);
 });
+
 $(document).on('pageinit', '#producto', function(){
+
+
+
     $('#votar_precio_si').on('click', function(e) {
         var precio = $(e.target).data('precio');
 
