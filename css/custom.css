@@ -34,6 +34,7 @@
 .ui-header .ui-title {
    margin-left: 125px !important;
    text-align: left !important;
+    width: 100% !important;
 }
 
 .ui-header .ui-title:before {
