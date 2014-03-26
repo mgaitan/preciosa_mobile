@@ -21,10 +21,13 @@ var app = {
     initialize: function() {
         this.bindEvents();
 
+
         // clean up de la ultima sesión.
         localStorage.removeItem('lat');
         localStorage.removeItem('lng');
-
+        if (localStorage.sucursales_recientes === undefined || localStorage.sucursales_recientes == ""){
+           localStorage.sucursales_recientes = JSON.stringify([]);
+        }
     },
     // Bind Event Listeners
     //
