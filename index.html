@@ -14,7 +14,7 @@
         <!-- Página princial -->
         <div data-role="page" id="principal">
             <div data-role="header" data-position="fixed">
-                <h1>Elegí tu sucursal</h1>
+                <h1>Sucursal</h1>
             </div>
 
             <div role="main" class="ui-content">
@@ -51,21 +51,28 @@
             </div>
         </div>
 
-        <!-- Página de sucursal -->
+        <!-- Página de buscador de productos. -->
         <div data-role="page" id="sucursal">
             <div data-role="header" data-position="fixed">
                 <a href="#" data-icon="back" data-rel="back" data-iconpos="notext" title="Volver">Volver</a>
-                <h1>Sucursal</h1>
+                <h1>Productos</h1>
             </div>
 
             <div role="main" class="ui-content">
-                <form>
-                    <input id="scan" data-icon="camera" value="Leer Código de barras" type="button">
-                </form>
 
-                <h3>Buscar producto</h3>
-                <ul id="productos_listview" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Ej: marca, código, descripción..." data-filter-theme="a"></ul>
-                </ul>
+
+                <div data-role="tabs" id="tabs_productos">
+                  <div data-role="navbar">
+                    <ul>
+                      <li><a id="tab_productos_buscar" href="#productos_buscar" data-icon="search"  class="ui-btn-active" data-ajax="false">Buscar</a></li>
+                      <li><a id="scan" data-icon="camera" href="#" data-ajax="false" data-iconpos="left">Leer código</a></li>
+                    </ul>
+                  </div>
+
+                  <div id="productos_buscar" class="ui-body-d ui-content">
+                    <ul id="productos_listview" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Ej: marca, código, descripción..." data-filter-theme="a"></ul>
+                  </div>
+                </div>
             </div>
         </div>
 
