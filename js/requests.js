@@ -289,7 +289,8 @@ $(document).on("pagecreate", "#principal", function() {
                     selector: $('#sucursales_cercanas_listview'),
                     lat: ubicacion.lat,
                     lon: ubicacion.lng,
-                    limite: 3
+                    radio: 15,
+                    limite: 5
                 }
             );
         }
