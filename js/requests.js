@@ -186,8 +186,7 @@ var mostrar_productos = function(status, response, selector) {
     $ul.trigger('updatelayout');
 }
 
-var guardar_precio = function(precio)
-{
+var guardar_precio = function(precio){
     var fecha = new Date();
     var data = {
         precio: precio,
@@ -208,6 +207,8 @@ var guardar_precio = function(precio)
             });
     });
     $('#precio_votar_form input[name=precio]').val('');
+
+    setTimeout(enviar_precios, 500);
 }
 
 
@@ -230,6 +231,7 @@ var enviar_precios = function (){
                 url: url,
                 data: {precio: e.precio, created: e.fecha},
                 error: function(response) {
+                    console.log("error" + response);
                     precios_queue.put(e);
                 },
                 complete: function(response) {
@@ -510,7 +512,6 @@ var asignar_producto_id = function(e){
 
 $(document).on('pageinit', '#principal', function(){
     $(document).on('click', 'a.sucursal', asignar_sucursal_id);
-    setTimeout(enviar_precios, 5000);
 });
 $(document).on('pageinit', '#sucursal', function(){
     $(document).on('click', 'a.producto', asignar_producto_id);
