@@ -276,8 +276,8 @@ $(document).on("pagecreate", "#principal", function() {
             html = '<li><a class="ui-btn ui-shadow ui-corner-all ui-icon-alert ui-btn-icon-left">No hay sucursales recientes</a></li>';
         }
 
-        // para test en el mobil
-        alert($('a:first', $('<div></div>').append(html)).attr('class'));
+        // para test en el movil
+        console.log('### CLASSES' + $('a:first', $('<div></div>').append(html)).attr('class'));
 
         actualizar_listview(html, $('#sucursales_recientes_listview'));
     });
