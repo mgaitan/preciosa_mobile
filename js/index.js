@@ -16,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+var PRECIOSA_CLIENT_VERSION = "0.1dev (Natimit)";
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -24,16 +26,66 @@ var app = {
            localStorage.sucursales_recientes = JSON.stringify([]);
         }
 
-          if(window.location.hash) {
+        if(window.location.hash) {
             var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
             console.debug(hash);
             setTimeout(function(){
                 $('a[href="#' + hash + '"]').trigger('click');
-            },200);
-
+            }, 200);
         }
 
+        try{
+            device;
+        } catch(err){
+            // mock. se pide via prompt.
+            window.device = device_mock;
+        }
+
+        $.ajaxSetup({
+              headers: {'Authorization': "Token " + app.get_token()}
+        });
+
     },
+
+
+    get_token: function(){
+
+        if (localStorage.preciosa_token !== undefined) {
+            return localStorage.preciosa_token;
+        }
+
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: API_URL + "/auth/registro",
+            async: false,
+            data: {uuid: device.uuid,
+                   nombre: device.name,
+                   plataforma: device.platform,
+                   phonegap: device.phonegap,
+                   plataforma_version: device.version,
+                   preciosa_version: PRECIOSA_CLIENT_VERSION,
+                },
+            error: function(response) {
+                console.log("error obteniendo token" + response);
+                alert('Ha ocurrido un problema iniciando Preciosa. ' +
+                      'Por favor vuelva a intentarlo en unos minutos.');
+                return false;
+            },
+            success: function(response) {
+                localStorage.preciosa_token = response.token;
+            }
+        })
+        // TO DO: esto huele a mierda bloqueante. Preguntarle a
+        // alguien que sepa cómo se hace bien.
+        while (localStorage.preciosa_token === undefined){
+            return get_token();
+        }
+        return localStorage.preciosa_token;
+    },
+
+
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
@@ -122,4 +174,14 @@ var scanner_mock = {
     }
 }
 
+
+var device_mock = {
+    uuid: "test_uuid",
+    name: "test_name",
+    platform: "test_platform",
+    phonegap: "test_phonegap",
+    version: "test_version"
+}
+
 app.initialize();
+

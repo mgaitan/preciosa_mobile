@@ -10,11 +10,12 @@ Desarrollo
 ----------
 
 Para configurar la URL de la API configura la variable javascript
-``BASE_URL`` en ``js/requests.js`` con la url (sin slash). Por ejemplo:
+``BASE_URL`` en ``js/requests.js`` con la url de preciosa
+(sin slash). Por ejemplo, para un entorno de desarrollo local:
 
 .. code-block:: javascript
 
-    var BASE_URL = "http://localhost:8000/api/v1";
+    var BASE_URL = "http://localhost:8000";
 
 
 Recursos
