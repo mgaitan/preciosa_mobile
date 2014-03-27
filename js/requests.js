@@ -277,7 +277,7 @@ $(document).on("pagecreate", "#principal", function() {
         }
 
         // para test en el movil
-        console.log('### CLASSES' + $('a:first', $('<div></div>').append(html)).attr('class'));
+        // console.log('### CLASSES' + $('a:first', $('<div></div>').append(html)).attr('class'));
 
         actualizar_listview(html, $('#sucursales_recientes_listview'));
     });
@@ -485,6 +485,12 @@ var actualizar_recientes = function(sucursal_id, $li){
 
     // { XX: {id: XX, html: 'zzz', contador: YY}, ZZ: {id: ZZ ...}}
     var recientes = unpack_objects(recientes_original);
+
+
+    // en el telefono quedan azules debido a que al hacer
+    // click se agrega la clase ui-btn-active. lo quitamos
+    // para el caché.
+    $('a', $li).removeClass("ui-btn-active");
 
     // cómo se hace para obtener el html incluyendo el contenedor?
     var html = '<li>' + $li.html() + '</li>';
