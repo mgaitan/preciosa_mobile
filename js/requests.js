@@ -1,14 +1,17 @@
 /* Este es el modulo js cliente de la API rest */
 
-var BASE_API_URL = "http://preciosdeargentina.com.ar/api/v1";
-var BASE_IMG_URL = "http://preciosdeargentina.com.ar";
+var BASE_URL = "http://localhost:8000";
+// var BASE_URL = "http://preciosdeargentina.com.ar";
+var API_URL = BASE_URL + "/api/v1";
 
 
-// esta cola se usa como buffer para enviar precios asincronicamente
+// buffer para enviar precios asincronicamente
 var precios_queue = new Queue('precios');
 
 
+// token para evitar peticiones concurrentes.
 var peticion_ajax = null;
+
 
 var consultar_sucursales = function(callback, params) {
     if (typeof(params) === 'undefined') params = {};
@@ -34,7 +37,7 @@ var consultar_sucursales = function(callback, params) {
     if (peticion_ajax != null) { peticion_ajax.abort(); }
 
     peticion_ajax = $.ajax({
-        url: BASE_API_URL + "/sucursales/",
+        url: API_URL + "/sucursales/",
         dataType: "json",
         crossDomain: true,
         data: data,
@@ -65,7 +68,7 @@ var consultar_productos = function(callback, params) {
     if (peticion_ajax != null) { peticion_ajax.abort(); }
 
     peticion_ajax = $.ajax({
-        url: BASE_API_URL + "/productos/",
+        url: API_URL + "/productos/",
         dataType: "json",
         crossDomain: true,
         data: data,
@@ -222,7 +225,7 @@ var enviar_precios = function (){
             en_verde = false;
 
             e = precios_queue.get();
-            var url = BASE_API_URL + '/sucursales/' + e.sid + '/productos/' + e.pid;
+            var url = API_URL + '/sucursales/' + e.sid + '/productos/' + e.pid;
 
             $.ajax({
                 global: false,
@@ -370,7 +373,7 @@ $(document).on("pageshow", "#producto", function() {
     if (peticion_ajax != null) { peticion_ajax.abort(); }
 
     peticion_ajax = $.ajax({
-        url: BASE_API_URL + '/sucursales/' + localStorage.sucursal_id + '/productos/' + localStorage.producto_id,
+        url: API_URL + '/sucursales/' + localStorage.sucursal_id + '/productos/' + localStorage.producto_id,
         dataType: "json",
         crossDomain: true,
         data: {
@@ -383,7 +386,7 @@ $(document).on("pageshow", "#producto", function() {
             $('#producto_nombre').html(response.producto.descripcion);
             $('#producto_upc').html(response.producto.upc);
             if (response.producto.foto !== null) {
-                $('#producto_foto').attr('src', BASE_IMG_URL + response.producto.foto);
+                $('#producto_foto').attr('src', BASE_URL + response.producto.foto);
             }
 
             if (response.mas_probables.length > 0) {
