@@ -211,7 +211,8 @@ var guardar_precio = function(precio){
             });
     });
     $('#precio_votar_form input[name=precio]').val('');
-
+    $('#no_seas_leecher').hide();
+    $('#mejores_precios').fadeIn();
     setTimeout(enviar_precios, 500);
 }
 
@@ -409,6 +410,8 @@ $(document).on("pageshow", "#producto", function() {
             }
 
             if (response.mejores.length > 0) {
+                $('#mejores_precios').hide()
+                $('#no_seas_leecher').attr('style', '').fadeIn();
                 response.mejores.forEach(function (e, index) {
                     var extra_class = '';
                     if (index===0){
