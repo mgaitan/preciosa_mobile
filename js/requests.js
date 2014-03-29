@@ -410,11 +410,25 @@ $(document).on("pageshow", "#producto", function() {
 
             if (response.mejores.length > 0) {
                 response.mejores.forEach(function (e, index) {
-                    $('#mejores_precios').append('<li>$'+e.precio+'.- en '+e.sucursal.nombre+'</li>');
+                    var extra_class = '';
+                    if (index===0){
+                        extra_class += ' ui-first-child';
+                    }
+                    if(index === response.mejores.length - 1){
+                        extra_class = ' ui-last-child';
+                    }
+
+                    var li = '<li class="ui-li-static ui-body-inherit ui-li-has-count ';
+                       li += extra_class + '"><h4>' + e.sucursal.nombre + '</h4> ';
+                       li += '<span class="ui-li-count ui-body-inherit" style="font-size:1.3em">$ ';
+                       li += e.precio + '</span> <p>' + e.sucursal.direccion + ' - ' + e.sucursal.ciudad_nombre;
+                       li += '</p></li>';
+
+                    $('#mejores_precios').append(li);
                 });
             }
             else {
-                $('#mejores_precios').html('<li>No hay precios sugeridos</li>');
+                $('#mejores_precios').html('<li class="ui-li-static ui-body-inherit ui-first-child ui-last-child">No hay precios sugeridos</li>');
             }
         },
     });

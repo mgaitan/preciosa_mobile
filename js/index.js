@@ -22,7 +22,7 @@ var init = null;
 var app = {
     // Application Constructor
     initialize: function() {
-        if (init === null) {
+        if (init !== null) {
             return;
         }
         this.bindEvents();
