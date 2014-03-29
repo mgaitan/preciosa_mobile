@@ -17,10 +17,14 @@
  * under the License.
  */
 var PRECIOSA_CLIENT_VERSION = "0.1dev (Natimit)";
+var init = null;
 
 var app = {
     // Application Constructor
     initialize: function() {
+        if (init === null) {
+            return;
+        }
         this.bindEvents();
         if (localStorage.sucursales_recientes === undefined || localStorage.sucursales_recientes == ""){
            localStorage.sucursales_recientes = JSON.stringify([]);
@@ -45,6 +49,11 @@ var app = {
               headers: {'Authorization': "Token " + app.get_token()}
         });
 
+        // clean up de la ultima sesión.
+        localStorage.removeItem('lat');
+        localStorage.removeItem('lng');
+
+        init = 'inicializado';
     },
 
 
@@ -102,9 +111,6 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
 
-        // clean up de la ultima sesión.
-        localStorage.removeItem('lat');
-        localStorage.removeItem('lng');
     },
 
     // Update DOM on a Received Event
