@@ -160,7 +160,8 @@ var get_ubicacion = function(success_callback, error_callback) {
             error_callback({error: "No se pudo conseguir la ubicacion del equipo (motivo: " + error.message + ")"});
         }
 
-        var options = {maximumAge: 500000, enableHighAccuracy:true, timeout: 10000};
+        var options = {enableHighAccuracy:true,
+                       timeout: 15000};
 
         navigator.geolocation.getCurrentPosition(success, fail, options);
     }
