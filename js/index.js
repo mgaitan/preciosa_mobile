@@ -101,7 +101,8 @@ var app = {
     // `load`, `deviceready`, `offline`, and `online`.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
-        document.getElementById('scan').addEventListener('click', this.scan, false);
+        $('#scan').on('click', this.pre_scan);
+        $('#camara_chota_ok').on('click', this.scan);
     },
 
     // deviceready Event Handler
@@ -125,7 +126,20 @@ var app = {
         console.log('Received Event: ' + id);
     },
 
+    pre_scan: function(){
+        if (localStorage.camara_chota_no_mostrar_mas !== undefined){
+            app.scan();
+        } else {
+            $('#camara_chota').popup('open');
+        }
+    },
+
     scan: function() {
+        // si viene de mensaje, se cierra y se guarda un flag.
+        $('#camara_chota').popup('close');
+        if ($('#camara_chota_check').prop('checked')){
+            localStorage.camara_chota_no_mostrar_mas = true;
+        }
 
         try{
             var scanner = cordova.require("cordova/plugin/BarcodeScanner");
@@ -133,9 +147,7 @@ var app = {
             // mock. se pide via prompt.
             var scanner = scanner_mock;
         }
-
         var codigo = '';
-
         scanner.scan(function(result) {
                         if (result.cancelled !== true) {
                             app.buscar(result.text);
