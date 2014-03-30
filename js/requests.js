@@ -451,7 +451,7 @@ $(document).on("pageshow", "#producto", function() {
                         extra_class = ' ui-last-child';
                     }
 
-                    var li = '<li><a href="#producto" data-id="'+ e.id + '" class="producto_similar ui-btn ui-btn-icon-right ui-icon-carat-r">';
+                    var li = '<li><a href="#producto" data-id="'+ e.id + '" class="producto ui-btn ui-btn-icon-right ui-icon-carat-r">';
                         li += e.descripcion + '</a></li>';
 
                     $('#similares').append(li);
@@ -562,6 +562,10 @@ var actualizar_recientes = function(sucursal_id, $li){
 
 
 var asignar_producto_id = function(e){
+        //click en productos_similares
+    e.preventDefault();
+
+
     var target = $(e.target);
     var producto_id = null;
 
@@ -574,7 +578,16 @@ var asignar_producto_id = function(e){
 
     localStorage.producto_id = producto_id;
     console.log({producto_id: localStorage.producto_id});
-};
+
+    $.mobile.changePage('#empty_page_content',
+       {allowSamePageTransition : true,
+        transition              : 'none',
+        showLoadMsg             : false,
+        reloadPage              : false});
+    });
+}
+
+
 
 
 $(document).on('pageinit', '#principal', function(){
@@ -603,17 +616,11 @@ $(document).on("pageshow", "#empty_page_content", function() {
 });
 
 
+
+
 $(document).on('pageinit', '#producto', function(){
 
-    //click en productos_similares
-    $(document).on('click', 'a.producto_similar', function(e){
-        asignar_producto_id(e);
-        $.mobile.changePage('#empty_page_content',
-           {allowSamePageTransition : true,
-            transition              : 'none',
-            showLoadMsg             : false,
-            reloadPage              : false});
-        });
+    $('a.producto').on('click', asignar_producto_id);
 
     $('#votar_precio_si').on('click', function(e) {
         var precio = $(e.target).data('precio');

@@ -170,7 +170,7 @@ var scanner_mock = {
 
     scan: function(callback_success, callback_error){
 
-        var codigo = window.prompt("Ingresa el codigo","7794");
+        var codigo = window.prompt("Ingresa el codigo","7794045");
         if (codigo !== 'error'){
             result = {text: codigo, cancelled: false};
             callback_success(result);
