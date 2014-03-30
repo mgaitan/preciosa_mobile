@@ -139,7 +139,7 @@ var app = {
 
     scan: function(e) {
 
-        console.log('camara chota ok' + e);
+        console.log('camara chota ok');
         // si viene de mensaje, se cierra y se guarda un flag.
         if ($('#camara_chota_check').prop('checked')){
             localStorage.camara_chota_no_mostrar_mas = true;
