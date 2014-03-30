@@ -53,7 +53,7 @@
         <!-- Página de buscador de productos. -->
         <div data-role="page" id="sucursal">
             <div data-role="header" data-position="fixed">
-                <a href="#" data-icon="back" data-rel="back" data-iconpos="notext" title="Volver">Volver</a>
+                <a href="#principal" data-icon="back" data-iconpos="notext" title="Volver">Volver</a>
                 <h1>Productos</h1>
             </div>
 
@@ -78,7 +78,7 @@
         <!-- Página de producto -->
         <div data-role="page" id="producto">
             <div data-role="header" data-position="fixed">
-                <a href="#" data-icon="back" data-rel="back" data-iconpos="notext" title="Volver">Volver</a>
+                <a href="#sucursal" data-icon="back" data-iconpos="notext" title="Volver">Volver</a>
                 <h1>Producto</h1>
             </div>
 
@@ -125,10 +125,16 @@
 
                 <h3>Mejores precios</h3>
 
-                <p id="no_seas_leecher" style="visibility: hidden;">Confirmá o corregí el precio en la sucursal para ver los sugeridos...</p>
 
                 <ul id="mejores_precios" class"ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
                 </ul>
+
+
+                <h3>Productos similares</h3>
+
+                <ul id="similares" class"ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
+                </ul>
+
 
                 <div data-role="popup" id="votar_precio" data-theme="c" class="ui-corner-all">
                     <form id="precio_votar_form">
@@ -143,6 +149,9 @@
 
             </div>
         </div>
+
+        <!-- una pagina vacia que se usa en la redireccion de productos similares -->
+        <div data-role="page" id="empty_page_content"></div>
 
         <!-- Modal de "Cargando" -->
         <script type="text/javascript" src="cordova.js"></script>
