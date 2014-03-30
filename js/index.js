@@ -149,12 +149,21 @@ var app = {
         }
         var codigo = '';
         scanner.scan(function(result) {
-                        if (result.cancelled !== true) {
-                            app.buscar(result.text);
-                        }
-                    }, function (error) {
-                        console.log("Scanning failed: ", error);
-                    }
+                console.log(result);
+                if (result.cancelled !== true) {
+                    app.buscar(result.text);
+                } else {
+                    console.log('cancelado');
+                    // si se cancela volvemos a la solapa de busqueda
+                    setTimeout(function(){
+                        $('a[href="#productos_buscar"]').trigger('click');
+                        $('input[data-type="search"]', '#sucursal').focus();
+                    },200);
+                }
+
+            }, function (error) {
+                console.log("Scanning failed: ", error);
+            }
         );
     },
 
@@ -182,12 +191,15 @@ var scanner_mock = {
 
     scan: function(callback_success, callback_error){
 
-        var codigo = window.prompt("Ingresa el codigo","7794");
-        if (codigo !== 'error'){
+        var codigo = window.prompt("Ingresa el codigo","779403");
+        if (codigo != '' && codigo != null) {
             result = {text: codigo, cancelled: false};
             callback_success(result);
-        } else {
+        } else if (codigo === 'error'){
             callback_error("Error en el scanner");
+        } else {
+            result = {text: '', cancelled: true};
+            callback_success(result);
         }
     }
 }
