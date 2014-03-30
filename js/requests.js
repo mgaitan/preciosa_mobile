@@ -635,7 +635,7 @@ $(document).on('pageinit', '#nueva_sucursal', function(){
         dataType: "json",
         crossDomain: true,
         error: function(xhr, text, error) {
-            return callback('error', text, params.selector);
+            console.log("error:" + text + error);
         },
         success: function(response) {
             $.each(response['results'], function(i, e){
@@ -643,4 +643,44 @@ $(document).on('pageinit', '#nueva_sucursal', function(){
             });
         },
     });
+
+    $("a.ciudad").on('click', function () {
+            // no funca. por qué ?
+            debugger;
+            $('#nueva_sucursal_ciudad').children().addClass('ui-screen-hidden');
+            var text = $(this).find('.ui-link-inherit').text();
+            $(this).closest('[data-role=listview]').prev('form').find('input').val(text);
+    });
+
+
+
+    $( "#nueva_sucursal_ciudad" ).on( "filterablebeforefilter", function ( e, data ) {
+
+
+        var $ul = $( this ),
+            $input = $( data.input ),
+            value = $input.val(),
+            html = "";
+
+        var html = "";
+
+        $ul.html( "" );
+        if ( value && value.length > 3 ) {
+            $.ajax({
+                url: API_URL + "/ciudades/",
+                dataType: "json",
+                crossDomain: true,
+                data: {
+                    q: $input.val()
+                }
+            })
+            .then( function ( response ) {
+                $.each( response['results'], function ( i, ciudad ) {
+                    html += "<li><a class='ciudad' data-id='" + ciudad.id + "'>" + ciudad.name + "</a></li>";
+                });
+                actualizar_listview(html, $ul);
+            });
+        }
+    });
+
 });
