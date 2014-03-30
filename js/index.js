@@ -129,6 +129,7 @@ var app = {
 
     pre_scan: function(){
         if (localStorage.camara_chota_no_mostrar_mas !== undefined){
+            console.log('camara chota pre_scan: localStorage' +  localStorage.camara_chota_no_mostrar_mas);
             app.scan();
         } else {
             console.log('camara levantando popup');
@@ -138,19 +139,25 @@ var app = {
 
     scan: function(e) {
 
-        console.log('camara chota ok');
+        console.log('camara chota ok' + e);
         // si viene de mensaje, se cierra y se guarda un flag.
-        $('#camara_chota').popup('close');
         if ($('#camara_chota_check').prop('checked')){
             localStorage.camara_chota_no_mostrar_mas = true;
         }
+        console.log('camara chota localStorage ' +  localStorage.camara_chota_no_mostrar_mas);
+        $('#camara_chota').popup('close');
 
         try{
             var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+            var scanner_type = 'native';
         } catch(err){
             // mock. se pide via prompt.
             var scanner = scanner_mock;
+            var scanner_type = 'mock';
         }
+
+        console.log('camara scanner' + scanner_type);
+
         var codigo = '';
         scanner.scan(function(result) {
                 console.log(result);
