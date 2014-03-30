@@ -18,8 +18,12 @@
     <feature name="http://api.phonegap.com/1.0/geolocation"/>
 
     <feature name="http://api.phonegap.com/1.0/device" />
+    <feature name="debug-server" required="true">
+       <param name="domain" value="http://debug.phonegap.com"/>
+       <param name="key" value="willoughby"/>
+    </feature>
 
-    <preference name="phonegap-version" value="3.4.0" />
+    <preference name="phonegap-version" value="3.3.0" />
     <preference name="orientation"      value="default" />
     <preference name="target-device"    value="universal" />
     <preference name="fullscreen"       value="false" />
@@ -30,6 +34,13 @@
     <icon src="res/icon/android/icon-72-hdpi.png"   gap:platform="android"    gap:density="hdpi" />
     <icon src="res/icon/android/icon-96-xhdpi.png"  gap:platform="android"    gap:density="xhdpi" />
 
+    <!--
+
+    Xlarge (xhdpi): al menos 960 × 720
+    grande (IPAP): al menos 640 × 480
+    medio (mdpi): al menos 470 × 320
+    pequeño (ldpi): por lo menos 426 × 320
+    -->
 
     <gap:splash src="res/splash/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
     <gap:splash src="res/splash/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
