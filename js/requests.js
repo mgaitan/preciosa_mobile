@@ -1,7 +1,7 @@
 /* Este es el modulo js cliente de la API rest */
 
-// var BASE_URL = "http://localhost:8000";
-var BASE_URL = "http://preciosdeargentina.com.ar";
+var BASE_URL = "http://localhost:8000";
+// var BASE_URL = "http://preciosdeargentina.com.ar";
 var API_URL = BASE_URL + "/api/v1";
 
 
@@ -621,4 +621,26 @@ $(document).on('pageinit', '#ubicacion', function(){
 
     get_ubicacion(cuando_obtiene_ubicacion, cuando_falla_obtener_ubicacion);
 
+});
+
+
+
+$(document).on('pageinit', '#nueva_sucursal', function(){
+
+    if (peticion_ajax != null) { peticion_ajax.abort(); }
+
+
+    peticion_ajax = $.ajax({
+        url: API_URL + "/cadenas/",
+        dataType: "json",
+        crossDomain: true,
+        error: function(xhr, text, error) {
+            return callback('error', text, params.selector);
+        },
+        success: function(response) {
+            $.each(response['results'], function(i, e){
+                $('#sucursal_cadena').append('<option value="' + e.id + '">' + e.nombre + '</option>');
+            });
+        },
+    });
 });
