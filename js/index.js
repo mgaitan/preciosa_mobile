@@ -103,6 +103,7 @@ var app = {
         document.addEventListener('deviceready', this.onDeviceReady, false);
         $('#scan').on('click', this.pre_scan);
         $('#camara_chota_ok').on('click', this.scan);
+        console.log('camara binded');
     },
 
     // deviceready Event Handler
@@ -130,11 +131,14 @@ var app = {
         if (localStorage.camara_chota_no_mostrar_mas !== undefined){
             app.scan();
         } else {
+            console.log('camara levantando popup');
             $('#camara_chota').popup('open');
         }
     },
 
-    scan: function() {
+    scan: function(e) {
+
+        console.log('camara chota ok');
         // si viene de mensaje, se cierra y se guarda un flag.
         $('#camara_chota').popup('close');
         if ($('#camara_chota_check').prop('checked')){
