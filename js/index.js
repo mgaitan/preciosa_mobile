@@ -101,8 +101,14 @@ var app = {
     // `load`, `deviceready`, `offline`, and `online`.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
-        $('#scan').on('click', this.pre_scan);
-        $('#camara_chota_ok').on('click', this.scan);
+
+
+        //$('#scan').on('click', this.scan_msg);
+        $('#scan').on('click', this.scan);
+        $('#camara_chota_ok').on('click', this.scan_msg_ok);
+        $('#camara_chota_check').on('click', this.scan_msg_no_mostrar_mas);
+        $('#camara_chota').on( "popupafterclose", this.scan);
+
         console.log('camara binded');
     },
 
@@ -127,33 +133,51 @@ var app = {
         console.log('Received Event: ' + id);
     },
 
-    pre_scan: function(){
+    scan_msg: function(){
+
         if (localStorage.camara_chota_no_mostrar_mas !== undefined){
+            console.log('camara chota pre_scan: localStorage' +  localStorage.camara_chota_no_mostrar_mas);
             app.scan();
         } else {
-            console.log('camara levantando popup');
+            $('#camara_chota').popup();
             $('#camara_chota').popup('open');
         }
     },
 
+    scan_msg_no_mostrar_mas: function(){
+        // seria mejor confirmar si el checkbox está tildado en
+        // scan_msg_ok, pero hay un bug con webkit.
+        // simplemente hacemos un toggle via click
+        if (localStorage.camara_chota_no_mostrar_mas === undefined){
+            localStorage.camara_chota_no_mostrar_mas = true;
+            console.log('camara msg: no mostrar mas');
+        } else {
+            localStorage.removeItem('camara_chota_no_mostrar_mas');
+            console.log('camara msg: volver a mostrar');
+        }
+    },
+
+    scan_msg_ok: function(){
+        $('#camara_chota').popup();
+        $('#camara_chota').popup('close');
+    },
+
     scan: function(e) {
 
-        console.log('camara chota ok');
-        // si viene de mensaje, se cierra y se guarda un flag.
-        $('#camara_chota').popup('close');
-        if ($('#camara_chota_check').prop('checked')){
-            localStorage.camara_chota_no_mostrar_mas = true;
-        }
-
         try{
-            var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+            var scanner = cordova.require("com.phonegap.plugins.barcodescanner.BarcodeScanner");
+            var scanner_type = 'native';
         } catch(err){
             // mock. se pide via prompt.
             var scanner = scanner_mock;
+            var scanner_type = 'mock';
         }
+
+        console.log('camara scanner' + scanner_type);
+
         var codigo = '';
         scanner.scan(function(result) {
-                console.log(result);
+                console.log('scanner scan success', result);
                 if (result.cancelled !== true) {
                     app.buscar(result.text);
                 } else {
@@ -162,7 +186,7 @@ var app = {
                     setTimeout(function(){
                         $('a[href="#productos_buscar"]').trigger('click');
                         $('input[data-type="search"]', '#sucursal').focus();
-                    },200);
+                    },500);
                 }
 
             }, function (error) {
@@ -174,6 +198,7 @@ var app = {
     buscar: function(codigo){
         // como tenemos productos con y sin checksum, por las dudas
         // se lo quitamos para la búsqueda
+        console.log('scan buscar: ' + codigo);
         codigo = codigo.substring(0, codigo.length - 1);
 
         var $search = $('input[data-type="search"]', '#sucursal');
@@ -183,10 +208,11 @@ var app = {
        // volvemos a la solapa de busqueda
         setTimeout(function(){
             $('a[href="#productos_buscar"]').trigger('click');
-        },200);
+            console.log("scan triggered");
+        },500);
 
         $search.trigger('change');
-        $search.focus();
+        //$search.focus();
     }
 
 };
