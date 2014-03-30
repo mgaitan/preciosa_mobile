@@ -1,7 +1,7 @@
 /* Este es el modulo js cliente de la API rest */
 
-// var BASE_URL = "http://localhost:8000";
-var BASE_URL = "http://preciosdeargentina.com.ar";
+var BASE_URL = "http://localhost:8000";
+// BASE_URL = "http://preciosdeargentina.com.ar";
 var API_URL = BASE_URL + "/api/v1";
 
 
@@ -205,7 +205,7 @@ var guardar_precio = function(precio){
     $('#votar_precio').popup('close');
     $('#precio_preguntar').hide();
     $('#producto_precio').fadeOut('slow', function(){
-            $(this).html('$' + precio);
+            $(this).html('$' + precio.toFixed(2));
             $(this).fadeIn('slow', function(){
                 $('#precio_agradecer').show().delay(5000).fadeOut();
             });
