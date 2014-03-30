@@ -155,6 +155,64 @@
             </div>
         </div>
 
+
+        <!--nueva sucursal -->
+        <div data-role="page" id="nueva_sucursal">
+            <div data-role="header" data-position="fixed">
+                <a href="#principal" data-icon="back" data-iconpos="notext" title="Volver">Volver</a>
+                <h1>Nueva sucursal</h1>
+            </div>
+
+            <div role="main" class="ui-content">
+
+            <form id="sucursal_form" class="ui-body ui-body-a ui-corner-all" data-ajax="false">
+                <fieldset>
+                    <div data-role="fieldcontain">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" value="" name="nombre" placeholder="Ej: Walmart Bº Jardín" />
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="cadena" class="select">Cadena:</label>
+                        <select name="cadena" id="sucursal_cadena">
+                            <option value="">Otra/Ninguna</option>
+                            <option value="2">Carrefour</option>
+                            <option value="1">Walmart</option>
+                        </select>
+                    </div>
+
+                    <div data-role="fieldcontain">
+                        <label for="ciudad" class="select">Ciudad:</label>
+                        <ul id="ciudad" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Buscar ciudad..." data-filter-theme="a"></ul>
+
+
+                    </div>
+
+                    <div data-role="fieldcontain">
+
+                        <label>
+                        <input type="checkbox" id="estoy_aca">Estoy en la sucursal ahora</label>
+                    </div>
+
+                    <div data-role="fieldcontain">
+                        <label for="direccion">Dirección:</label>
+                        <input type="text" value="" name="direccion" placeholder="Ej: Av. Rivadavia 1034" />
+
+                    </div>
+
+                <input type="button" data-theme="b" name="submit" id="submit"
+                    value="Enviar y elegir esta sucursal">
+                </fieldset>
+
+            </form>
+
+
+            </div>
+        </div>
+
+
+        <!-- una pagina vacia que se usa en la redireccion de productos similares -->
+        <div data-role="page" id="empty_page_content"></div>
+
         <!-- Modal de "Cargando" -->
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="barcodescanner.js"></script>
