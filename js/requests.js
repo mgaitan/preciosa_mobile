@@ -644,8 +644,8 @@ $(document).on('pageinit', '#nueva_sucursal', function(){
         },
     });
 
-
-
+    // parece que no funca :(
+    $('input[data-type="search"]').attr('required', 'required');
 
     $( "#nueva_sucursal_ciudad" ).on( "filterablebeforefilter", function ( e, data ) {
 
@@ -715,6 +715,29 @@ $(document).on('pageinit', '#nueva_sucursal', function(){
 
            get_ubicacion(cuando_obtiene, cuando_falla);
 
+        }
+    });
+
+    $('#sucursal_form').submit(function(e){
+        e.preventDefault();
+        $search = $('input[data-type="search"]');
+        if ($search.val() === '' || $('#ciudad_id').val() === ''){
+            $search.focus();
+        } else {
+            $.ajax({
+                url: API_URL + '/sucursales/',
+                type: 'post',
+                data: $('#sucursal_form').serialize(),
+                dataType: 'json',
+                crossDomain : true,
+                success: function(response){
+                    console.log('ok!');
+                    console.log(response);
+                },
+                error: function(){
+                    console.log('error enviando el form!');
+                }
+            });
         }
     });
 

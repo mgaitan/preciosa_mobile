@@ -169,12 +169,13 @@
                 <fieldset>
                     <div data-role="fieldcontain">
                         <label for="nombre">Nombre:</label>
-                        <input type="text" value="" name="nombre" placeholder="Ej: Walmart Bº Jardín" />
+                        <input type="text" value="" name="nombre" placeholder="Ej: Walmart Bº Jardín" required>
                     </div>
                     <div data-role="fieldcontain">
                         <label for="cadena" class="select">Cadena:</label>
-                        <select name="cadena" id="sucursal_cadena">
-                            <option value="">Otra/Ninguna</option>
+                        <select name="cadena" id="sucursal_cadena" required>
+                            <option value=""></option>
+                            <option value="otra">Otra/Ninguna</option>
                         </select>
                     </div>
 
@@ -189,17 +190,17 @@
                         <label for="nueva_sucursal_ciudad" class="select">Ciudad/Barrio:</label>
                         <ul id="nueva_sucursal_ciudad" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Buscar ciudad o barrio..." data-filter-theme="a"></ul>
 
-                         <input type="hidden" name="ciudad" id="ciudad_id">
+                        <input type="hidden" name="ciudad" id="ciudad_id" required>
                     </div>
 
 
                     <div data-role="fieldcontain">
                         <label for="direccion">Dirección:</label>
-                        <input id="direccion_id" type="text" value="" name="direccion" placeholder="Ej: Av. Rivadavia 1034" />
+                        <input id="direccion_id" type="text" value="" name="direccion" placeholder="Ej: Av. Rivadavia 1034" required>
 
                     </div>
 
-                <input type="button" data-theme="b" name="submit" id="submit"
+                <input type="submit" data-theme="b" name="submit" id="submit"
                     value="Enviar y elegir esta sucursal">
                 </fieldset>
 
