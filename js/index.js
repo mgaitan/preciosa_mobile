@@ -137,7 +137,7 @@ var app = {
             console.log('camara chota pre_scan: localStorage' +  localStorage.camara_chota_no_mostrar_mas);
             app.scan();
         } else {
-            console.log('camara levantando popup');
+            $('#camara_chota').popup();
             $('#camara_chota').popup('open');
         }
     },
@@ -148,6 +148,7 @@ var app = {
         if ($('#camara_chota_check').is(':checked')){
             localStorage.camara_chota_no_mostrar_mas = true;
         }
+        $('#camara_chota').popup();
         $('#camara_chota').popup('close');
     },
 
