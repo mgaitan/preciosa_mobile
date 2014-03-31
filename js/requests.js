@@ -1,7 +1,7 @@
 /* Este es el modulo js cliente de la API rest */
 
-// var BASE_URL = "http://localhost:8000";
-var BASE_URL = "http://preciosdeargentina.com.ar";
+var BASE_URL = "http://localhost:8000";
+// var BASE_URL = "http://preciosdeargentina.com.ar";
 var API_URL = BASE_URL + "/api/v1";
 
 
@@ -95,8 +95,8 @@ var mostrar_sucursales = function(status, response, selector) {
         $.each(response.results, function (i, e) {
             html += '<li><a href="#sucursal" data-id="'+e.id+'" class="sucursal">';
 
-            if (e.cadena) {
-                html += '<h2>'+e.cadena.nombre+' ('+e.nombre+')</h2>';
+            if (e.cadena_completa) {
+                html += '<h2>'+e.cadena_completa.nombre+' ('+e.nombre+')</h2>';
             }
             else {
                 html += '<h2>'+e.nombre+'</h2>';
