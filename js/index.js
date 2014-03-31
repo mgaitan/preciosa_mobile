@@ -101,8 +101,12 @@ var app = {
     // `load`, `deviceready`, `offline`, and `online`.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
-        $('#scan').on('click', this.pre_scan);
-        $('#camara_chota_ok').on('click', this.scan);
+        $('#scan').on('click', this.scan_msg);
+
+        $('#camara_chota_ok').on('click', this.scan_msg_ok);
+
+        $('#camara_chota').on( "popupafterclose", this.scan);
+
         console.log('camara binded');
     },
 
@@ -127,7 +131,8 @@ var app = {
         console.log('Received Event: ' + id);
     },
 
-    pre_scan: function(){
+    scan_msg: function(){
+
         if (localStorage.camara_chota_no_mostrar_mas !== undefined){
             console.log('camara chota pre_scan: localStorage' +  localStorage.camara_chota_no_mostrar_mas);
             app.scan();
@@ -137,15 +142,16 @@ var app = {
         }
     },
 
-    scan: function(e) {
+    scan_msg_ok: function(){
 
-        console.log('camara chota ok');
         // si viene de mensaje, se cierra y se guarda un flag.
-        if ($('#camara_chota_check').prop('checked')){
+        if ($('#camara_chota_check').is(':checked')){
             localStorage.camara_chota_no_mostrar_mas = true;
         }
-        console.log('camara chota localStorage ' +  localStorage.camara_chota_no_mostrar_mas);
         $('#camara_chota').popup('close');
+    },
+
+    scan: function(e) {
 
         try{
             var scanner = cordova.require("cordova/plugin/BarcodeScanner");
