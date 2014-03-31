@@ -104,7 +104,7 @@ var app = {
         $('#scan').on('click', this.scan_msg);
 
         $('#camara_chota_ok').on('click', this.scan_msg_ok);
-
+        $('#camara_chota_check').on('click', this.scan_msg_no_mostrar_mas);
         $('#camara_chota').on( "popupafterclose", this.scan);
 
         console.log('camara binded');
@@ -142,12 +142,20 @@ var app = {
         }
     },
 
-    scan_msg_ok: function(){
-
-        // si viene de mensaje, se cierra y se guarda un flag.
-        if ($('#camara_chota_check').is(':checked')){
+    scan_msg_no_mostrar_mas: function(){
+        // seria mejor confirmar si el checkbox está tildado en
+        // scan_msg_ok, pero hay un bug con webkit.
+        // simplemente hacemos un toggle via click
+        if (localStorage.camara_chota_no_mostrar_mas === undefined){
             localStorage.camara_chota_no_mostrar_mas = true;
+            console.log('camara msg: no mostrar mas');
+        } else {
+            localStorage.removeItem('camara_chota_no_mostrar_mas');
+            console.log('camara msg: volver a mostrar');
         }
+    },
+
+    scan_msg_ok: function(){
         $('#camara_chota').popup();
         $('#camara_chota').popup('close');
     },
@@ -176,7 +184,7 @@ var app = {
                     setTimeout(function(){
                         $('a[href="#productos_buscar"]').trigger('click');
                         $('input[data-type="search"]', '#sucursal').focus();
-                    },200);
+                    },500);
                 }
 
             }, function (error) {
