@@ -175,7 +175,7 @@ var app = {
 
         var codigo = '';
         scanner.scan(function(result) {
-                console.log(result);
+                console.log('scanner scan success', result);
                 if (result.cancelled !== true) {
                     app.buscar(result.text);
                 } else {
@@ -196,6 +196,7 @@ var app = {
     buscar: function(codigo){
         // como tenemos productos con y sin checksum, por las dudas
         // se lo quitamos para la búsqueda
+        console.log('scan buscar: ' + codigo);
         codigo = codigo.substring(0, codigo.length - 1);
 
         var $search = $('input[data-type="search"]', '#sucursal');
@@ -205,10 +206,11 @@ var app = {
        // volvemos a la solapa de busqueda
         setTimeout(function(){
             $('a[href="#productos_buscar"]').trigger('click');
-        },200);
+            console.log("scan triggered");
+        },500);
 
         $search.trigger('change');
-        $search.focus();
+        //$search.focus();
     }
 
 };
