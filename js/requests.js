@@ -644,17 +644,16 @@ $(document).on('pageinit', '#nueva_sucursal', function(){
         },
     });
 
-    $("a.ciudad").on('click', function () {
-            // no funca. por qué ?
-            debugger;
-            $('#nueva_sucursal_ciudad').children().addClass('ui-screen-hidden');
-            var text = $(this).find('.ui-link-inherit').text();
-            $(this).closest('[data-role=listview]').prev('form').find('input').val(text);
-    });
 
 
 
     $( "#nueva_sucursal_ciudad" ).on( "filterablebeforefilter", function ( e, data ) {
+
+        $('a.ui-input-clear').click(function() {
+            $('#ciudad_id').val('');
+            $("input[data-type='search']").val('');
+            $("input[data-type='search']").trigger('keyup');
+        });
 
 
         var $ul = $( this ),
@@ -676,9 +675,14 @@ $(document).on('pageinit', '#nueva_sucursal', function(){
             })
             .then( function ( response ) {
                 $.each( response['results'], function ( i, ciudad ) {
-                    html += "<li><a class='ciudad' data-id='" + ciudad.id + "'>" + ciudad.name + "</a></li>";
+                    html += "<li><a href='' class='ciudad' data-id='" + ciudad.id + "'>" + ciudad.name + "</a></li>";
                 });
                 actualizar_listview(html, $ul);
+                $('#nueva_sucursal_ciudad li a').on('click', function(){
+                     $('input[data-type="search"]').val($(this).text());
+                     $("ul:jqmData(role='listview')").children().addClass('ui-screen-hidden');
+                     $('#ciudad_id').val($(this).data('id'));
+                });
             });
         }
     });
