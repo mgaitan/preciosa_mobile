@@ -179,21 +179,23 @@
                     </div>
 
                     <div data-role="fieldcontain">
+                        <label>
+                        <input type="checkbox" id="estoy_aca">Estoy en esta sucursal</label>
+                         <input type="hidden" name="ubicacion" id="ubicacion_id">
+                    </div>
+
+
+                    <div data-role="fieldcontain">
                         <label for="nueva_sucursal_ciudad" class="select">Ciudad/Barrio:</label>
                         <ul id="nueva_sucursal_ciudad" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Buscar ciudad o barrio..." data-filter-theme="a"></ul>
 
                          <input type="hidden" name="ciudad" id="ciudad_id">
                     </div>
 
-                    <div data-role="fieldcontain">
-
-                        <label>
-                        <input type="checkbox" id="estoy_aca">Estoy en la sucursal ahora</label>
-                    </div>
 
                     <div data-role="fieldcontain">
                         <label for="direccion">Dirección:</label>
-                        <input type="text" value="" name="direccion" placeholder="Ej: Av. Rivadavia 1034" />
+                        <input id="direccion_id" type="text" value="" name="direccion" placeholder="Ej: Av. Rivadavia 1034" />
 
                     </div>
 

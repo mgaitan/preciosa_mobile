@@ -687,4 +687,35 @@ $(document).on('pageinit', '#nueva_sucursal', function(){
         }
     });
 
+    $('#estoy_aca').change(function(event) {
+          if ($('#estoy_aca').is(':checked')){
+
+            var cuando_obtiene = function(ubicacion){
+
+                $.ajax({
+                    url: API_URL + "/utils/donde_queda",
+                    dataType: "json",
+                    crossDomain: true,
+                    data: {
+                      lon: ubicacion.lng,
+                      lat: ubicacion.lat
+                    }
+                })
+                .then( function ( response ) {
+                   $('input[data-type="search"]').val(response.ciudad_nombre);
+                   $('#ciudad_id').val(response.ciudad);
+                   $('#direccion_id').val(response.direccion);
+                   // $('#ubicacion_id').val(ubicacion.lon + ', ' + ubicacion.lat);
+                });
+            }
+
+           var cuando_falla = function(){
+                console.log('no se pudo obtener la ubicación');
+           }
+
+           get_ubicacion(cuando_obtiene, cuando_falla);
+
+        }
+    });
+
 });
