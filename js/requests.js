@@ -645,7 +645,7 @@ $(document).on('pageinit', '#nueva_sucursal', function(){
     });
 
     // parece que no funca :(
-    $('input[data-type="search"]').attr('required', 'required');
+    $('input[data-type="search"]').attr('name', 'ciudad_nombre').attr('required', 'required');
 
     $( "#nueva_sucursal_ciudad" ).on( "filterablebeforefilter", function ( e, data ) {
 
