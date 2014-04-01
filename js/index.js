@@ -102,16 +102,14 @@ var app = {
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
 
-        $('#scan').on('click', this.scan);
+        // $('#scan').on('click', this.scan);
 
-        /*
         // ver https://github.com/mgaitan/preciosa_mobile/issues/37#issuecomment-39165164
         $('#scan').on('click', this.scan_msg);
-
         $('#camara_chota_ok').on('click', this.scan_msg_ok);
         $('#camara_chota_check').on('click', this.scan_msg_no_mostrar_mas);
         $('#camara_chota').on( "popupafterclose", this.scan);
-        */
+
         console.log('camara binded');
     },
 
