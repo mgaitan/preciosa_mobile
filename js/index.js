@@ -215,7 +215,7 @@ var app = {
         },500);
 
         $search.trigger('change');
-        //$search.focus();
+        $search.focus();
     }
 
 };
