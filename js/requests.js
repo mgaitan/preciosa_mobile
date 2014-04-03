@@ -558,7 +558,7 @@ $(document).on('pageinit', '#sucursal', function(){
 
 $(document).on('pageinit', '#producto', function(){
 
-
+    location.replace('index.html#producto');
 
     $('#votar_precio_si').on('click', function(e) {
         var precio = $(e.target).data('precio');
