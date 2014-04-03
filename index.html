@@ -64,11 +64,15 @@
                   <div data-role="navbar">
                     <ul>
                       <li><a id="tab_productos_buscar" href="#productos_buscar" data-icon="search"  class="ui-btn-active" data-ajax="false">Buscar</a></li>
-                      <li><a id="scan" data-icon="camera" href="#" data-ajax="false" data-iconpos="left">Leer código</a></li>
+                      <li><a id="scan" data-icon="camera" href="#camara_chota" data-ajax="false">Leer código</a></li>
                     </ul>
                   </div>
 
-                  <div id="camara_chota" data-role="popup" class="ui-content" data-dismissible="false">La lectura de códigos de barra depende de la calidad de tu cámara y las condiciones de luz. En caso de que no te funcione, podés ingresar el código manualmente en el buscador.
+                  <div id="productos_buscar">
+                    <ul id="productos_listview" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Ej: marca, código, descripción..." data-filter-theme="a"></ul>
+                  </div>
+
+                <div id="camara_chota"><p>La lectura de códigos de barra depende de la calidad de tu cámara y las condiciones de luz. En caso de que no te funcione, podés ingresar el código manualmente en el buscador.</p>
 
                     <div data-role="fieldcontain">
                         <label>
@@ -79,9 +83,6 @@
 
                 </div>
 
-                  <div id="productos_buscar" class="ui-body-d ui-content">
-                    <ul id="productos_listview" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Ej: marca, código, descripción..." data-filter-theme="a"></ul>
-                  </div>
                 </div>
             </div>
         </div>
