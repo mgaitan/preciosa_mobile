@@ -106,12 +106,9 @@ var app = {
 
         // ver https://github.com/mgaitan/preciosa_mobile/issues/37#issuecomment-39165164
 
-        //$('#scan').on('click', this.scan_msg);
-
+        $('#scan').on('click', this.scan_msg);
         $('#camara_chota_ok').on('click', this.scan);
-
-        //$('#camara_chota_check').on('click', this.scan_msg_no_mostrar_mas);
-        //$('#camara_chota').on( "popupafterclose", this.scan);
+        $('#camara_chota_check').on('click', this.scan_msg_no_mostrar_mas);
 
         console.log('camara binded');
     },
@@ -137,14 +134,9 @@ var app = {
         console.log('Received Event: ' + id);
     },
 
-    scan_msg: function(){
-
+    scan_msg: function(e){
         if (localStorage.camara_chota_no_mostrar_mas !== undefined){
-            console.log('camara chota pre_scan: localStorage' +  localStorage.camara_chota_no_mostrar_mas);
-            app.scan();
-        } else {
-            $('#camara_chota').popup();
-            $('#camara_chota').popup('open');
+            $('#camara_chota_ok').click();
         }
     },
 
