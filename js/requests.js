@@ -175,7 +175,7 @@ var mostrar_productos = function(status, response, selector) {
 
     if (response.count > 0){
         $.each(response.results, function (i, obj) {
-            html += '<li><a href="#producto" data-id="'+obj.id+'" class="producto">' +
+            html += '<li><a href="producto.html#producto" data-ajax="false" data-id="'+obj.id+'" class="producto">' +
                     '<h2>' + obj.descripcion + '</h2>' +
                     '<p><i class="fa fa-barcode"></i> ' + obj.upc + '</p>' +
                     '</a></li>';
@@ -556,9 +556,8 @@ $(document).on('pageinit', '#sucursal', function(){
     $(document).on('click', 'a.producto', asignar_producto_id);
 });
 
-$(document).on('pageinit', '#producto', function(){
 
-    location.replace('index.html#producto');
+$(document).on('pageinit', '#producto', function(){
 
     $('#votar_precio_si').on('click', function(e) {
         var precio = $(e.target).data('precio');
