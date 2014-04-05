@@ -38,16 +38,16 @@ var app = {
             }, 200);
         }
 
-        try{
-            device;
-        } catch(err){
-            // mock. se pide via prompt.
+
+
+        if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+            document.addEventListener("deviceready", onDeviceReady, false);
+        } else {
             window.device = device_mock;
+            app.setup_ajax();
         }
 
-        $.ajaxSetup({
-              headers: {'Authorization': "Token " + app.get_token()}
-        });
+
 
         // clean up de la ultima sesión.
         localStorage.removeItem('lat');
@@ -56,6 +56,11 @@ var app = {
         init = 'inicializado';
     },
 
+    setup_ajax: function(){
+        $.ajaxSetup({
+              headers: {'Authorization': "Token " + app.get_token()}
+        });
+    },
 
     get_token: function(){
 
@@ -119,7 +124,7 @@ var app = {
     // function, we must explicity call `app.receivedEvent(...);`
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-
+        app.setup_ajax();
     },
 
     // Update DOM on a Received Event
