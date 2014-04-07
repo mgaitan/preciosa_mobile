@@ -13,13 +13,12 @@
         Martin Gaitan
     </author>
 
-    <gap:plugin name="com.phonegap.plugins.barcodescanner"/>
-    <gap:plugin name="org.apache.cordova.geolocation" />
-    <gap:plugin name="org.apache.cordova.device" />
+    <gap:plugin name="com.phonegap.plugins.barcodescanner" version="1.1.0" />
+    <gap:plugin name="org.apache.cordova.geolocation" version="0.3.6" />
+    <gap:plugin name="org.apache.cordova.device" version="0.2.8" />
 
     <feature name="http://api.phonegap.com/1.0/geolocation"/>
 
-    <feature name="http://api.phonegap.com/1.0/device" />
 
     <preference name="phonegap-version" value="3.3.0" />
     <preference name="orientation"      value="default" />

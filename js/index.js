@@ -48,14 +48,6 @@ var app = {
         }
 
 
-        if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
-            console.log('Preciosa: binding deviceready');
-            document.addEventListener("deviceready", onDeviceReady, false);
-        } else {
-            window.device = device_mock;
-            app.setup_ajax();
-        }
-
         // clean up de la ultima sesión.
         localStorage.removeItem('lat');
         localStorage.removeItem('lng');
@@ -119,7 +111,15 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // `load`, `deviceready`, `offline`, and `online`.
     bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
+
+        if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+            console.log('Preciosa: binding deviceready');
+            document.addEventListener("deviceready", onDeviceReady, false);
+        } else {
+            window.device = device_mock;
+            app.setup_ajax();
+        }
+
 
         // $('#scan').on('click', this.scan);
 
@@ -137,6 +137,7 @@ var app = {
     // The scope of `this` is the event. In order to call the `receivedEvent`
     // function, we must explicity call `app.receivedEvent(...);`
     onDeviceReady: function() {
+        console.log('Preciosa: device is ready');
         app.receivedEvent('deviceready');
         app.setup_ajax();
     },
