@@ -39,15 +39,12 @@ var app = {
         }
 
 
-
         if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
             document.addEventListener("deviceready", onDeviceReady, false);
         } else {
             window.device = device_mock;
             app.setup_ajax();
         }
-
-
 
         // clean up de la ultima sesión.
         localStorage.removeItem('lat');
@@ -64,23 +61,27 @@ var app = {
 
     get_token: function(){
 
+
+        var data = {uuid: device.uuid,
+                   nombre: device.name,
+                   plataforma: device.platform,
+                   phonegap: device.phonegap,
+                   plataforma_version: device.version,
+                   preciosa_version: PRECIOSA_CLIENT_VERSION,
+                   }
+        console.log(data);
+
         if (localStorage.preciosa_token !== undefined) {
             return localStorage.preciosa_token;
         }
-
 
         $.ajax({
             type: 'POST',
             dataType: 'json',
             url: API_URL + "/auth/registro",
             async: false,
-            data: {uuid: device.uuid,
-                   nombre: device.name,
-                   plataforma: device.platform,
-                   phonegap: device.phonegap,
-                   plataforma_version: device.version,
-                   preciosa_version: PRECIOSA_CLIENT_VERSION,
-                },
+            data: data,
+
             error: function(response) {
                 console.log("error obteniendo token" + response);
                 alert('Ha ocurrido un problema iniciando Preciosa. ' +
@@ -94,7 +95,7 @@ var app = {
         // TO DO: esto huele a mierda bloqueante. Preguntarle a
         // alguien que sepa cómo se hace bien.
         while (localStorage.preciosa_token === undefined){
-            return get_token();
+            return app.get_token();
         }
         return localStorage.preciosa_token;
     },
