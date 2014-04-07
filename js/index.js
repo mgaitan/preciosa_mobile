@@ -33,6 +33,7 @@ var app = {
 
         // clean up en una reinstalacion
         if (localStorage.getItem('current_version') !== PRECIOSA_CLIENT_VERSION){
+            console.log('preciosa: clean localStorage');
             localStorage.clear();
         }
 
@@ -61,6 +62,7 @@ var app = {
     },
 
     setup_ajax: function(){
+        console.log('preciosa: setup ajax token + ' app.get_token());
         $.ajaxSetup({
               headers: {'Authorization': "Token " + app.get_token()}
         });
@@ -78,7 +80,8 @@ var app = {
                    }
         console.log(data);
 
-        if (localStorage.preciosa_token !== undefined) {
+        if (localStorage.getItem('preciosa_token') !== null) {
+            console.log('preciosa: token ' + localStorage.preciosa_token);
             return localStorage.preciosa_token;
         }
 
