@@ -32,10 +32,9 @@ var app = {
         }
 
         // clean up en una reinstalacion
-        if (localStorage.getItem('current_version') === null){
+        if (localStorage.getItem('current_version') !== PRECIOSA_CLIENT_VERSION){
             localStorage.clear();
         }
-
 
         if(window.location.hash) {
             var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
