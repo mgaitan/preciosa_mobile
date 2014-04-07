@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var PRECIOSA_CLIENT_VERSION = "0.1dev (Natimit)";
+var PRECIOSA_CLIENT_VERSION = "0.1.1dev (Natimit)";
 var init = null;
 
 var app = {
@@ -25,10 +25,17 @@ var app = {
         if (init !== null) {
             return;
         }
+
         this.bindEvents();
         if (localStorage.sucursales_recientes === undefined || localStorage.sucursales_recientes == ""){
            localStorage.sucursales_recientes = JSON.stringify([]);
         }
+
+        // clean up en una reinstalacion
+        if (localStorage.getItem('current_version') === null){
+            localStorage.clear();
+        }
+
 
         if(window.location.hash) {
             var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
@@ -49,6 +56,7 @@ var app = {
         // clean up de la ultima sesión.
         localStorage.removeItem('lat');
         localStorage.removeItem('lng');
+        localStorage.current_version = PRECIOSA_CLIENT_VERSION;
 
         init = 'inicializado';
     },
