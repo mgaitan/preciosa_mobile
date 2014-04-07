@@ -22,7 +22,8 @@ var init = null;
 var app = {
     // Application Constructor
     initialize: function() {
-        console.log('Preciosa: initialize');
+        localStorage.clear();
+        console.debug('Preciosa: initialize');
         if (init !== null) {
             return;
         }
@@ -34,8 +35,8 @@ var app = {
 
         // clean up en una reinstalacion
         if (localStorage.getItem('current_version') !== PRECIOSA_CLIENT_VERSION){
-            console.log('Preciosa: clean localStorage');
-            localStorage.clear();
+            console.debug('Preciosa: clean localStorage');
+
         }
 
         if(window.location.hash) {
@@ -48,7 +49,7 @@ var app = {
 
 
         if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
-            console.log('Preciosa: binding deviceready');
+            console.debug('Preciosa: binding deviceready');
             document.addEventListener("deviceready", onDeviceReady, false);
         } else {
             window.device = device_mock;
@@ -64,7 +65,7 @@ var app = {
     },
 
     setup_ajax: function(){
-        console.log('Preciosa: setup ajax token + ' app.get_token());
+        console.debug('Preciosa: setup ajax token + ' app.get_token());
         $.ajaxSetup({
               headers: {'Authorization': "Token " + app.get_token()}
         });
@@ -80,10 +81,10 @@ var app = {
                    plataforma_version: device.version,
                    preciosa_version: PRECIOSA_CLIENT_VERSION,
                    }
-        console.log(data);
+        console.debug(data);
 
         if (localStorage.getItem('preciosa_token') !== null) {
-            console.log('Preciosa: token ' + localStorage.preciosa_token);
+            console.debug('Preciosa: token ' + localStorage.preciosa_token);
             return localStorage.preciosa_token;
         }
 
@@ -95,7 +96,7 @@ var app = {
             data: data,
 
             error: function(response) {
-                console.log("error obteniendo token" + response);
+                console.debug("error obteniendo token" + response);
                 alert('Ha ocurrido un problema iniciando Preciosa. ' +
                       'Por favor vuelva a intentarlo en unos minutos.');
                 return false;
@@ -128,7 +129,7 @@ var app = {
         $('#camara_chota_ok').on('click', this.scan);
         $('#camara_chota_check').on('click', this.scan_msg_no_mostrar_mas);
 
-        console.log('camara binded');
+        console.debug('camara binded');
     },
 
     // deviceready Event Handler
@@ -149,7 +150,7 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 
-        console.log('Received Event: ' + id);
+        console.debug('Received Event: ' + id);
     },
 
     scan_msg: function(e){
@@ -164,10 +165,10 @@ var app = {
         // simplemente hacemos un toggle via click
         if (localStorage.camara_chota_no_mostrar_mas === undefined){
             localStorage.camara_chota_no_mostrar_mas = true;
-            console.log('camara msg: no mostrar mas');
+            console.debug('camara msg: no mostrar mas');
         } else {
             localStorage.removeItem('camara_chota_no_mostrar_mas');
-            console.log('camara msg: volver a mostrar');
+            console.debug('camara msg: volver a mostrar');
         }
     },
 
@@ -187,15 +188,15 @@ var app = {
             var scanner_type = 'mock';
         }
 
-        console.log('camara scanner' + scanner_type);
+        console.debug('camara scanner' + scanner_type);
 
         var codigo = '';
         scanner.scan(function(result) {
-                console.log('scanner scan success', result);
+                console.debug('scanner scan success', result);
                 if (result.cancelled !== true) {
                     app.buscar(result.text);
                 } else {
-                    console.log('cancelado');
+                    console.debug('cancelado');
                     // si se cancela volvemos a la solapa de busqueda
                     setTimeout(function(){
                         $('a[href="#productos_buscar"]').trigger('click');
@@ -204,7 +205,7 @@ var app = {
                 }
 
             }, function (error) {
-                console.log("Scanning failed: ", error);
+                console.debug("Scanning failed: ", error);
             }
         );
     },
@@ -212,7 +213,7 @@ var app = {
     buscar: function(codigo){
         // como tenemos productos con y sin checksum, por las dudas
         // se lo quitamos para la búsqueda
-        console.log('scan buscar: ' + codigo);
+        console.debug('scan buscar: ' + codigo);
         codigo = codigo.substring(0, codigo.length - 1);
 
         var $search = $('input[data-type="search"]', '#sucursal');
@@ -222,7 +223,7 @@ var app = {
        // volvemos a la solapa de busqueda
         setTimeout(function(){
             $('a[href="#productos_buscar"]').trigger('click');
-            console.log("scan triggered");
+            console.debug("scan triggered");
         },500);
 
         $search.trigger('change');
