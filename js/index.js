@@ -114,12 +114,22 @@ var app = {
 
         if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
             console.log('Preciosa: binding deviceready');
-            document.addEventListener("deviceready", onDeviceReady, false);
+
+            function esperar_device() {
+                if(!window.device) {//we want it to match
+                    console.log('Preciosa: esperando device')
+                    //wait 50 millisecnds then recheck
+                    setTimeout(esperar_device, 50);
+                return;
+                }
+            }
+            esperar_device();
+
         } else {
             window.device = device_mock;
-            app.setup_ajax();
         }
 
+        app.setup_ajax();
 
         // $('#scan').on('click', this.scan);
 
@@ -130,28 +140,6 @@ var app = {
         $('#camara_chota_check').on('click', this.scan_msg_no_mostrar_mas);
 
         console.log('camara binded');
-    },
-
-    // deviceready Event Handler
-    //
-    // The scope of `this` is the event. In order to call the `receivedEvent`
-    // function, we must explicity call `app.receivedEvent(...);`
-    onDeviceReady: function() {
-        console.log('Preciosa: device is ready');
-        app.receivedEvent('deviceready');
-        app.setup_ajax();
-    },
-
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
     },
 
     scan_msg: function(e){
