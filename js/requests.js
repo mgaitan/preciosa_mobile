@@ -133,7 +133,7 @@ var get_ubicacion = function(success_callback, error_callback) {
     // para llamar en caso de error.
 
     if (localStorage.lat !== undefined  && localStorage.lng !== undefined) {
-        console.log("Recuperando latitud y longitud desde localStorage.");
+        console.log("Preciosa: Recuperando latitud y longitud desde localStorage.");
 
         var ubicacion = {lat: localStorage.lat, lng: localStorage.lng};
         success_callback(ubicacion);
@@ -236,7 +236,7 @@ var enviar_precios = function (){
                 url: url,
                 data: {precio: e.precio, created: e.fecha},
                 error: function(response) {
-                    console.log("error" + response);
+                    console.log("Preciosa: error" + response);
                     precios_queue.put(e);
                 },
                 complete: function(response) {
@@ -263,7 +263,7 @@ $(document).on("pagecreate", "#principal", function() {
 
     $('#tab_recientes').on("click", function(){
 
-        console.log('recientes');
+        console.log('Preciosa: recientes');
         var html = '';
 
         var recientes = JSON.parse(localStorage.sucursales_recientes);
@@ -615,7 +615,7 @@ $(document).on('pageinit', '#ubicacion', function(){
     }
 
     function cuando_falla_obtener_ubicacion(error) {
-        console.log("No se pudo obtener la locación (" + error.error + ").");
+        console.log("Preciosa: No se pudo obtener la locación (" + error.error + ").");
     }
 
     get_ubicacion(cuando_obtiene_ubicacion, cuando_falla_obtener_ubicacion);
