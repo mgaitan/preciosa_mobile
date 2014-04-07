@@ -65,7 +65,7 @@ var app = {
     },
 
     setup_ajax: function(){
-        console.log('Preciosa: setup ajax token + ' app.get_token());
+        console.log('Preciosa: setup ajax token ' + app.get_token());
         $.ajaxSetup({
               headers: {'Authorization': "Token " + app.get_token()}
         });
