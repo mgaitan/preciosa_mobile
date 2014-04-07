@@ -22,6 +22,7 @@ var init = null;
 var app = {
     // Application Constructor
     initialize: function() {
+        console.log('Preciosa: initialize');
         if (init !== null) {
             return;
         }
@@ -33,7 +34,7 @@ var app = {
 
         // clean up en una reinstalacion
         if (localStorage.getItem('current_version') !== PRECIOSA_CLIENT_VERSION){
-            console.log('preciosa: clean localStorage');
+            console.log('Preciosa: clean localStorage');
             localStorage.clear();
         }
 
@@ -47,6 +48,7 @@ var app = {
 
 
         if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+            console.log('Preciosa: binding deviceready');
             document.addEventListener("deviceready", onDeviceReady, false);
         } else {
             window.device = device_mock;
@@ -62,7 +64,7 @@ var app = {
     },
 
     setup_ajax: function(){
-        console.log('preciosa: setup ajax token + ' app.get_token());
+        console.log('Preciosa: setup ajax token + ' app.get_token());
         $.ajaxSetup({
               headers: {'Authorization': "Token " + app.get_token()}
         });
@@ -81,7 +83,7 @@ var app = {
         console.log(data);
 
         if (localStorage.getItem('preciosa_token') !== null) {
-            console.log('preciosa: token ' + localStorage.preciosa_token);
+            console.log('Preciosa: token ' + localStorage.preciosa_token);
             return localStorage.preciosa_token;
         }
 
