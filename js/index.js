@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var PRECIOSA_CLIENT_VERSION = "0.1.1dev (Natimit)";
+var PRECIOSA_CLIENT_VERSION = "0.1beta (Natimit)";
 var init = null;
 
 var app = {
