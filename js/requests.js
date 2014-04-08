@@ -107,7 +107,8 @@ var mostrar_sucursales = function(status, response, selector) {
         });
     }
     else {
-        html = '<li><a class="ui-btn ui-shadow ui-corner-all ui-icon-alert ui-btn-icon-left">No se encontraron resultados</a></li>';
+        html = '<li><a class="ui-btn ui-shadow ui-corner-all ui-icon-alert ui-btn-icon-left">No se encontraron resultados</a>';
+        html += '<p style="padding:0.5em; white-space:normal;">Podés agregar nuevas sucursales desde la web <strong>preciosdeargentina.com.ar</strong></p></li>';
     }
 
     if ($ul.attr('id') === 'sucursales_listview'){
