@@ -421,9 +421,15 @@ $(document).on("pageshow", "#producto", function() {
                     if(index === response.mejores.length - 1){
                         extra_class = ' ui-last-child';
                     }
+                    if (e.sucursal.cadena_completa){
+                        var cadena = e.sucursal.cadena_completa.nombre + ' ';
+                    }else{
+                        var cadena = '';
+                    }
+
 
                     var li = '<li class="ui-li-static ui-body-inherit ui-li-has-count ';
-                       li += extra_class + '"><h4>' + e.sucursal.nombre + '</h4> ';
+                       li += extra_class + '"><h4>' + cadena + e.sucursal.nombre + '</h4> ';
                        li += '<span class="ui-li-count ui-body-inherit" style="font-size:1.3em">$ ';
                        li += e.precio + '</span> <p>' + e.sucursal.direccion + ' - ' + e.sucursal.ciudad_nombre;
                        li += '</p></li>';
