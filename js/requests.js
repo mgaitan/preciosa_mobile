@@ -18,7 +18,7 @@ var consultar_sucursales = function(callback, params) {
 
     var data = {
         format: 'json',
-    }
+    };
 
     if (typeof(params.lat) !== 'undefined' && typeof(params.lon) !== 'undefined') {
         data.lat = params.lat;
@@ -34,7 +34,7 @@ var consultar_sucursales = function(callback, params) {
         data.q = params.q;
     }
 
-    if (peticion_ajax != null) { peticion_ajax.abort(); }
+    if (peticion_ajax !== null) { peticion_ajax.abort(); }
 
     peticion_ajax = $.ajax({
         url: API_URL + "/sucursales/",
@@ -47,7 +47,7 @@ var consultar_sucursales = function(callback, params) {
         success: function(response) {
             return callback('ok', response, params.selector);
         },
-    })
+    });
 };
 
 var consultar_productos = function(callback, params) {
@@ -55,7 +55,7 @@ var consultar_productos = function(callback, params) {
 
     var data = {
         format: 'json',
-    }
+    };
 
     if (typeof(params.barcode) !== 'undefined') {
         data.barcode = params.barcode;
@@ -65,7 +65,7 @@ var consultar_productos = function(callback, params) {
         data.q = params.q;
     }
 
-    if (peticion_ajax != null) { peticion_ajax.abort(); }
+    if (peticion_ajax !== null) { peticion_ajax.abort(); }
 
     peticion_ajax = $.ajax({
         url: API_URL + "/productos/",
@@ -78,14 +78,14 @@ var consultar_productos = function(callback, params) {
         success: function(response) {
             return callback('ok', response, params.selector);
         },
-    })
+    });
 };
 
 var mostrar_error = function(opciones) {
     $elemento = opciones.selector;
     var html = opciones.error;
     $elemento.html(html);
-}
+};
 
 var mostrar_sucursales = function(status, response, selector) {
     var $ul = selector,
@@ -122,7 +122,7 @@ var actualizar_listview = function(html, $ul){
     $ul.html(html);
     $ul.listview('refresh');
     $ul.trigger('updatelayout');
-}
+};
 
 
 var get_ubicacion = function(success_callback, error_callback) {
@@ -166,7 +166,7 @@ var get_ubicacion = function(success_callback, error_callback) {
 
         navigator.geolocation.getCurrentPosition(success, fail, options);
     }
-}
+};
 
 
 
@@ -189,7 +189,7 @@ var mostrar_productos = function(status, response, selector) {
     $ul.html(html);
     $ul.listview('refresh');
     $ul.trigger('updatelayout');
-}
+};
 
 var guardar_precio = function(precio){
     var fecha = new Date();
@@ -198,7 +198,7 @@ var guardar_precio = function(precio){
         fecha: fecha.toJSON(),
         pid: localStorage.producto_id,
         sid: localStorage.sucursal_id
-    }
+    };
 
     precios_queue.put(data);
 
@@ -215,7 +215,7 @@ var guardar_precio = function(precio){
     $('#no_seas_leecher').hide();
     $('#mejores_precios').fadeIn();
     setTimeout(enviar_precios, 500);
-}
+};
 
 
 var enviar_precios = function (){
@@ -248,7 +248,7 @@ var enviar_precios = function (){
     }
 
     setTimeout(enviar_precios, 3000);
-}
+};
 
 
 $(document).ajaxStart(function () {
@@ -357,7 +357,7 @@ $(document).on("pagecreate", "#sucursal", function() {
                     selector: $ul,
                     q: $input.val()
                 }
-            )
+            );
         }
     });
 });
@@ -376,7 +376,7 @@ $(document).on("pageshow", "#producto", function() {
     $('#precio_preguntar').show();
     $('#precio_agradecer').hide();
 
-    if (peticion_ajax != null) { peticion_ajax.abort(); }
+    if (peticion_ajax !== null) { peticion_ajax.abort(); }
 
     peticion_ajax = $.ajax({
         url: API_URL + '/sucursales/' + localStorage.sucursal_id + '/productos/' + localStorage.producto_id,
@@ -411,10 +411,11 @@ $(document).on("pageshow", "#producto", function() {
             }
 
             if (response.mejores.length > 0) {
-                $('#mejores_precios').hide()
+                $('#mejores_precios').hide();
                 $('#no_seas_leecher').attr('style', '').fadeIn();
                 response.mejores.forEach(function (e, index) {
                     var extra_class = '';
+                    var cadena = '';
                     if (index===0){
                         extra_class += ' ui-first-child';
                     }
@@ -422,9 +423,7 @@ $(document).on("pageshow", "#producto", function() {
                         extra_class = ' ui-last-child';
                     }
                     if (e.sucursal.cadena_completa){
-                        var cadena = e.sucursal.cadena_completa.nombre + ' ';
-                    }else{
-                        var cadena = '';
+                        cadena = e.sucursal.cadena_completa.nombre + ' ';
                     }
 
 
@@ -470,9 +469,9 @@ var actualizar_recientes = function(sucursal_id, $li){
     // ordena de mas visitadas a menos visitadas y deja las 5 más visitadas
 
     function compare(a,b) {
-      if (a.contador > b.contador || a == null)
+      if (a.contador > b.contador || a === null)
          return -1;
-      if (a.contador < b.contador || b == null)
+      if (a.contador < b.contador || b === null)
         return 1;
       // a igual contador, primero el más reciente
       if (a.ultima_vez > b.ultima_vez)
@@ -484,23 +483,23 @@ var actualizar_recientes = function(sucursal_id, $li){
 
 
     function unpack_objects(map){
-        var r = {}
+        var r = {};
         $.each(map, function(i,e){
 
             if (e !== null)
                 r[e.id] = e;
         });
         return r;
-    };
+    }
 
 
     function pack_objects(hash){
-        var r = []
+        var r = [];
         $.each(hash, function(e){
                 r.push(hash[e]);
         });
         return r;
-    };
+    }
 
     console.log(localStorage.sucursales_recientes);
 
@@ -528,7 +527,7 @@ var actualizar_recientes = function(sucursal_id, $li){
         recientes[sucursal_id] = {'contador': 1,
                                   'html': html,
                                   'id': sucursal_id,
-                                  'ultima_vez': Date.now()}
+                                  'ultima_vez': Date.now()};
     }
 
     recientes_original = pack_objects(recientes);

@@ -19,6 +19,14 @@
 var PRECIOSA_CLIENT_VERSION = "0.1dev (Natimit)";
 var init = null;
 
+var device_mock = {
+    uuid: "test_uuid",
+    name: "test_name",
+    platform: "test_platform",
+    phonegap: "test_phonegap",
+    version: "test_version"
+};
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -26,7 +34,8 @@ var app = {
             return;
         }
         this.bindEvents();
-        if (localStorage.sucursales_recientes === undefined || localStorage.sucursales_recientes == ""){
+        this.onDeviceReady();
+        if (localStorage.sucursales_recientes === undefined || localStorage.sucursales_recientes === ""){
            localStorage.sucursales_recientes = JSON.stringify([]);
         }
 
@@ -63,7 +72,6 @@ var app = {
             return localStorage.preciosa_token;
         }
 
-
         $.ajax({
             type: 'POST',
             dataType: 'json',
@@ -85,7 +93,7 @@ var app = {
             success: function(response) {
                 localStorage.preciosa_token = response.token;
             }
-        })
+        });
         // TO DO: esto huele a mierda bloqueante. Preguntarle a
         // alguien que sepa cómo se hace bien.
         while (localStorage.preciosa_token === undefined){
@@ -100,8 +108,6 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // `load`, `deviceready`, `offline`, and `online`.
     bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-
         // $('#scan').on('click', this.scan);
 
         // ver https://github.com/mgaitan/preciosa_mobile/issues/37#issuecomment-39165164
@@ -125,13 +131,15 @@ var app = {
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+        if (parentElement) {
+            var listeningElement = parentElement.querySelector('.listening');
+            var receivedElement = parentElement.querySelector('.received');
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+            listeningElement.setAttribute('style', 'display:none;');
+            receivedElement.setAttribute('style', 'display:block;');
 
-        console.log('Received Event: ' + id);
+            console.log('Received Event: ' + id);
+        }
     },
 
     scan_msg: function(e){
@@ -218,7 +226,7 @@ var scanner_mock = {
     scan: function(callback_success, callback_error){
 
         var codigo = window.prompt("Ingresa el codigo","779403");
-        if (codigo != '' && codigo != null) {
+        if (codigo !== '' && codigo !== null) {
             result = {text: codigo, cancelled: false};
             callback_success(result);
         } else if (codigo === 'error'){
@@ -230,14 +238,7 @@ var scanner_mock = {
     }
 }
 
-
-var device_mock = {
-    uuid: "test_uuid",
-    name: "test_name",
-    platform: "test_platform",
-    phonegap: "test_phonegap",
-    version: "test_version"
-}
-
-app.initialize();
+document.addEventListener('deviceready', function(e) {
+    app.initialize();
+}, false);
 
