@@ -1,7 +1,7 @@
 /* Este es el modulo js cliente de la API rest */
 
-var BASE_URL = "http://107.170.28.160";
-// var BASE_URL = "http://preciosdeargentina.com.ar";
+//var BASE_URL = "http://107.170.28.160";
+var BASE_URL = "http://preciosdeargentina.com.ar";
 var API_URL = BASE_URL + "/api/v1";
 
 

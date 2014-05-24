@@ -47,12 +47,25 @@ var app = {
             }, 200);
         }
 
+
+        // si no es un telefono, se usa un mock
         try{
             device;
         } catch(err){
             // mock. se pide via prompt.
             window.device = device_mock;
         }
+
+
+        // Si la version de Preciosa se actualizó,
+        // reiniciamos el token para que lo recalcule basado en el uuid
+        // ref #43
+        if (localStorage.preciosa_version === undefined || \
+            localStorage.preciosa_version !== PRECIOSA_CLIENT_VERSION){
+            localStorage.removeItem('preciosa_token');
+        }
+        localStorage.preciosa_version = PRECIOSA_CLIENT_VERSION;
+
 
         $.ajaxSetup({
               headers: {'Authorization': "Token " + app.get_token()}
@@ -67,6 +80,7 @@ var app = {
 
 
     get_token: function(){
+
 
         if (localStorage.preciosa_token !== undefined) {
             return localStorage.preciosa_token;
