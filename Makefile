@@ -21,5 +21,10 @@ install: $(APK_NAME)
 	# instalo una nueva
 	adb install -r $(APK_NAME)
 
+sync: $(APK_NAME)
+	mkdir -p apk
+	fuse-zip $(APK_NAME) apk/
+	rsync -r --exclude 'apk' --exclude '*.apk' . apk/assets/www/
+	fusermount -u apk
 
 .PHONY: clean install reinstall uninstall
