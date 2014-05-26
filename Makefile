@@ -1,11 +1,13 @@
 APK_NAME = preciosa.apk
-APK_ID = com.phonegap.preciosa_peru
+APK_ID = com.phonegap.preciosa
 PHONEGAP_BUILD_ID = 762757
 
 all: clean $(APK_NAME) reinstall
 
 clean:
 	rm -f $(APK_NAME)
+
+get: $(APK_NAME)
 
 $(APK_NAME):
 	wget -c https://build.phonegap.com/apps/$(PHONEGAP_BUILD_ID)/download/android
@@ -20,11 +22,5 @@ reinstall: uninstall install
 install: $(APK_NAME)
 	# instalo una nueva
 	adb install -r $(APK_NAME)
-
-sync: $(APK_NAME)
-	mkdir -p apk
-	fuse-zip $(APK_NAME) apk/
-	rsync -r --exclude 'apk' --exclude '*.apk' . apk/assets/www/
-	fusermount -u apk
 
 .PHONY: clean install reinstall uninstall
