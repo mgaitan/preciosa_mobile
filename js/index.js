@@ -60,7 +60,7 @@ var app = {
         // Si la version de Preciosa se actualizó,
         // reiniciamos el token para que lo recalcule basado en el uuid
         // ref #43
-        if (localStorage.preciosa_version === undefined || \
+        if (localStorage.preciosa_version === undefined ||
             localStorage.preciosa_version !== PRECIOSA_CLIENT_VERSION){
             localStorage.removeItem('preciosa_token');
         }
@@ -252,7 +252,15 @@ var scanner_mock = {
     }
 }
 
-document.addEventListener('deviceready', function(e) {
+
+//Event "deviceready" is fired in cordova.js so I don't know a way to detect
+//existence of this event in application code
+if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+    document.addEventListener('deviceready', function(e) {
+        app.initialize();
+    }, false);
+} else {
     app.initialize();
-}, false);
+}
+
 
