@@ -6,7 +6,6 @@
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.min.css" />
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
         <link rel="stylesheet" type="text/css" href="css/custom.css" />
-
     </head>
 
     <body>
@@ -40,13 +39,16 @@
                         <li>Cargando sucursales cercanas...</li>
                     </ul>
 
-                    <a href="mapa.html#ubicacion" class="ui-btn ui-shadow ui-corner-all" data-icon="navigation" data-ajax="false">Configurar ubicación</a>
+                    <a id="go-to-conf" href="#configuracion" class="ui-btn ui-shadow ui-corner-all" data-icon="navigation">Configurar ubicación</a>
 
                   </div>
 
 
                 </div>
 
+            </div>
+            <div data-role="footer" data-position="fixed" style="visibility:hidden;text-align: center;">
+              <a href="#configuracion" data-role="button">Configuración</a>
             </div>
         </div>
 
@@ -85,6 +87,57 @@
 
                 </div>
             </div>
+            <div data-role="footer" data-position="fixed" style="visibility:hidden;text-align: center;">
+              <a href="#configuracion" data-role="button">Configuración</a>
+            </div>
+        </div>
+
+
+        <!-- Página de Configuración -->
+        <div data-role="page" id="configuracion">
+            <div data-role="header" data-position="fixed">
+              <a href="#" data-icon="back" data-rel="back" data-iconpos="notext" title="Volver">Volver</a>
+                <h1>Configuración</h1>
+            </div>
+
+            <div role="main" class="ui-content">
+
+                <div data-role="tabs" id="conf-tabs">
+                  <div data-role="navbar">
+                    <ul>
+                      <li id="tab-general"><a id='conf-tab-general' href="#configuracon-general" class="ui-btn-active" data-ajax="false" data-toggle="tab">General</a></li>
+                      <li id="tab-ubicacion"><a id='conf-tab-ubicacion' href="#configuracon-ubicacion" data-ajax="false" data-toggle="tab">Ubicación</a></li>
+                    </ul>
+                  </div>
+                  <div id="configuracon-general" class="ui-body-d ui-content">
+                    <h2>General</h2>
+                    <div data-theme="c" class="ui-corner-all">
+                      <form id="configuracion-general-form">
+                          <div style="padding:10px 20px; background: #ffffff;">
+                              <label for="precio_dias_input">Días de antiguedad del precio:</label>
+                              <input name="precio_dias" id="precio_dias_input" value="" placeholder="Ej: 30" data-theme="a" min="0" step="1" type="number" required>
+                              <label for="precio_radio_input">Radio en kilometros de la búsqueda:</label>
+                              <input name="precio_radio" id="precio_radio_input" value="" placeholder="Ej: 10" data-theme="a" min="0" step="1" type="number" required>
+                              <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Guardar</button>
+                          </div>
+                      </form>
+                  </div>
+                  </div>
+                  <div id="configuracon-ubicacion" class="ui-body-d ui-content">
+                    <h3>Ubicación </h3>
+                    <span><b>Ubicación actual: </b></span>
+                    <span id="ubicacion-texto"></span>
+                    <div id="configuracion-ubicacion-form">
+                    <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Guardar</button>
+                    <label for="ubicacion_input">Buscar:</label>
+                    <input name="ubicacion" id="ubicacion_input" value="" placeholder="Ej: Córdoba" data-theme="a" required>
+                    <div id="map_canvas" style="margin: 0px; padding: 0px"></div>
+                    <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Guardar</button>
+                    </div>
+                  </div>
+                </div>
+
+            </div>
         </div>
 
               <!-- Modal de "Cargando" -->
@@ -95,8 +148,13 @@
         <script type="text/javascript" src="js/queue.js"></script>
         <script type="text/javascript" src="js/loader.js"></script>
         <script type="text/javascript" src="js/jquery.mobile-1.4.2.min.js"></script>
+        <script type="text/javascript" src="js/configuration.js"></script>
+        <script type="text/javascript" src="js/api.js"></script>
+        <script type="text/javascript" src="js/location.js"></script>
+        <script type="text/javascript" src="js/preciosaapp.js"></script>
         <script type="text/javascript" src="js/requests.js"></script>
 
         <script type="text/javascript" src="js/index.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     </body>
 </html>

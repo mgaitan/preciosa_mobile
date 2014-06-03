@@ -79,8 +79,7 @@ var app = {
     },
 
 
-    get_token: function(){
-
+    get_token: function() {
 
         if (localStorage.preciosa_token !== undefined) {
             return localStorage.preciosa_token;
@@ -111,7 +110,7 @@ var app = {
         // TO DO: esto huele a mierda bloqueante. Preguntarle a
         // alguien que sepa cómo se hace bien.
         while (localStorage.preciosa_token === undefined){
-            return get_token();
+            return;
         }
         return localStorage.preciosa_token;
     },
@@ -129,6 +128,7 @@ var app = {
         $('#scan').on('click', this.scan_msg);
         $('#camara_chota_ok').on('click', this.scan);
         $('#camara_chota_check').on('click', this.scan_msg_no_mostrar_mas);
+        document.addEventListener("menubutton", this.show_menu, false);
 
         console.log('camara binded');
     },
@@ -213,6 +213,13 @@ var app = {
         );
     },
 
+    show_menu: function() {
+        if ($("div[data-role=footer]").css("visibility") == "hidden") {
+            $("div[data-role=footer]").css("visibility", "visible");
+        } else {
+            $("div[data-role=footer]").css("visibility", "hidden");
+        }
+    },
     buscar: function(codigo){
         // como tenemos productos con y sin checksum, por las dudas
         // se lo quitamos para la búsqueda
@@ -250,7 +257,7 @@ var scanner_mock = {
             callback_success(result);
         }
     }
-}
+};
 
 
 //Event "deviceready" is fired in cordova.js so I don't know a way to detect

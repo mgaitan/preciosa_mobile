@@ -16,6 +16,7 @@
     <gap:plugin name="com.phonegap.plugins.barcodescanner"/>
     <gap:plugin name="org.apache.cordova.geolocation" />
     <gap:plugin name="org.apache.cordova.device" />
+    <access origin="*" />
     <feature name="http://api.phonegap.com/1.0/geolocation"/>
 
     <feature name="http://api.phonegap.com/1.0/device" />
