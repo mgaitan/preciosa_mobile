@@ -40,3 +40,11 @@
 .ui-header .ui-title:before {
   content: " | ";
 }
+
+.cercana_coor {
+  font-weight: bold;
+}
+
+.cercana_coor_text {
+  margin-top: 15px;
+}

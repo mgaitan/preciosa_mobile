@@ -119,6 +119,7 @@ PreciosaApp.prototype.actualizarRecientes = function(sucursal_id, $li) {
 PreciosaApp.prototype.mostrarSucursales = function(status, response, selector) {
     var $ul = selector,
     html = '';
+    $(".cercana_coor").text(localStorage.placeName);
     if (response.count > 0){
         $.each(response.results, function (i, e) {
             html += '<li><a href="#sucursal" data-id="'+e.id+'" class="sucursal">';
@@ -150,9 +151,13 @@ PreciosaApp.prototype.mostrarSucursales = function(status, response, selector) {
 PreciosaApp.prototype.mostrarProductos = function(status, response, selector) {
     var $ul = selector,
     html = '';
-    if (response.count > 0){
+    if (response.count > 0) {
+        var href = "producto.html#producto";
+        if (localStorage.readMode === "true") {
+            href = "producto.html#producto_read";
+        }
         $.each(response.results, function (i, obj) {
-            html += '<li><a href="producto.html#producto" data-ajax="false" data-id="'+obj.id+'" class="producto">' +
+            html += '<li><a href="'+ href +'" data-ajax="false" data-id="'+obj.id+'" class="producto">' +
                     '<h2>' + obj.descripcion + '</h2>' +
                     '<p><i class="fa fa-barcode"></i> ' + obj.upc + '</p>' +
                     '</a></li>';
@@ -179,7 +184,7 @@ PreciosaApp.prototype.guardarPrecio = function(precio) {
         });
         $('#precio_votar_form input[name=precio]').val('');
         $('#no_seas_leecher').hide();
-        $('#mejores_precios').fadeIn();
+        $('.mejores_precios').fadeIn();
     });
 };
 
@@ -261,7 +266,7 @@ PreciosaApp.prototype.initConfUbicacion = function() {
     });
 };
 
-PreciosaApp.prototype.createPrincipal = function() {
+PreciosaApp.prototype.createSupermarketMode = function() {
     //obtenemos recientes al hacer click en el tab
     var that = this;
     $('#tab_recientes').on("click", function() {
@@ -322,7 +327,7 @@ PreciosaApp.prototype.createPrincipal = function() {
 };
 
 
-PreciosaApp.prototype.showPrincipal = function() {
+PreciosaApp.prototype.showSupermarketMode = function() {
     var that = this;
     if($("#tab_cercanas").parent().hasClass('ui-tabs-active')) {
         that.sucursalesCercanas();
@@ -381,29 +386,33 @@ PreciosaApp.prototype.showProducto = function() {
     $('#precio_agradecer').hide();
     var that = this;
     this.api.getProductoDetalle(function(response) {
-        $('#producto_nombre').html(response.producto.descripcion);
-        $('#producto_upc').html(response.producto.upc);
+        $('.producto_nombre').html(response.producto.descripcion);
+        $('.producto_upc').html(response.producto.upc);
         if (response.producto.foto !== null) {
             $('#producto_foto').attr('src', BASE_URL + response.producto.foto);
         }
 
-        if (response.mas_probables.length > 0) {
-            $('#producto_precio').html('$' + response.mas_probables[0].precio);
-            $('#votar_precio_si').data('precio', response.mas_probables[0].precio / 1);
-        }
-        else {
-            $('#producto_precio').html('Sin precio');
-            $('#votar_precio_si').data('precio', 0);
+        if(localStorage.readMode !== "true") {
+            if (response.mas_probables.length > 0) {
+                $('#producto_precio').html('$' + response.mas_probables[0].precio);
+                $('#votar_precio_si').data('precio', response.mas_probables[0].precio / 1);
+            }
+            else {
+                $('#producto_precio').html('Sin precio');
+                $('#votar_precio_si').data('precio', 0);
 
-            // si no hay precio para la sucursal, se pide automáticamente
-            setTimeout(function(){
-                $('#votar_precio').popup('open', {transition: "pop"});
-            }, 300);
+                // si no hay precio para la sucursal, se pide automáticamente
+                setTimeout(function(){
+                    $('#votar_precio').popup('open', {transition: "pop"});
+                }, 300);
 
+            }
         }
 
         if (response.mejores.length > 0) {
-            $('#mejores_precios').hide();
+            if(localStorage.readMode !== "true") {
+                $('.mejores_precios').hide();
+            }
             $('#no_seas_leecher').attr('style', '').fadeIn();
             response.mejores.forEach(function (e, index) {
                 var extra_class = '';
@@ -425,13 +434,22 @@ PreciosaApp.prototype.showProducto = function() {
                    li += e.precio + '</span> <p>' + e.sucursal.direccion + ' - ' + e.sucursal.ciudad_nombre;
                    li += '</p></li>';
 
-                $('#mejores_precios').append(li);
+                $('.mejores_precios').append(li);
             });
         }
         else {
-            $('#mejores_precios').html('<li class="ui-li-static ui-body-inherit ui-first-child ui-last-child">No hay precios sugeridos</li>');
+            $('.mejores_precios').html('<li class="ui-li-static ui-body-inherit ui-first-child ui-last-child">No hay precios sugeridos</li>');
         }
     }, function(xhr, text, error) {
-        $('#producto_nombre').html('No se pudo obtener la información solicitada');
+        $('.producto_nombre').html('No se pudo obtener la información solicitada');
+    });
+};
+
+
+PreciosaApp.prototype.showPrincipal = function() {
+    localStorage.readMode = false;
+    $("#to-read-mode").off("click");
+    $("#to-read-mode").on("click", function(e) {
+        localStorage.readMode = true;
     });
 };

@@ -17,6 +17,24 @@
 
             <div role="main" class="ui-content">
 
+              <a id="to-supermarket" href="#supermercado" class="ui-btn ui-shadow ui-corner-all" data-icon="navigation">En el Supermercado</a>
+              <a id="to-read-mode" href="#sucursal" class="ui-btn ui-shadow ui-corner-all" data-icon="navigation">Curosear precios</a>
+
+            </div>
+            <div data-role="footer" data-position="fixed" style="visibility:hidden;text-align: center;">
+              <a href="#configuracion" data-role="button">Configuración</a>
+            </div>
+        </div>
+
+        <!-- Pagina donde se elige la sucursal -->
+        <div data-role="page" id="supermercado">
+            <div data-role="header" data-position="fixed">
+                <a href="#" data-icon="back" data-rel="back" data-iconpos="notext" title="Volver">Volver</a>
+                <h1>Sucursal</h1>
+            </div>
+
+            <div role="main" class="ui-content">
+
                 <div data-role="tabs" id="tabs">
                   <div data-role="navbar">
                     <ul>
@@ -35,11 +53,14 @@
                     </ul>
                   </div>
                   <div id="sucursal_cercanas">
+                    <div class="cercana_coor_text">Sucursal cercana a: <span class="cercana_coor"></span>
+                      <a href="#configuracion" class="ui-btn ui-shadow ui-corner-all go-to-conf" data-icon="navigation">Configurar ubicación</a>
+                    </div>
                     <ul id="sucursales_cercanas_listview" data-role="listview" data-inset="true">
                         <li>Cargando sucursales cercanas...</li>
                     </ul>
+                    <a href="#configuracion" class="ui-btn ui-shadow ui-corner-all go-to-conf" data-icon="navigation">Configurar ubicación</a>
 
-                    <a id="go-to-conf" href="#configuracion" class="ui-btn ui-shadow ui-corner-all" data-icon="navigation">Configurar ubicación</a>
 
                   </div>
 

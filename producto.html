@@ -19,11 +19,11 @@
             </div>
 
             <div role="main" class="ui-content">
-                <h3 id="producto_nombre">Cargando ...</h3>
-                <p><i class="fa fa-barcode"></i> <span id="producto_upc"></span></p>
+                <h3 class="producto_nombre">Cargando ...</h3>
+                <p><i class="fa fa-barcode"></i> <span class="producto_upc"></span></p>
 
                 <div id="descripcion" class="ui-grid-a">
-                    <div class="ui-block-a"><img id="producto_foto" src="images/logo.png" /></div>
+                    <div class="ui-block-a"><img class="producto_foto" src="images/logo.png" /></div>
                     <div class="ui-block-b">
                         <h4>Precio en sucursal</h4>
                         <h2 id="producto_precio">Cargando ...</h2>
@@ -39,18 +39,6 @@
                                 <a href="#votar_precio" data-rel="popup"  data-role="button" data-transition="pop" data-position-to="window" data-icon="delete">No</a>
                             </div>
 
-
-                        <!--
-                            <div id="preciovotar" class="ui-grid-a">
-                                <div class="ui-block-a">
-                                    <a id="votar_precio_si" data-precio="" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-check ui-btn-inline">Sí</a>
-                                </div>
-                                <div class="ui-block-b">
-                                    <a href="#votar_precio" data-rel="popup" data-transition="pop" data-position-to="window" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete ui-btn-inline">No</a>
-                                </div>
-                            </div>
-
-                         //-->
                         </div>
 
                         <div id="precio_agradecer"><p><center>Gracias por la información.</center></p></div>
@@ -63,7 +51,7 @@
 
                 <p id="no_seas_leecher" style="visibility: hidden;">Confirmá o corregí el precio en la sucursal para ver los sugeridos...</p>
 
-                <ul id="mejores_precios" class"ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
+                <ul class="mejores_precios" class"ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
                 </ul>
 
                 <div data-role="popup" id="votar_precio" data-theme="c" class="ui-corner-all">
@@ -77,6 +65,30 @@
                     </form>
                 </div>
 
+            </div>
+        </div>
+
+
+        <div data-role="page" id="producto_read">
+            <div data-role="header" data-position="fixed">
+                <a href="#" data-icon="back" data-rel="back" data-iconpos="notext" title="Volver">Volver</a>
+                <h1>Producto</h1>
+            </div>
+
+            <div role="main" class="ui-content">
+                <h3 class="producto_nombre">Cargando ...</h3>
+                <p><i class="fa fa-barcode"></i> <span class="producto_upc"></span></p>
+
+                <div id="descripcion">
+                    <div><img class="producto_foto" src="images/logo.png" /></div>
+                    <div>
+                        <h3>Mejores precios</h3>
+
+                        <ul class="mejores_precios" class"ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
+                        </ul>
+
+                    </div>
+                </div>
             </div>
         </div>
 

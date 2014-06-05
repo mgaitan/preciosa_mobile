@@ -132,12 +132,18 @@ PreciosaApi.prototype.savePrecio = function(precio, callback) {
 PreciosaApi.prototype.getProductoDetalle = function(callbackSuccess, callbackError) {
 
     if (peticion_ajax !== null) { peticion_ajax.abort(); }
+    var url = API_URL + '/sucursales/' + localStorage.sucursal_id + '/productos/' + localStorage.producto_id;
+    if (localStorage.readMode === "true") {
+        url = API_URL + '/productos_mejores/' + localStorage.producto_id;
+    }
     peticion_ajax = $.ajax({
-        url: API_URL + '/sucursales/' + localStorage.sucursal_id + '/productos/' + localStorage.producto_id,
+        url: url,
         dataType: "json",
         crossDomain: true,
         data: {
             format: 'json',
+            lat: conf.lat,
+            lng: conf.lng,
             dias: conf.days,
             radio: conf.radio
         },

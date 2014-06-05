@@ -1,7 +1,7 @@
 /* Este es el modulo js cliente de la API rest */
 
-var BASE_URL = "http://107.170.28.160";
-//var BASE_URL = "http://192.168.1.203:8000";
+//var BASE_URL = "http://107.170.28.160";
+var BASE_URL = "http://192.168.1.203:8000";
 //var BASE_URL = "http://localhost:8000";
 //var BASE_URL = "http://preciosdeargentina.com.ar";
 
@@ -27,13 +27,17 @@ $(document).ajaxStop(function () {
 });
 
 
-$(document).on("pagecreate", "#principal", function() {
-    preciosa.createPrincipal();
+$(document).on("pageshow", "#principal", function() {
+    preciosa.showPrincipal();
+});
+
+$(document).on("pagecreate", "#supermercado", function() {
+    preciosa.createSupermarketMode();
 });
 
 
-$(document).on("pageshow", "#principal", function() {
-    preciosa.showPrincipal();
+$(document).on("pageshow", "#supermercado", function() {
+    preciosa.showSupermarketMode();
 });
 
 $(document).on("pagecreate", "#sucursal", function() {
@@ -52,6 +56,10 @@ $(document).on("pageshow", "#producto", function() {
     preciosa.showProducto();
 });
 
+$(document).on("pageshow", "#producto_read", function() {
+    preciosa.showProducto();
+});
+
 // ---
 var asignar_sucursal_id = function(e){
     preciosa.asignarSucursalId(e, this);
@@ -65,7 +73,7 @@ var asignar_producto_id = function(e) {
     preciosa.asignarProductoId(e);
 };
 
-$(document).on('pageinit', '#principal', function() {
+$(document).on('pageinit', '#supermercado', function() {
     $(document).on('click', 'a.sucursal', asignar_sucursal_id);
 });
 $(document).on('pageinit', '#sucursal', function() {
