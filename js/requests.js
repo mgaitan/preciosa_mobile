@@ -44,6 +44,10 @@ $(document).on("pagecreate", "#sucursal", function() {
     preciosa.createSucursal();
 });
 
+$(document).on("pageshow", "#sucursal", function() {
+    preciosa.showSucursal();
+});
+
 $(document).on("pagebeforeshow", "#producto", function() {
     $('#producto_nombre').html('');
     $('#producto_upc').html('');

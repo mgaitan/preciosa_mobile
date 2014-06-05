@@ -3,6 +3,8 @@ function Configuration() {
     this.days = 20;
     this.lat = -64.183;
     this.lng = -64.183;
+    this.sucursalId = undefined;
+    this.sucursalName = undefined;
     this.placeName = undefined;
 
     if (localStorage.latitud !== undefined  && localStorage.longitud !== undefined) {
@@ -21,12 +23,31 @@ function Configuration() {
     if(localStorage.conf_days !== undefined) {
         this.days = localStorage.conf_dias;
     }
+
+    if(localStorage.sucursalId !== undefined) {
+        this.sucursalId = localStorage.sucursalId;
+    }
+
+    if(localStorage.sucursalName !== undefined) {
+        this.sucursalName = localStorage.sucursalName;
+    }
 }
 
 Configuration.prototype.setPlaceName = function(placeName) {
     this.placeName = placeName;
     localStorage.placeName = placeName;
 };
+
+Configuration.prototype.setSucursalId = function(id) {
+    this.sucursalId = id;
+    localStorage.sucursalId = id;
+};
+
+Configuration.prototype.setSucursalName = function(name) {
+    this.sucursalName = name;
+    localStorage.sucursalName = name;
+};
+
 
 Configuration.prototype.setRadio = function(radio) {
     this.radio = radio;

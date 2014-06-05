@@ -85,6 +85,7 @@ PreciosaApi.prototype.sendPrecios = function() {
             en_verde = false;
 
             e = this.preciosQueue.get();
+
             var url = API_URL + '/sucursales/' + e.sid + '/productos/' + e.pid;
 
             $.ajax({
@@ -117,7 +118,7 @@ PreciosaApi.prototype.savePrecio = function(precio, callback) {
         precio: precio,
         fecha: fecha.toJSON(),
         pid: localStorage.producto_id,
-        sid: localStorage.sucursal_id
+        sid: conf.sucursalId
     };
     callback();
     this.preciosQueue.put(data);
@@ -132,7 +133,7 @@ PreciosaApi.prototype.savePrecio = function(precio, callback) {
 PreciosaApi.prototype.getProductoDetalle = function(callbackSuccess, callbackError) {
 
     if (peticion_ajax !== null) { peticion_ajax.abort(); }
-    var url = API_URL + '/sucursales/' + localStorage.sucursal_id + '/productos/' + localStorage.producto_id;
+    var url = API_URL + '/sucursales/' + conf.sucursalId + '/productos/' + localStorage.producto_id;
     if (localStorage.readMode === "true") {
         url = API_URL + '/productos_mejores/' + localStorage.producto_id;
     }

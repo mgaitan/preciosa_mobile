@@ -18,16 +18,19 @@ PreciosaApp.prototype.actualizarListview = function(html, $ul) {
 
 PreciosaApp.prototype.asignarSucursalId = function(e, elem) {
     var target = $(e.target);
-    var sucursal_id = null;
-
+    var sucursalId = null;
+    var sucursalName = null;
     if (target.is('a')) {
-        sucursal_id = $(e.target).data('id');
+        sucursalId = $(e.target).data('id');
+        sucursalName = $("h2", $(e.target)).text();
     }
     else {
-        sucursal_id = $(e.target).closest('a').data('id');
+        sucursalId = $(e.target).closest('a').data('id');
+        sucursalName = $("h2", $(e.target).closest('a')).text();
     }
-    localStorage.sucursal_id = sucursal_id;
-    this.actualizarRecientes(sucursal_id, $(elem).parents('li'));
+    conf.setSucursalId(sucursalId);
+    conf.setSucursalName(sucursalName);
+    this.actualizarRecientes(sucursalId, $(elem).parents('li'));
 };
 
 
@@ -119,7 +122,7 @@ PreciosaApp.prototype.actualizarRecientes = function(sucursal_id, $li) {
 PreciosaApp.prototype.mostrarSucursales = function(status, response, selector) {
     var $ul = selector,
     html = '';
-    $(".cercana_coor").text(localStorage.placeName);
+
     if (response.count > 0){
         $.each(response.results, function (i, e) {
             html += '<li><a href="#sucursal" data-id="'+e.id+'" class="sucursal">';
@@ -192,7 +195,7 @@ PreciosaApp.prototype.guardarPrecio = function(precio) {
 PreciosaApp.prototype.sucursalesCercanas = function() {
     console.log('cercanas');
     var that = this;
-
+    $(".cercana_coor").text(conf.placeName);
     function mostrarSucursalesTmp(status, response, selector) {
         that.mostrarSucursales(status, response, selector);
     }
@@ -261,6 +264,8 @@ PreciosaApp.prototype.initConfUbicacion = function() {
             conf.setPlaceName($('#ubicacion_input').val());
             $("#ubicacion-texto").text(conf.placeName);
         }
+
+        $("div[data-role=footer]").css("visibility", "hidden");
         $.mobile.back();
         return false;
     });
@@ -357,6 +362,40 @@ PreciosaApp.prototype.createSucursal = function() {
             );
         }
     });
+};
+
+
+PreciosaApp.prototype.showSucursal = function() {
+    if(localStorage.readMode === "true") {
+        $(".cercana_coor_prod").text(conf.placeName);
+    } else {
+        $(".cercana_coor_prod").text(conf.sucursalName);
+    }
+
+    $("#prod_conf_hubicacion").off("click");
+    $("#prod_conf_hubicacion").on("click", function(e) {
+        e.preventDefault();
+        if(localStorage.readMode === "true") {
+            $.mobile.changePage("#configuracion", "none");
+         } else {
+            $.mobile.changePage("#supermercado", "none");
+        }
+        return false;
+    });
+
+    var $ul = $("#productos_listview");
+    var value = $("input", $ul.prev()).val();
+    if (value && value.length > 2) {
+        this.api.getProductos(
+            this.mostrarProductos,
+            {
+                selector: $ul,
+                q: value
+            }
+        );
+    }
+
+
 };
 
 
