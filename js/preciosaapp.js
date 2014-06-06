@@ -433,6 +433,10 @@ PreciosaApp.prototype.showProducto = function() {
 
         if(localStorage.readMode !== "true") {
             if (response.mas_probables.length > 0) {
+                var dateStr = response.mas_probables[0].created;
+                var dateData = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
+                var dateResult = dateData[3] + "/" +  dateData[2] + "/" + dateData[1];
+                $("#producto_precio_fecha").text(dateResult);
                 $('#producto_precio').html('$' + response.mas_probables[0].precio);
                 $('#votar_precio_si').data('precio', response.mas_probables[0].precio / 1);
             }
@@ -467,10 +471,14 @@ PreciosaApp.prototype.showProducto = function() {
                 }
 
 
+                var dateStr = e.created;
+                var dateData = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
+                var dateResult = dateData[3] + "/" +  dateData[2] + "/" + dateData[1];
+
                 var li = '<li class="ui-li-static ui-body-inherit ui-li-has-count ';
                    li += extra_class + '"><h4>' + cadena + e.sucursal.nombre + '</h4> ';
-                   li += '<span class="ui-li-count ui-body-inherit" style="font-size:1.3em">$ ';
-                   li += e.precio + '</span> <p>' + e.sucursal.direccion + ' - ' + e.sucursal.ciudad_nombre;
+                   li += '<span class="ui-li-count ui-body-inherit" style="font-size:1.3em; line-height: 1em;">$ ';
+                   li += e.precio + '<br/><span style="font-size:0.6em;">'+ dateResult +'</span> </span><p>' + e.sucursal.direccion + ' - ' + e.sucursal.ciudad_nombre;
                    li += '</p></li>';
 
                 $('.mejores_precios').append(li);
