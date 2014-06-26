@@ -49,3 +49,21 @@
 .cercana_coor_text {
   margin-top: 15px;
 }
+
+#precios_cuidados-container {
+  display: none;
+}
+
+#precios_cuidados img {
+  width: 20%;
+}
+
+.mejores-precio-cuidado {
+  font-size: 0.7em;
+  font-weight: bold;
+}
+
+#descripcion .mejores-precio-cuidado img,
+.mejores-precio-cuidado img {
+  width: 25px;
+}

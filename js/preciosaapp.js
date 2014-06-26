@@ -421,6 +421,7 @@ PreciosaApp.prototype.initProducto = function() {
 
 
 PreciosaApp.prototype.showProducto = function() {
+    $("#precios_cuidados-container").css("display", "none");
     $('#precio_preguntar').show();
     $('#precio_agradecer').hide();
     var that = this;
@@ -430,8 +431,8 @@ PreciosaApp.prototype.showProducto = function() {
         if (response.producto.foto !== null) {
             $('#producto_foto').attr('src', BASE_URL + response.producto.foto);
         }
-
         if(localStorage.readMode !== "true") {
+
             if (response.mas_probables.length > 0) {
                 var dateStr = response.mas_probables[0].created;
                 var dateData = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
@@ -449,6 +450,10 @@ PreciosaApp.prototype.showProducto = function() {
                     $('#votar_precio').popup('open', {transition: "pop"});
                 }, 300);
 
+            }
+            if (response.en_acuerdo && response.en_acuerdo.length > 0) {
+                $("#precios_cuidados-container").css("display", "block");
+                $("#precios_cuidados-presio").text(response.en_acuerdo[0].precio);
             }
         }
 
@@ -479,7 +484,12 @@ PreciosaApp.prototype.showProducto = function() {
                    li += extra_class + '"><h4>' + cadena + e.sucursal.nombre + '</h4> ';
                    li += '<span class="ui-li-count ui-body-inherit" style="font-size:1.3em; line-height: 1em;">$ ';
                    li += e.precio + '<br/><span style="font-size:0.6em;">'+ dateResult +'</span> </span><p>' + e.sucursal.direccion + ' - ' + e.sucursal.ciudad_nombre;
-                   li += '</p></li>';
+                   li += '</p>';
+                if (e.acuerdos.length) {
+                    li += '<span class="mejores-precio-cuidado"><img src="images/precios_cuidados.png"/>Precio Cuidado: <span>$' + e.acuerdos[0].precio + '</span></span></li>';
+                } else {
+                    li += '</li>';
+                }
 
                 $('.mejores_precios').append(li);
             });
